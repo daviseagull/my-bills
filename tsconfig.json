@@ -10,8 +10,14 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["*"]
+      "@/*": [
+        "*"
+      ]
     },
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ],
     "baseUrl": "src"
   }
 }
