@@ -6,7 +6,8 @@
   "author": "Davi Seagull <davi.seagull@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts",
+    "husky:prepare": "husky install"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
@@ -16,6 +17,8 @@
     "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "prisma": "^5.3.0",
     "ts-node-dev": "^2.0.0",
