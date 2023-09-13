@@ -2,7 +2,7 @@ import { prisma } from '@/prisma/client'
 import { User } from '@prisma/client'
 import { AppError } from '@/errors/app-error'
 import logger from '@/logger'
-import { CreateUserDto } from '@/modules/users/dtos/create-user.dto'
+import { CreateUserDto } from '@/features/users/dtos/create-user.dto'
 
 export class CreateUserUseCase {
   async execute(userDto: CreateUserDto): Promise<User> {
