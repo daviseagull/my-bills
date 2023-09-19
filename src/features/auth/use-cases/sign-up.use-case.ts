@@ -5,7 +5,6 @@ import {
   cognitoServiceProvider,
   hashCognitoSecret
 } from '@/utils/cognito.utils'
-import { AppError } from '@/errors/app-error'
 
 export class SignUpUseCase {
   public async execute(user: CreateUserDto) {
@@ -16,12 +15,7 @@ export class SignUpUseCase {
       SecretHash: hashCognitoSecret(user.username),
       UserAttributes: this.getUserAttributes(user)
     }
-
-    const data = await cognitoServiceProvider().signUp(params)
-
-    if (!data) {
-      throw new AppError(`Error while creating user ${user.username}`)
-    }
+    await cognitoServiceProvider().signUp(params)
   }
 
   private getUserAttributes(user: CreateUserDto): UserAttribute[] {

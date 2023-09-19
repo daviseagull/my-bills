@@ -6,21 +6,13 @@ import {
 } from '@/utils/cognito.utils'
 
 export class ConfirmUserUseCase {
-  public async execute(confirmationDto: ConfirmUserDto): Promise<boolean> {
+  public async execute(confirmationDto: ConfirmUserDto): Promise<void> {
     const params = {
       ClientId: cognitoClientId(),
       ConfirmationCode: confirmationDto.code,
       Username: confirmationDto.username,
       SecretHash: hashCognitoSecret(confirmationDto.username)
     }
-
-    try {
-      const cognitoResp = await cognitoServiceProvider().confirmSignUp(params)
-      console.log(cognitoResp)
-      return true
-    } catch (error) {
-      console.log('error', error)
-      return false
-    }
+    await cognitoServiceProvider().confirmSignUp(params)
   }
 }

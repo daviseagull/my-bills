@@ -10,6 +10,6 @@ export class ConfirmUserController {
 
     const result = await useCase.execute(confirmationDto)
 
-    return res.status(201).json(result)
+    return res.status(204).json(result)
   }
 }
