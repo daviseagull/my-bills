@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { SignUpController } from '@/features/auth/controllers/sign-up.controller'
-import { ConfirmUserController } from '@/features/auth/controllers/confirm-user.controller'
-import { SignInController } from '@/features/auth/controllers/sign-in.controller'
+import { SignUpController } from '@/infra/http/controllers/sign-up.controller'
+import { ConfirmUserController } from '@/infra/http/controllers/confirm-user.controller'
+import { SignInController } from '@/infra/http/controllers/sign-in.controller'
 
 const signUpController = new SignUpController()
 const signInController = new SignInController()
