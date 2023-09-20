@@ -20,7 +20,7 @@ export class SignUpUseCase {
   ) {}
 
   public async execute(request: SignUpRequest) {
-    const user = this.userRepository.findById(request.username)
+    const user = this.userRepository.findByUsername(request.username)
 
     if (!user) {
       throw new Error('')
