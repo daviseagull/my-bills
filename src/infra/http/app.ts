@@ -1,5 +1,5 @@
 import express from 'express'
-import { authRoutes } from '@/routes/auth.route'
+import { authRoutes } from '@/infra/http/routes/auth.route'
 
 const app = express()
 

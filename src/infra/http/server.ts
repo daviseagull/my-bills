@@ -1,6 +1,6 @@
-import logger from '@/logger'
+import logger from '@/infra/logger/logger'
 import { configDotenv } from 'dotenv'
-import { app } from '@/app'
+import { app } from '@/infra/http/app'
 
 configDotenv()
 
