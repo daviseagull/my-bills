@@ -1,24 +1,23 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/core/domain/authentication/authentication.service'
 
-export interface ConfirmUserRequest {
+export interface ResendCodeRequest {
   username: string
-  code: string
 }
 
-export class ConfirmUserUseCase {
+export class ResendCodeUseCase {
   constructor(
     private userRepository: UserRepository,
     private authService: AuthenticationService
   ) {}
 
-  public async execute(request: ConfirmUserRequest): Promise<void> {
+  public async execute(request: ResendCodeRequest): Promise<void> {
     const user = await this.userRepository.findByUsername(request.username)
 
     if (!user) {
       throw new Error('')
     }
 
-    await this.authService.confirmUser(request.username, request.code)
+    await this.authService.resendConfirmationCode(request.username)
   }
 }

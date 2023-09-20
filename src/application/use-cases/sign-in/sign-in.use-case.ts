@@ -1,3 +1,4 @@
+import { UserRepository } from '@/application/repositories/user.repository'
 import {
   AuthenticationResult,
   AuthenticationService
@@ -9,11 +10,20 @@ export interface SignInRequest {
 }
 
 export class SignInUseCase {
-  constructor(private authService: AuthenticationService) {}
+  constructor(
+    private userRepository: UserRepository,
+    private authService: AuthenticationService
+  ) {}
 
   public async execute(
     signInRequest: SignInRequest
   ): Promise<AuthenticationResult> {
+    const user = this.userRepository.findByUsername(signInRequest.username)
+
+    if (!user) {
+      throw new Error('')
+    }
+
     return await this.authService.signIn(
       signInRequest.username,
       signInRequest.password

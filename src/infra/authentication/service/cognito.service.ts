@@ -1,6 +1,7 @@
 import {
   AuthenticationResult,
-  AuthenticationService
+  AuthenticationService,
+  CognitoUser
 } from '@/core/domain/authentication/authentication.service'
 import {
   cognitoClientId,
@@ -9,6 +10,7 @@ import {
 } from '../utils/cognito.utils'
 import { AttributeType } from '@aws-sdk/client-cognito-identity-provider'
 import { SignUpRequest } from '@/application/use-cases/sign-up/sign-up.use-case'
+import { P } from 'pino'
 
 class UserAttribute implements AttributeType {
   constructor(name: string, value: string) {
@@ -44,7 +46,7 @@ export class CognitoService implements AuthenticationService {
     }
   }
 
-  async signUp(user: SignUpRequest): Promise<void> {
+  async signUp(user: SignUpRequest): Promise<CognitoUser> {
     const params = {
       ClientId: cognitoClientId(),
       Password: user.password,
@@ -52,14 +54,19 @@ export class CognitoService implements AuthenticationService {
       SecretHash: hashCognitoSecret(user.username),
       UserAttributes: this.getUserAttributes(user)
     }
-    await cognitoServiceProvider().signUp(params)
+
+    const cognitoUser = await cognitoServiceProvider().signUp(params)
+
+    return {
+      id: cognitoUser.UserSub!
+    }
   }
 
   private getUserAttributes(user: SignUpRequest): UserAttribute[] {
     const userAttr: UserAttribute[] = []
     userAttr.push(new UserAttribute('email', user.email))
     userAttr.push(new UserAttribute('gender', user.gender))
-    userAttr.push(new UserAttribute('birthdate', user.birthdate.toString()))
+    userAttr.push(new UserAttribute('birthdate', user.birthday.toString()))
     userAttr.push(
       new UserAttribute('name', `${user.name.first} ${user.name.last}`)
     )
@@ -78,5 +85,15 @@ export class CognitoService implements AuthenticationService {
     }
 
     await cognitoServiceProvider().confirmSignUp(params)
+  }
+
+  async resendConfirmationCode(username: string) {
+    const params = {
+      ClientId: cognitoClientId(),
+      SecretHash: hashCognitoSecret(username),
+      Username: username
+    }
+
+    await cognitoServiceProvider().resendConfirmationCode(params)
   }
 }

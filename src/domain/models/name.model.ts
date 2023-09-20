@@ -1,5 +1,5 @@
 export interface Name {
   first: string
   last: string
-  fullName: string
+  fullname: string
 }

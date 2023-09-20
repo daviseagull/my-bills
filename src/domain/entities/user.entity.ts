@@ -5,9 +5,10 @@ type UserProps = {
   username: string
   email: string
   name: Name
-  birthdate: Date
+  birthday: Date
   gender: string
   phone: string
+  cognitoId: string
   confirmed: boolean
 }
 
