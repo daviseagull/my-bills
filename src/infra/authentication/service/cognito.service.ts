@@ -12,9 +12,13 @@ import { SignUpRequest } from '@/application/use-cases/sign-up/sign-up.use-case'
 import { cpf } from 'cpf-cnpj-validator'
 
 class UserAttribute implements AttributeType {
-  constructor(name: string, value: string) {
+  private constructor(name: string, value: string) {
     this.Name = name
     this.Value = value
+  }
+
+  public static create(name: string, value: string) {
+    return new UserAttribute(name, value)
   }
 
   Name: string | undefined
@@ -61,17 +65,17 @@ export class CognitoService implements AuthenticationService {
 
   private getUserAttributes(user: SignUpRequest): UserAttribute[] {
     const userAttr: UserAttribute[] = []
-    userAttr.push(new UserAttribute('email', user.email))
-    userAttr.push(new UserAttribute('gender', user.gender))
-    userAttr.push(new UserAttribute('birthdate', user.birthday.toString()))
+    userAttr.push(UserAttribute.create('email', user.email))
+    userAttr.push(UserAttribute.create('gender', user.gender))
+    userAttr.push(UserAttribute.create('birthdate', user.birthday.toString()))
     userAttr.push(
-      new UserAttribute('name', `${user.name.first} ${user.name.last}`)
+      UserAttribute.create('name', `${user.name.first} ${user.name.last}`)
     )
-    userAttr.push(new UserAttribute('given_name', user.name.first))
-    userAttr.push(new UserAttribute('family_name', user.name.last))
-    userAttr.push(new UserAttribute('phone_number', user.phone))
+    userAttr.push(UserAttribute.create('given_name', user.name.first))
+    userAttr.push(UserAttribute.create('family_name', user.name.last))
+    userAttr.push(UserAttribute.create('phone_number', user.phone))
     userAttr.push(
-      new UserAttribute(
+      UserAttribute.create(
         'custom:fiscal_document',
         cpf.strip(user.fiscalDocument)
       )
