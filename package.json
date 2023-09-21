@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "start": "node dist/server.js",
+    "start": "node dist/infra/http/server.js",
     "start:dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/infra/http/server.ts' -e ts",
     "husky:prepare": "husky install",
     "test": "jest --passWithNoTests",
