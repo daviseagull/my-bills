@@ -14,7 +14,16 @@ export class ConfirmUserUseCase {
   ) {}
 
   public async execute(request: ConfirmUserRequest): Promise<void> {
-    await this.userRepository.findByUsername(request.username)
+    const user = await this.userRepository.findByUsername(request.username)
+
+    if (!user) {
+      throw new AppError(
+        `Couldn't find user in the database ${request.username}`,
+        404,
+        false
+      )
+    }
+    
     await this.authService.confirmUser(request.username, request.code)
   }
 }

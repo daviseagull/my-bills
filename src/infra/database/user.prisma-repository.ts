@@ -1,8 +1,7 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { UserMapper } from './prisma/mappers/user.mapper'
-import logger from '../logger/logger'
 import { AppError } from '@/core/domain/error/app-error'
 
 export class UserPrismaRepository implements UserRepository {
@@ -24,17 +23,21 @@ export class UserPrismaRepository implements UserRepository {
     return UserMapper.toDomain(createdUser)
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
         id: id
       }
     })
 
+    if (!user) {
+      return null
+    }
+
     return UserMapper.toDomain(user!)
   }
 
-  async findByUsername(username: string): Promise<User> {
+  async findByUsername(username: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
         username: username
@@ -42,13 +45,9 @@ export class UserPrismaRepository implements UserRepository {
     })
 
     if (!user) {
-      throw new AppError(
-        `Couldn't find user in the database ${username}`,
-        500,
-        false
-      )
+      return null
     }
-    
+
     return UserMapper.toDomain(user!)
   }
 }

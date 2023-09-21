@@ -3,6 +3,7 @@ import {
   AuthenticationResult,
   AuthenticationService
 } from '@/core/domain/authentication/authentication.service'
+import { AppError } from '@/core/domain/error/app-error'
 
 export interface SignInRequest {
   username: string
@@ -15,18 +16,17 @@ export class SignInUseCase {
     private authService: AuthenticationService
   ) {}
 
-  public async execute(
-    signInRequest: SignInRequest
-  ): Promise<AuthenticationResult> {
-    const user = this.userRepository.findByUsername(signInRequest.username)
+  public async execute(request: SignInRequest): Promise<AuthenticationResult> {
+    const user = this.userRepository.findByUsername(request.username)
 
     if (!user) {
-      throw new Error('')
+      throw new AppError(
+        `Couldn't find user in the database ${request.username}`,
+        404,
+        false
+      )
     }
 
-    return await this.authService.signIn(
-      signInRequest.username,
-      signInRequest.password
-    )
+    return await this.authService.signIn(request.username, request.password)
   }
 }

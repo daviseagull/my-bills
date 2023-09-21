@@ -2,6 +2,7 @@ import { Name } from '@/domain/models/name.model'
 import { AuthenticationService } from '@/core/domain/authentication/authentication.service'
 import { User } from '@/domain/entities/user.entity'
 import { UserRepository } from '@/application/repositories/user.repository'
+import { AppError } from '@/core/domain/error/app-error'
 
 export interface SignUpRequest {
   username: string
@@ -23,7 +24,11 @@ export class SignUpUseCase {
     const user = this.userRepository.findByUsername(request.username)
 
     if (!user) {
-      throw new Error('')
+      throw new AppError(
+        `Couldn't find user in the database ${request.username}`,
+        404,
+        false
+      )
     }
 
     const cognitoUser = await this.authService.signUp(request)
