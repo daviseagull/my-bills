@@ -2,11 +2,11 @@ import { UserRepository } from '@/application/repositories/user.repository'
 import {
   AuthenticationResult,
   AuthenticationService
-} from '@/core/domain/authentication/authentication.service'
-import { AppError } from '@/core/domain/error/app-error'
+} from '@/application/authentication/authentication.service'
+import { AppError } from '@/application/error/app-error'
 
 export interface SignInRequest {
-  username: string
+  email: string
   password: string
 }
 
@@ -17,16 +17,16 @@ export class SignInUseCase {
   ) {}
 
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
-    const user = this.userRepository.findByUsername(request.username)
+    const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new AppError(
-        `Couldn't find user in the database ${request.username}`,
+        `Couldn't find user in the database ${request.email}`,
         404,
         false
       )
     }
 
-    return await this.authService.signIn(request.username, request.password)
+    return await this.authService.signIn(request.email, request.password)
   }
 }

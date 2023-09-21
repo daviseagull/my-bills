@@ -6,14 +6,10 @@ export interface AuthenticationResult {
   accessToken: string
 }
 
-export interface CognitoUser {
-  id: string
-}
-
 export interface AuthenticationService {
   signIn(username: string, password: string): Promise<AuthenticationResult>
 
-  signUp(user: SignUpRequest): Promise<CognitoUser>
+  signUp(user: SignUpRequest): Promise<string>
 
   confirmUser(username: string, code: string): Promise<void>
 

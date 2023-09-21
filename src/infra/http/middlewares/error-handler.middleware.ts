@@ -1,6 +1,6 @@
-import { AppError } from '@/core/domain/error/app-error'
+import { AppError } from '@/application/error/app-error'
 import logger from '@/infra/logger/logger'
-import e, { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
 
 export const errorHandler = (
   err: Error,

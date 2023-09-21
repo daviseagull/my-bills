@@ -1,14 +1,21 @@
-import { Name } from '@/domain/models/name.model'
-import { AuthenticationService } from '@/core/domain/authentication/authentication.service'
+import { Name } from '@/domain/value-objects/name'
+import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { User } from '@/domain/entities/user.entity'
 import { UserRepository } from '@/application/repositories/user.repository'
-import { AppError } from '@/core/domain/error/app-error'
+import { AppError } from '@/application/error/app-error'
+import { Email } from '@/domain/value-objects/email'
+import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
+
+export interface NameRequest {
+  first: string
+  last: string
+}
 
 export interface SignUpRequest {
-  username: string
   password: string
   email: string
-  name: Name
+  fiscalDocument: string
+  name: NameRequest
   birthday: Date
   gender: string
   phone: string
@@ -21,32 +28,29 @@ export class SignUpUseCase {
   ) {}
 
   public async execute(request: SignUpRequest) {
-    const user = this.userRepository.findByUsername(request.username)
+    const newUser = User.create({
+      email: Email.create(request.email),
+      fiscalDocument: FiscalDocument.create(request.fiscalDocument),
+      birthday: new Date(request.birthday),
+      gender: request.gender,
+      phone: request.phone,
+      name: Name.create(request.name.first, request.name.last),
+      confirmed: false
+    })
 
-    if (!user) {
+    const user = await this.userRepository.findByEmail(request.email)
+
+    if (user) {
       throw new AppError(
-        `Couldn't find user in the database ${request.username}`,
+        `Couldn't create user ${request.email}. User already exists`,
         404,
         false
       )
     }
 
-    const cognitoUser = await this.authService.signUp(request)
+    const cognitoId = await this.authService.signUp(request)
 
-    const newUser = User.create({
-      username: request.username,
-      email: request.email,
-      birthday: new Date(request.birthday),
-      gender: request.gender,
-      phone: request.phone,
-      name: {
-        first: request.name.first,
-        last: request.name.last,
-        fullname: `${request.name.first} ${request.name.last}`
-      },
-      confirmed: false,
-      cognitoId: cognitoUser.id
-    })
+    newUser.props.cognitoId = cognitoId
 
     this.userRepository.create(newUser)
   }

@@ -1,8 +1,7 @@
 import {
   AuthenticationResult,
-  AuthenticationService,
-  CognitoUser
-} from '@/core/domain/authentication/authentication.service'
+  AuthenticationService
+} from '@/application/authentication/authentication.service'
 import {
   cognitoClientId,
   cognitoServiceProvider,
@@ -10,7 +9,6 @@ import {
 } from '../utils/cognito.utils'
 import { AttributeType } from '@aws-sdk/client-cognito-identity-provider'
 import { SignUpRequest } from '@/application/use-cases/sign-up/sign-up.use-case'
-import { P } from 'pino'
 
 class UserAttribute implements AttributeType {
   constructor(name: string, value: string) {
@@ -46,20 +44,18 @@ export class CognitoService implements AuthenticationService {
     }
   }
 
-  async signUp(user: SignUpRequest): Promise<CognitoUser> {
+  async signUp(user: SignUpRequest): Promise<string> {
     const params = {
       ClientId: cognitoClientId(),
       Password: user.password,
-      Username: user.username,
-      SecretHash: hashCognitoSecret(user.username),
+      Username: user.email,
+      SecretHash: hashCognitoSecret(user.email),
       UserAttributes: this.getUserAttributes(user)
     }
 
     const cognitoUser = await cognitoServiceProvider().signUp(params)
 
-    return {
-      id: cognitoUser.UserSub!
-    }
+    return cognitoUser.UserSub!
   }
 
   private getUserAttributes(user: SignUpRequest): UserAttribute[] {

@@ -1,3 +1,4 @@
+import { AppError } from '@/application/error/app-error'
 import { CognitoJwtVerifier } from 'aws-jwt-verify'
 import { NextFunction, Request, Response } from 'express'
 
@@ -25,10 +26,10 @@ export async function authenticateToken(
       clientId: process.env['COGNITO_CLIENT_ID']!
     })
   } catch {
-    throw new Error('Unauthorized!!')
+    throw new AppError('Unauthorized', 401)
   }
 
-  req.user = payload.username
+  req.user = payload.sub
 
   next()
 }

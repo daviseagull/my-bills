@@ -1,14 +1,16 @@
-import { Entity } from '@/core/domain/entity'
-import { Name } from '../models/name.model'
+import { Entity } from '@/domain/abstracts/entity'
+import { Name } from '../value-objects/name'
+import { Email } from '../value-objects/email'
+import { FiscalDocument } from '../value-objects/fiscal-document'
 
 type UserProps = {
-  username: string
-  email: string
+  email: Email
   name: Name
   birthday: Date
+  fiscalDocument: FiscalDocument
   gender: string
   phone: string
-  cognitoId: string
+  cognitoId?: string
   confirmed: boolean
 }
 
