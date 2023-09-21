@@ -2,7 +2,6 @@ import { UserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { PrismaClient } from '@prisma/client'
 import { UserMapper } from './prisma/mappers/user.mapper'
-import { AppError } from '@/application/error/app-error'
 
 export class UserPrismaRepository implements UserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
@@ -15,6 +14,7 @@ export class UserPrismaRepository implements UserRepository {
       data: {
         email: user.props.email.props.value,
         birthday: new Date(user.props.birthday),
+        fiscalDocument: user.props.fiscalDocument.props.value,
         gender: user.props.gender,
         phone: user.props.phone,
         name: user.props.name.props,
@@ -42,7 +42,7 @@ export class UserPrismaRepository implements UserRepository {
   async findByEmail(email: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
-        email
+        email: email
       }
     })
 

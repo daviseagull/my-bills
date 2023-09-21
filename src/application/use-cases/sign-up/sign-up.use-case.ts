@@ -37,7 +37,6 @@ export class SignUpUseCase {
       name: Name.create(request.name.first, request.name.last),
       confirmed: false
     })
-
     const user = await this.userRepository.findByEmail(request.email)
 
     if (user) {

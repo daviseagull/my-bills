@@ -9,6 +9,7 @@ import {
 } from '../utils/cognito.utils'
 import { AttributeType } from '@aws-sdk/client-cognito-identity-provider'
 import { SignUpRequest } from '@/application/use-cases/sign-up/sign-up.use-case'
+import { cpf } from 'cpf-cnpj-validator'
 
 class UserAttribute implements AttributeType {
   constructor(name: string, value: string) {
@@ -69,6 +70,13 @@ export class CognitoService implements AuthenticationService {
     userAttr.push(new UserAttribute('given_name', user.name.first))
     userAttr.push(new UserAttribute('family_name', user.name.last))
     userAttr.push(new UserAttribute('phone_number', user.phone))
+    userAttr.push(
+      new UserAttribute(
+        'custom:fiscal_document',
+        cpf.strip(user.fiscalDocument)
+      )
+    )
+
     return userAttr
   }
 

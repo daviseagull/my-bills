@@ -12,14 +12,10 @@ export class FiscalDocument extends ValueObject<FiscalDocumentProps> {
   }
 
   public static create(value: string): FiscalDocument {
-    if (cpf.isValid(value)) {
-      throw new AppError(
-        'Fiscal document must have between 2 and 20 characters',
-        400
-      )
+    if (!cpf.isValid(value)) {
+      throw new AppError('Fiscal document must be valid', 400)
     }
 
-    cpf.strip
-    return new FiscalDocument({ value })
+    return new FiscalDocument({ value: cpf.strip(value) })
   }
 }
