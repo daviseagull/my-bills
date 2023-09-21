@@ -1,6 +1,6 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
 
 export interface ForgotPasswordRequest {
   email: string

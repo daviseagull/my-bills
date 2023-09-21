@@ -2,9 +2,10 @@ import { Name } from '@/domain/value-objects/name'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { User } from '@/domain/entities/user.entity'
 import { UserRepository } from '@/application/repositories/user.repository'
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
 import { Email } from '@/domain/value-objects/email'
 import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
+import { PasswordUtils } from '@/application/utils/password.utils'
 
 export interface NameRequest {
   first: string
@@ -37,6 +38,9 @@ export class SignUpUseCase {
       name: Name.create(request.name.first, request.name.last),
       confirmed: false
     })
+
+    PasswordUtils.validatePassword(request.password)
+
     const user = await this.userRepository.findByEmail(request.email)
 
     if (user) {

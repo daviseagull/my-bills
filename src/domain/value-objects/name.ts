@@ -1,4 +1,4 @@
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
 import { ValueObject } from '../abstracts/value-object'
 
 interface NameProps {

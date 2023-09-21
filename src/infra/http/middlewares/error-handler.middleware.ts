@@ -1,4 +1,4 @@
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
 import logger from '@/infra/logger/logger'
 import { Request, Response, NextFunction } from 'express'
 

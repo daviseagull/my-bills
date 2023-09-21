@@ -1,4 +1,4 @@
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
 import { CognitoJwtVerifier } from 'aws-jwt-verify'
 import { NextFunction, Request, Response } from 'express'
 

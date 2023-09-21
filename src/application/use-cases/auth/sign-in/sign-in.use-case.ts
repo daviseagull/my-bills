@@ -3,7 +3,8 @@ import {
   AuthenticationResult,
   AuthenticationService
 } from '@/application/authentication/authentication.service'
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
+import { PasswordUtils } from '@/application/utils/password.utils'
 
 export interface SignInRequest {
   email: string
@@ -17,6 +18,8 @@ export class SignInUseCase {
   ) {}
 
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
+    PasswordUtils.validatePassword(request.password)
+
     const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {

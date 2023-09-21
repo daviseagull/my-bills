@@ -1,6 +1,7 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
-import { AppError } from '@/application/error/app-error'
+import { AppError } from '@/application/errors/app-error'
+import { PasswordUtils } from '@/application/utils/password.utils'
 
 export interface ConfirmForgotPasswordRequest {
   email: string
@@ -15,6 +16,8 @@ export class ConfirmForgotPasswordUseCase {
   ) {}
 
   public async execute(request: ConfirmForgotPasswordRequest): Promise<void> {
+    PasswordUtils.validatePassword(request.password)
+    
     const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {

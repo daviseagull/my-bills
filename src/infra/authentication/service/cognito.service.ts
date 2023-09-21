@@ -7,9 +7,15 @@ import {
   cognitoServiceProvider,
   hashCognitoSecret
 } from '../utils/cognito.utils'
-import { AttributeType } from '@aws-sdk/client-cognito-identity-provider'
+import {
+  AttributeType,
+  CodeMismatchException,
+  ExpiredCodeException,
+  NotAuthorizedException
+} from '@aws-sdk/client-cognito-identity-provider'
 import { cpf } from 'cpf-cnpj-validator'
 import { SignUpRequest } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
+import { AppError } from '@/application/errors/app-error'
 
 class UserAttribute implements AttributeType {
   private constructor(name: string, value: string) {
@@ -39,13 +45,19 @@ export class CognitoService implements AuthenticationService {
         SECRET_HASH: hashCognitoSecret(username)
       }
     }
+    try {
+      const data = await cognitoServiceProvider().initiateAuth(params)
+      return {
+        status: 'OK',
+        accessToken: data.AuthenticationResult!.AccessToken!,
+        type: 'Bearer'
+      }
+    } catch (err) {
+      if (err instanceof NotAuthorizedException) {
+        throw new AppError('Invalid username or password', 400)
+      }
 
-    const data = await cognitoServiceProvider().initiateAuth(params)
-
-    return {
-      status: 'OK',
-      accessToken: data.AuthenticationResult!.AccessToken!,
-      type: 'Bearer'
+      throw new AppError('Unknown error while trying to authenticate', 500)
     }
   }
 
@@ -58,9 +70,15 @@ export class CognitoService implements AuthenticationService {
       UserAttributes: this.getUserAttributes(user)
     }
 
-    const cognitoUser = await cognitoServiceProvider().signUp(params)
-
-    return cognitoUser.UserSub!
+    try {
+      const cognitoUser = await cognitoServiceProvider().signUp(params)
+      return cognitoUser.UserSub!
+    } catch (err) {
+      throw new AppError(
+        `Unknown error while trying to create user in IAM`,
+        500
+      )
+    }
   }
 
   private getUserAttributes(user: SignUpRequest): UserAttribute[] {
@@ -91,8 +109,20 @@ export class CognitoService implements AuthenticationService {
       Username: email,
       SecretHash: hashCognitoSecret(email)
     }
-
-    await cognitoServiceProvider().confirmSignUp(params)
+    try {
+      await cognitoServiceProvider().confirmSignUp(params)
+    } catch (err) {
+      if (err instanceof ExpiredCodeException) {
+        throw new AppError('Code has expired', 400)
+      }
+      if (err instanceof CodeMismatchException) {
+        throw new AppError(
+          "Code doesn't match with what server was expecting",
+          400
+        )
+      }
+      throw new AppError('Unknown error while trying to confirm user', 500)
+    }
   }
 
   async resendConfirmationCode(email: string) {
@@ -101,8 +131,14 @@ export class CognitoService implements AuthenticationService {
       SecretHash: hashCognitoSecret(email),
       Username: email
     }
-
-    await cognitoServiceProvider().resendConfirmationCode(params)
+    try {
+      await cognitoServiceProvider().resendConfirmationCode(params)
+    } catch (err) {
+      throw new AppError(
+        'Unknown error while trying to resend confirmation code',
+        500
+      )
+    }
   }
 
   async forgotPassword(email: string) {
@@ -112,7 +148,11 @@ export class CognitoService implements AuthenticationService {
       Username: email
     }
 
-    await cognitoServiceProvider().forgotPassword(params)
+    try {
+      await cognitoServiceProvider().forgotPassword(params)
+    } catch (err) {
+      throw new AppError('Unknown error while trying to forgot password', 500)
+    }
   }
 
   async confirmResetPassword(
@@ -128,7 +168,14 @@ export class CognitoService implements AuthenticationService {
       Password: password
     }
 
-    await cognitoServiceProvider().confirmForgotPassword(params)
+    try {
+      await cognitoServiceProvider().confirmForgotPassword(params)
+    } catch (err) {
+      throw new AppError(
+        'Unknown error while trying to resend confirmation code',
+        500
+      )
+    }
   }
 
   async signOut(token: string): Promise<void> {
@@ -136,6 +183,13 @@ export class CognitoService implements AuthenticationService {
       AccessToken: token
     }
 
-    await cognitoServiceProvider().globalSignOut(params)
+    try {
+      await cognitoServiceProvider().globalSignOut(params)
+    } catch (err) {
+      throw new AppError(
+        'Unknown error while trying to resend confirmation code',
+        500
+      )
+    }
   }
 }
