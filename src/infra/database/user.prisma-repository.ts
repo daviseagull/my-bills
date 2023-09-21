@@ -3,6 +3,7 @@ import { User } from '@/domain/entities/user.entity'
 import { Prisma, PrismaClient } from '@prisma/client'
 import { UserMapper } from './prisma/mappers/user.mapper'
 import logger from '../logger/logger'
+import { AppError } from '@/core/domain/error/app-error'
 
 export class UserPrismaRepository implements UserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
@@ -39,6 +40,14 @@ export class UserPrismaRepository implements UserRepository {
         username: username
       }
     })
+
+    if (!user) {
+      throw new AppError(
+        `Couldn't find user in the database ${username}`,
+        500,
+        false
+      )
+    }
     
     return UserMapper.toDomain(user!)
   }

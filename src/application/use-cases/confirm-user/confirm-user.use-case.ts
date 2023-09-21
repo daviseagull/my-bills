@@ -1,5 +1,6 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/core/domain/authentication/authentication.service'
+import { AppError } from '@/core/domain/error/app-error'
 
 export interface ConfirmUserRequest {
   username: string
@@ -13,12 +14,7 @@ export class ConfirmUserUseCase {
   ) {}
 
   public async execute(request: ConfirmUserRequest): Promise<void> {
-    const user = await this.userRepository.findByUsername(request.username)
-
-    if (!user) {
-      throw new Error('')
-    }
-
+    await this.userRepository.findByUsername(request.username)
     await this.authService.confirmUser(request.username, request.code)
   }
 }
