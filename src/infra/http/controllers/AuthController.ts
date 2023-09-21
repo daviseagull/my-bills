@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-
 import {
   ConfirmForgotPasswordRequest,
   ConfirmForgotPasswordUseCase
@@ -18,14 +17,8 @@ import {
   SignInRequest,
   SignInUseCase
 } from '@/application/use-cases/auth/sign-in/sign-in.use-case'
-import {
-  SignUpRequest,
-  SignUpUseCase
-} from '@/application/use-cases/auth/sign-up/sign-up.use-case'
-import {
-  ForgotPasswordRequest,
-  ForgotPasswordUseCase
-} from '@/application/use-cases/auth/forgot-password/forgot-password.use-case'
+import { SignUpRequest, SignUpUseCase } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
+import { ForgotPasswordRequest, ForgotPasswordUseCase } from '@/application/use-cases/auth/forgot-password/forgot-password.use-case'
 
 export class AuthController {
   async confirmUser(req: Request, res: Response) {

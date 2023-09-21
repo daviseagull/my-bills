@@ -30,6 +30,7 @@ export async function authenticateToken(
   }
 
   req.user = payload.sub
+  req.token = token
 
   next()
 }

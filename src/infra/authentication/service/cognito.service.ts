@@ -8,8 +8,8 @@ import {
   hashCognitoSecret
 } from '../utils/cognito.utils'
 import { AttributeType } from '@aws-sdk/client-cognito-identity-provider'
-import { SignUpRequest } from '@/application/use-cases/sign-up/sign-up.use-case'
 import { cpf } from 'cpf-cnpj-validator'
+import { SignUpRequest } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
 
 class UserAttribute implements AttributeType {
   private constructor(name: string, value: string) {
@@ -84,24 +84,58 @@ export class CognitoService implements AuthenticationService {
     return userAttr
   }
 
-  async confirmUser(username: string, code: string): Promise<void> {
+  async confirmUser(email: string, code: string): Promise<void> {
     const params = {
       ClientId: cognitoClientId(),
       ConfirmationCode: code,
-      Username: username,
-      SecretHash: hashCognitoSecret(username)
+      Username: email,
+      SecretHash: hashCognitoSecret(email)
     }
 
     await cognitoServiceProvider().confirmSignUp(params)
   }
 
-  async resendConfirmationCode(username: string) {
+  async resendConfirmationCode(email: string) {
     const params = {
       ClientId: cognitoClientId(),
-      SecretHash: hashCognitoSecret(username),
-      Username: username
+      SecretHash: hashCognitoSecret(email),
+      Username: email
     }
 
     await cognitoServiceProvider().resendConfirmationCode(params)
+  }
+
+  async forgotPassword(email: string) {
+    const params = {
+      ClientId: cognitoClientId(),
+      SecretHash: hashCognitoSecret(email),
+      Username: email
+    }
+
+    await cognitoServiceProvider().forgotPassword(params)
+  }
+
+  async confirmResetPassword(
+    email: string,
+    code: string,
+    password: string
+  ): Promise<void> {
+    const params = {
+      ClientId: cognitoClientId(),
+      SecretHash: hashCognitoSecret(email),
+      Username: email,
+      ConfirmationCode: code,
+      Password: password
+    }
+
+    await cognitoServiceProvider().confirmForgotPassword(params)
+  }
+
+  async signOut(token: string): Promise<void> {
+    const params = {
+      AccessToken: token
+    }
+
+    await cognitoServiceProvider().globalSignOut(params)
   }
 }
