@@ -17,8 +17,8 @@ export class ConfirmForgotPasswordUseCase {
 
   public async execute(request: ConfirmForgotPasswordRequest): Promise<void> {
     PasswordUtils.validatePassword(request.password)
-    
-    const user = await this.userRepository.findByEmail(request.email)
+
+    const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new AppError(
@@ -28,7 +28,7 @@ export class ConfirmForgotPasswordUseCase {
       )
     }
 
-    await this.authService.confirmResetPassword(
+    this.authService.confirmResetPassword(
       request.email,
       request.code,
       request.password

@@ -20,7 +20,7 @@ export class SignInUseCase {
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
     PasswordUtils.validatePassword(request.password)
 
-    const user = await this.userRepository.findByEmail(request.email)
+    const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new AppError(
@@ -30,6 +30,6 @@ export class SignInUseCase {
       )
     }
 
-    return await this.authService.signIn(request.email, request.password)
+    return this.authService.signIn(request.email, request.password)
   }
 }

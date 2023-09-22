@@ -13,7 +13,7 @@ export class ResendCodeUseCase {
   ) {}
 
   public async execute(request: ResendCodeRequest): Promise<void> {
-    const user = await this.userRepository.findByEmail(request.email)
+    const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new AppError(
