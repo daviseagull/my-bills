@@ -3,13 +3,14 @@ service: my-bills
 provider:
   name: aws
   runtime: nodejs18.x
+  region: sa-east-1
 
 plugins:
   - serverless-offline
 
 functions:
   api:
-    handler: dist/app.handler
+    handler: dist/lambda.handler
     events:
       - http: ANY /
       - http: ANY /{proxy+}

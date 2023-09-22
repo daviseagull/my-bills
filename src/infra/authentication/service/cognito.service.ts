@@ -12,7 +12,8 @@ import {
   CodeMismatchException,
   ExpiredCodeException,
   NotAuthorizedException,
-  UserNotConfirmedException
+  UserNotConfirmedException,
+  UsernameExistsException
 } from '@aws-sdk/client-cognito-identity-provider'
 import { cpf } from 'cpf-cnpj-validator'
 import { SignUpRequest } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
@@ -82,6 +83,13 @@ export class CognitoService implements AuthenticationService {
       const cognitoUser = await cognitoServiceProvider().signUp(params)
       return cognitoUser.UserSub!
     } catch (err) {
+      if (err instanceof UsernameExistsException) {
+        throw new AppError(
+          `User with email ${user.email} already exists`,
+          400,
+          false
+        )
+      }
       throw new AppError(
         `Unknown error while trying to create user in IAM`,
         500,
