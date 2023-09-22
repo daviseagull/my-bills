@@ -17,6 +17,6 @@ export class Email extends ValueObject<EmailProps> {
       throw new AppError('Email must be a valid email', 400)
     }
 
-    return new Email({ value })
+    return new Email({ value: value.toLowerCase() })
   }
 }

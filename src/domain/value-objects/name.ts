@@ -1,5 +1,6 @@
 import { AppError } from '@/application/errors/app-error'
 import { ValueObject } from '../abstracts/value-object'
+import { StringUtils } from '@/application/utils/string.utils'
 
 interface NameProps {
   first: string
@@ -27,6 +28,9 @@ export class Name extends ValueObject<NameProps> {
         false
       )
     }
+
+    first = StringUtils.capitalizeFirstLetter(first)
+    last = StringUtils.capitalizeFirstLetter(last)
 
     return new Name({
       first,
