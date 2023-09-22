@@ -80,6 +80,18 @@ npm install -g yarn
 
 ## Running the project
 
+### Using Express
+
 ```
 yarn start:dev
+```
+
+### Using serverless
+
+```
+yarn build
+```
+
+```
+yarn serverless offline start
 ```
