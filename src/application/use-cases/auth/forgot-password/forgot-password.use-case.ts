@@ -13,7 +13,7 @@ export class ForgotPasswordUseCase {
   ) {}
 
   public async execute(request: ForgotPasswordRequest): Promise<void> {
-    const user = await this.userRepository.findByEmail(request.email)
+    const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new AppError(
@@ -23,6 +23,6 @@ export class ForgotPasswordUseCase {
       )
     }
 
-    await this.authService.forgotPassword(request.email)
+    this.authService.forgotPassword(request.email)
   }
 }

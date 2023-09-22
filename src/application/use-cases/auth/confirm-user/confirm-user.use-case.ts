@@ -14,7 +14,7 @@ export class ConfirmUserUseCase {
   ) {}
 
   public async execute(request: ConfirmUserRequest): Promise<void> {
-    const user = await this.userRepository.findByEmail(request.email)
+    const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new AppError(
@@ -24,6 +24,6 @@ export class ConfirmUserUseCase {
       )
     }
 
-    await this.authService.confirmUser(request.email, request.code)
+    this.authService.confirmUser(request.email, request.code)
   }
 }
