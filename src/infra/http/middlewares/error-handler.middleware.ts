@@ -9,7 +9,6 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   if (err instanceof AppError) {
-    console.log(err.authenticated)
     const message = err.authenticated
       ? `User: ${req.user} - ${err.message}`
       : err.message
@@ -20,8 +19,6 @@ export const errorHandler = (
       message: err.message
     })
   } else {
-    console.log(err)
-
     logger.error(`User: ${req.user} - ${err.message}`)
     res.status(500).json({
       status: 500,
