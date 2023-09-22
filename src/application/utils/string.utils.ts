@@ -1,5 +1,6 @@
 export class StringUtils {
-  public static capitalizeFirstLetter(str: string): string {
-    return str.replace(/^\w/, (c) => c.toUpperCase())
+  public static capitalizeFirstLetter(value: string): string {
+    value = value.toLocaleLowerCase()
+    return value.replace(/^\w/, (c) => c.toUpperCase())
   }
 }
