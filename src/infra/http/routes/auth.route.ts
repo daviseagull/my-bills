@@ -14,4 +14,4 @@ authRoutes.post(
   authController.confirmForgotPassword
 )
 
-export { authRoutes }
+export default authRoutes

@@ -6,4 +6,4 @@ const userRoutes = Router()
 
 userRoutes.post('/sign-out', userController.signOut)
 
-export { userRoutes }
+export default userRoutes
