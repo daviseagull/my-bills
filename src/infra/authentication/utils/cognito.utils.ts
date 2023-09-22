@@ -4,7 +4,7 @@ import process from 'process'
 
 export const cognitoServiceProvider = () => {
   return new CognitoIdentityServiceProvider({
-    region: 'us-east-1'
+    region: 'sa-east-1'
   })
 }
 

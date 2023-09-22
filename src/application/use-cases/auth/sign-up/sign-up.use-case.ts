@@ -55,6 +55,6 @@ export class SignUpUseCase {
 
     newUser.props.cognitoId = cognitoId
 
-    this.userRepository.create(newUser)
+    await this.userRepository.create(newUser)
   }
 }
