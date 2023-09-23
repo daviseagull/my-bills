@@ -1,6 +1,7 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { AppError } from '@/application/errors/app-error'
+import logger from '@/infra/logger/logger'
 
 export interface ConfirmUserRequest {
   email: string
@@ -14,6 +15,7 @@ export class ConfirmUserUseCase {
   ) {}
 
   public async execute(request: ConfirmUserRequest): Promise<void> {
+    logger.info(`Confirming user ${request.email} sign up`)
     const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {

@@ -1,7 +1,7 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { PrismaClient } from '@prisma/client'
-import { UserMapper } from './prisma/mappers/user.mapper'
+import { UserPrismaMapper } from './prisma/mappers/user.prisma-mapper'
 
 export class UserPrismaRepository implements UserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
@@ -22,7 +22,7 @@ export class UserPrismaRepository implements UserRepository {
         cognitoId: user.props.cognitoId!
       }
     })
-    return UserMapper.toDomain(createdUser)
+    return UserPrismaMapper.toDomain(createdUser)
   }
 
   async findById(id: string): Promise<User | null> {
@@ -36,7 +36,7 @@ export class UserPrismaRepository implements UserRepository {
       return null
     }
 
-    return UserMapper.toDomain(user!)
+    return UserPrismaMapper.toDomain(user!)
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -50,6 +50,20 @@ export class UserPrismaRepository implements UserRepository {
       return null
     }
 
-    return UserMapper.toDomain(user!)
+    return UserPrismaMapper.toDomain(user!)
+  }
+
+  async findByCognitoId(id: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        cognitoId: id
+      }
+    })
+
+    if (!user) {
+      return null
+    }
+
+    return UserPrismaMapper.toDomain(user!)
   }
 }

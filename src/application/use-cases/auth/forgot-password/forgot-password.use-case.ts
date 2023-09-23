@@ -1,6 +1,7 @@
 import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { AppError } from '@/application/errors/app-error'
+import logger from '@/infra/logger/logger'
 
 export interface ForgotPasswordRequest {
   email: string
@@ -13,6 +14,7 @@ export class ForgotPasswordUseCase {
   ) {}
 
   public async execute(request: ForgotPasswordRequest): Promise<void> {
+    logger.info(`Resetting password for user ${request.email}`)
     const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {

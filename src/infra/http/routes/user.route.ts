@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { UserController } from '../controllers/user.controller'
+import { authenticateToken } from '../middlewares/authenticate.middleware'
 
 const userController = new UserController()
 const userRoutes = Router()
 
-userRoutes.post('/sign-out', userController.signOut)
-userRoutes.get('/:email', userController.getUser)
+userRoutes.get('', authenticateToken, userController.getUser)
 
 export default userRoutes

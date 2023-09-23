@@ -5,6 +5,7 @@ import {
 } from '@/application/authentication/authentication.service'
 import { AppError } from '@/application/errors/app-error'
 import { PasswordUtils } from '@/application/utils/password.utils'
+import logger from '@/infra/logger/logger'
 
 export interface SignInRequest {
   email: string
@@ -18,6 +19,7 @@ export class SignInUseCase {
   ) {}
 
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
+    logger.info(`Trying to log in user ${request.email}`)
     PasswordUtils.validatePassword(request.password)
 
     const user = this.userRepository.findByEmail(request.email)

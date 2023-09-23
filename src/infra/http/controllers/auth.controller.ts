@@ -26,6 +26,7 @@ import {
   ForgotPasswordRequest,
   ForgotPasswordUseCase
 } from '@/application/use-cases/auth/forgot-password/forgot-password.use-case'
+import { SignOutUseCase } from '@/application/use-cases/auth/sign-out/sign-out.use-case'
 
 export class AuthController {
   async confirmUser(req: Request, res: Response) {
@@ -78,6 +79,14 @@ export class AuthController {
     const result = await useCase.execute(user)
 
     return res.status(201).json(result)
+  }
+
+  async signOut(req: Request, res: Response) {
+    const useCase = new SignOutUseCase(new CognitoService())
+
+    const result = await useCase.execute(req.token!, req.user!)
+
+    return res.status(204).json(result)
   }
 
   async forgotPassword(req: Request, res: Response) {

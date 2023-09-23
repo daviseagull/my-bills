@@ -4,7 +4,7 @@ import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { Prisma, User as RawUser } from '@prisma/client'
 
-export class UserMapper {
+export class UserPrismaMapper {
   static toDomain(raw: RawUser): User {
     const user = User.create(
       {

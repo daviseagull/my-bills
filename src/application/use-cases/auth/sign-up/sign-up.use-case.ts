@@ -6,6 +6,7 @@ import { AppError } from '@/application/errors/app-error'
 import { Email } from '@/domain/value-objects/email'
 import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { PasswordUtils } from '@/application/utils/password.utils'
+import logger from '@/infra/logger/logger'
 
 export interface NameRequest {
   first: string
@@ -29,6 +30,7 @@ export class SignUpUseCase {
   ) {}
 
   public async execute(request: SignUpRequest) {
+    logger.info(`Tying to sign up user with email ${request.email}`)
     const newUser = User.create({
       email: Email.create(request.email),
       fiscalDocument: FiscalDocument.create(request.fiscalDocument),

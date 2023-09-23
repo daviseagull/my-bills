@@ -19,6 +19,10 @@ export class User extends Entity<UserProps> {
     super(props, id)
   }
 
+  get id() {
+    return this._id
+  }
+
   static create(props: UserProps, id?: string) {
     return new User(props, id)
   }
