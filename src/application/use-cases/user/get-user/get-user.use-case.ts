@@ -1,6 +1,6 @@
 import { AppError } from '@/application/errors/app-error'
 import { UserRepository } from '@/application/repositories/user.repository'
-import { UserDto } from '@/domain/dtos/user.dto.entity'
+import { UserDto } from '@/domain/dtos/user.dto'
 import { UserMapper } from '@/domain/mappers/user.mapper'
 
 export class GetUserUseCase {
