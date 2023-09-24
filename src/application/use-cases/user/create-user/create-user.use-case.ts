@@ -5,9 +5,13 @@ import { Email } from '@/domain/value-objects/email'
 import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { SignUpRequest } from '../../auth/sign-up/sign-up.use-case'
+import { CreateDefaultCategoryUseCase } from '../../category/create-category/create-default-category.use-case'
 
 export class CreateUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private categoryUseCase: CreateDefaultCategoryUseCase
+  ) {}
 
   public async execute(
     request: SignUpRequest,
@@ -26,6 +30,10 @@ export class CreateUserUseCase {
 
     PasswordUtils.validatePassword(request.password)
 
-    return this.userRepository.create(newUser)
+    const user = await this.userRepository.create(newUser)
+
+    this.categoryUseCase.execute(user.id!)
+
+    return user
   }
 }

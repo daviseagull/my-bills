@@ -8,8 +8,10 @@ import {
   ConfirmUserRequest,
   ConfirmUserUseCase
 } from '@/application/use-cases/auth/confirm-user/confirm-user.use-case'
-import { UserPrismaRepository } from '@/infra/database/user.prisma-repository'
-import { CognitoService } from '@/infra/authentication/service/cognito.service'
+import {
+  ForgotPasswordRequest,
+  ForgotPasswordUseCase
+} from '@/application/use-cases/auth/forgot-password/forgot-password.use-case'
 import {
   ResendCodeRequest,
   ResendCodeUseCase
@@ -18,15 +20,16 @@ import {
   SignInRequest,
   SignInUseCase
 } from '@/application/use-cases/auth/sign-in/sign-in.use-case'
+import { SignOutUseCase } from '@/application/use-cases/auth/sign-out/sign-out.use-case'
 import {
   SignUpRequest,
   SignUpUseCase
 } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
-import {
-  ForgotPasswordRequest,
-  ForgotPasswordUseCase
-} from '@/application/use-cases/auth/forgot-password/forgot-password.use-case'
-import { SignOutUseCase } from '@/application/use-cases/auth/sign-out/sign-out.use-case'
+import { CreateDefaultCategoryUseCase } from '@/application/use-cases/category/create-category/create-default-category.use-case'
+import { CreateUserUseCase } from '@/application/use-cases/user/create-user/create-user.use-case'
+import { CognitoService } from '@/infra/authentication/service/cognito.service'
+import { CategoryPrismaRepository } from '@/infra/database/category.prisma-repository'
+import { UserPrismaRepository } from '@/infra/database/user.prisma-repository'
 
 export class AuthController {
   async confirmUser(req: Request, res: Response) {
@@ -72,8 +75,11 @@ export class AuthController {
     const user: SignUpRequest = req.body
 
     const useCase = new SignUpUseCase(
-      new UserPrismaRepository(),
-      new CognitoService()
+      new CognitoService(),
+      new CreateUserUseCase(
+        new UserPrismaRepository(),
+        new CreateDefaultCategoryUseCase(new CategoryPrismaRepository())
+      )
     )
 
     const result = await useCase.execute(user)

@@ -2,7 +2,7 @@ import { Entity } from '../abstracts/entity'
 
 export interface ICategory {
   description: string
-  parent: string
+  parent?: string | null
 }
 
 type CategoryProps = {
