@@ -1,12 +1,6 @@
-import { Name } from '@/domain/value-objects/name'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
-import { User } from '@/domain/entities/user.entity'
-import { UserRepository } from '@/application/repositories/user.repository'
-import { AppError } from '@/application/errors/app-error'
-import { Email } from '@/domain/value-objects/email'
-import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
-import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
+import { CreateUserUseCase } from '../../user/create-user/create-user.use-case'
 
 export interface NameRequest {
   first: string
@@ -25,38 +19,16 @@ export interface SignUpRequest {
 
 export class SignUpUseCase {
   constructor(
-    private userRepository: UserRepository,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private createUserUseCase: CreateUserUseCase
   ) {}
 
-  public async execute(request: SignUpRequest) {
+  public async execute(request: SignUpRequest): Promise<string> {
     logger.info(`Tying to sign up user with email ${request.email}`)
-    const newUser = User.create({
-      email: Email.create(request.email),
-      fiscalDocument: FiscalDocument.create(request.fiscalDocument),
-      birthday: new Date(request.birthday),
-      gender: request.gender,
-      phone: request.phone,
-      name: Name.create(request.name.first, request.name.last),
-      confirmed: false
-    })
-
-    PasswordUtils.validatePassword(request.password)
-
-    const user = await this.userRepository.findByEmail(request.email)
-
-    if (user) {
-      throw new AppError(
-        `Couldn't create user ${request.email}. User already exists`,
-        404,
-        false
-      )
-    }
-
+    
     const cognitoId = await this.authService.signUp(request)
-
-    newUser.props.cognitoId = cognitoId
-
-    await this.userRepository.create(newUser)
+    
+    const user = await this.createUserUseCase.execute(request, cognitoId)
+    return user.id!
   }
 }

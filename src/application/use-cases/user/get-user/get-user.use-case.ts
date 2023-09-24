@@ -1,13 +1,12 @@
-import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { AppError } from '@/application/errors/app-error'
 import { UserRepository } from '@/application/repositories/user.repository'
+import { UserDto } from '@/domain/dtos/user.dto.entity'
 import { UserMapper } from '@/domain/mappers/user.mapper'
-import e from 'express'
 
 export class GetUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  public async execute(id: string) {
+  public async execute(id: string): Promise<UserDto> {
     const user = await this.userRepository.findByCognitoId(id)
 
     if (!user) {
