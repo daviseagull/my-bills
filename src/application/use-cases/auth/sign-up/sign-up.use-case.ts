@@ -24,11 +24,14 @@ export class SignUpUseCase {
   ) {}
 
   public async execute(request: SignUpRequest): Promise<string> {
-    logger.info(`Tying to sign up user with email ${request.email}`)
-    
+    logger.info(`Signing up user with email ${request.email}`)
+
     const cognitoId = await this.authService.signUp(request)
-    
+    logger.info(`User ${request.email} created in IAM with id ${cognitoId}`)
+
     const user = await this.createUserUseCase.execute(request, cognitoId)
+
+    logger.info(`User ${request.email} created in database with id ${user.id}`)
     return user.id!
   }
 }
