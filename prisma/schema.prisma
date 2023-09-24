@@ -25,3 +25,15 @@ type Name {
   last     String
   fullname String
 }
+
+model Category {
+  id      String      @id @default(auto()) @map("_id") @db.ObjectId
+  user    String      @db.ObjectId
+  incomes ICategory[]
+  expenses ICategory[]
+}
+
+type ICategory {
+  description String
+  parent      String @db.ObjectId
+}
