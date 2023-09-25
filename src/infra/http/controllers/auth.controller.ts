@@ -25,20 +25,13 @@ import {
   SignUpRequest,
   SignUpUseCase
 } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
-import { CreateDefaultCategoryUseCase } from '@/application/use-cases/category/create-category/create-default-category.use-case'
-import { CreateUserUseCase } from '@/application/use-cases/user/create-user/create-user.use-case'
-import { CognitoService } from '@/infra/authentication/service/cognito.service'
-import { CategoryPrismaRepository } from '@/infra/database/category.prisma-repository'
-import { UserPrismaRepository } from '@/infra/database/user.prisma-repository'
+import { container } from 'tsyringe'
 
 export class AuthController {
   async confirmUser(req: Request, res: Response) {
     const confirmationDto: ConfirmUserRequest = req.body
 
-    const useCase = new ConfirmUserUseCase(
-      new UserPrismaRepository(),
-      new CognitoService()
-    )
+    const useCase = container.resolve(ConfirmUserUseCase)
 
     const result = await useCase.execute(confirmationDto)
 
@@ -48,10 +41,7 @@ export class AuthController {
   async resendCode(req: Request, res: Response) {
     const body: ResendCodeRequest = req.body
 
-    const useCase = new ResendCodeUseCase(
-      new UserPrismaRepository(),
-      new CognitoService()
-    )
+    const useCase = container.resolve(ResendCodeUseCase)
 
     const result = await useCase.execute(body)
 
@@ -61,10 +51,7 @@ export class AuthController {
   async signIn(req: Request, res: Response) {
     const user: SignInRequest = req.body
 
-    const useCase = new SignInUseCase(
-      new UserPrismaRepository(),
-      new CognitoService()
-    )
+    const useCase = container.resolve(SignInUseCase)
 
     const result = await useCase.execute(user)
 
@@ -74,13 +61,7 @@ export class AuthController {
   async signUp(req: Request, res: Response) {
     const user: SignUpRequest = req.body
 
-    const useCase = new SignUpUseCase(
-      new CognitoService(),
-      new CreateUserUseCase(
-        new UserPrismaRepository(),
-        new CreateDefaultCategoryUseCase(new CategoryPrismaRepository())
-      )
-    )
+    const useCase = container.resolve(SignUpUseCase)
 
     const result = await useCase.execute(user)
 
@@ -88,7 +69,7 @@ export class AuthController {
   }
 
   async signOut(req: Request, res: Response) {
-    const useCase = new SignOutUseCase(new CognitoService())
+    const useCase = container.resolve(SignOutUseCase)
 
     const result = await useCase.execute(req.token!, req.user!)
 
@@ -98,11 +79,7 @@ export class AuthController {
   async forgotPassword(req: Request, res: Response) {
     const user: ForgotPasswordRequest = req.body
 
-    const useCase = new ForgotPasswordUseCase(
-      new UserPrismaRepository(),
-      new CognitoService()
-    )
-
+    const useCase = container.resolve(ForgotPasswordUseCase)
     const result = await useCase.execute(user)
 
     return res.status(204).json(result)
@@ -111,10 +88,7 @@ export class AuthController {
   async confirmForgotPassword(req: Request, res: Response) {
     const user: ConfirmForgotPasswordRequest = req.body
 
-    const useCase = new ConfirmForgotPasswordUseCase(
-      new UserPrismaRepository(),
-      new CognitoService()
-    )
+    const useCase = container.resolve(ConfirmForgotPasswordUseCase)
 
     const result = await useCase.execute(user)
 

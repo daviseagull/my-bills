@@ -2,7 +2,9 @@ import { AppError } from '@/application/errors/app-error'
 import { UserRepository } from '@/application/repositories/user.repository'
 import { UserDto } from '@/domain/dtos/user.dto'
 import { UserMapper } from '@/domain/mappers/user.mapper'
+import { autoInjectable } from 'tsyringe'
 
+@autoInjectable()
 export class GetUserUseCase {
   constructor(private userRepository: UserRepository) {}
 

@@ -1,8 +1,9 @@
-import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { AppError } from '@/application/errors/app-error'
+import { UserRepository } from '@/application/repositories/user.repository'
 import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
+import { inject, injectable } from 'tsyringe'
 
 export interface ConfirmForgotPasswordRequest {
   email: string
@@ -10,10 +11,11 @@ export interface ConfirmForgotPasswordRequest {
   password: string
 }
 
+@injectable()
 export class ConfirmForgotPasswordUseCase {
   constructor(
-    private userRepository: UserRepository,
-    private authService: AuthenticationService
+    @inject("UserRepository") private userRepository: UserRepository,
+    @inject("AuthService") private authService: AuthenticationService
   ) {}
 
   public async execute(request: ConfirmForgotPasswordRequest): Promise<void> {

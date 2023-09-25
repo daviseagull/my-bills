@@ -1,10 +1,10 @@
 import { GetUserUseCase } from '@/application/use-cases/user/get-user/get-user.use-case'
-import { UserPrismaRepository } from '@/infra/database/user.prisma-repository'
 import { Request, Response } from 'express'
+import { container } from 'tsyringe'
 
 export class UserController {
   async getUser(req: Request, res: Response) {
-    const useCase = new GetUserUseCase(new UserPrismaRepository())
+    const useCase = container.resolve(GetUserUseCase)
 
     const result = await useCase.execute(req.user!)
 

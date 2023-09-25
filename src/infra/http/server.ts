@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import logger from '../logger/logger'
 import app from './app'
 

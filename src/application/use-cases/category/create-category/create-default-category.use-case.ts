@@ -2,9 +2,13 @@ import { CategoryRepository } from '@/application/repositories/category.reposito
 import { CategoryUtils } from '@/application/utils/category.utils'
 import { Category } from '@/domain/entities/category.entity'
 import logger from '@/infra/logger/logger'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class CreateDefaultCategoryUseCase {
-  constructor(private categoryRepository: CategoryRepository) {}
+  constructor(
+    @inject('CategoryRepository') private categoryRepository: CategoryRepository
+  ) {}
 
   public execute(user: string): void {
     logger.info(`Creating categories for user ${user}`)

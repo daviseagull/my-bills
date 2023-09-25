@@ -1,17 +1,19 @@
-import { UserRepository } from '@/application/repositories/user.repository'
 import { AuthenticationService } from '@/application/authentication/authentication.service'
 import { AppError } from '@/application/errors/app-error'
+import { UserRepository } from '@/application/repositories/user.repository'
 import logger from '@/infra/logger/logger'
+import { inject, injectable } from 'tsyringe'
 
 export interface ConfirmUserRequest {
   email: string
   code: string
 }
 
+@injectable()
 export class ConfirmUserUseCase {
   constructor(
-    private userRepository: UserRepository,
-    private authService: AuthenticationService
+    @inject('UserRepository') private userRepository: UserRepository,
+    @inject('AuthService') private authService: AuthenticationService
   ) {}
 
   public async execute(request: ConfirmUserRequest): Promise<void> {

@@ -1,5 +1,6 @@
 import { AuthenticationService } from '@/application/authentication/authentication.service'
 import logger from '@/infra/logger/logger'
+import { inject, injectable } from 'tsyringe'
 import { CreateUserUseCase } from '../../user/create-user/create-user.use-case'
 
 export interface NameRequest {
@@ -17,10 +18,11 @@ export interface SignUpRequest {
   phone: string
 }
 
+@injectable()
 export class SignUpUseCase {
   constructor(
-    private authService: AuthenticationService,
-    private createUserUseCase: CreateUserUseCase
+    @inject('AuthService') private authService: AuthenticationService,
+    @inject('CreateUserUseCase') private createUserUseCase: CreateUserUseCase
   ) {}
 
   public async execute(request: SignUpRequest): Promise<string> {

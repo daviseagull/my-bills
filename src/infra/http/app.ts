@@ -1,7 +1,9 @@
+import { errorHandler } from '@/infra/http/middlewares/error-handler.middleware'
+import '@/shared/dependency-injection/container'
 import { configDotenv } from 'dotenv'
 import express from 'express'
 import 'express-async-errors'
-import { errorHandler } from '@/infra/http/middlewares/error-handler.middleware'
+import 'reflect-metadata'
 import routes from './routes'
 
 configDotenv()
