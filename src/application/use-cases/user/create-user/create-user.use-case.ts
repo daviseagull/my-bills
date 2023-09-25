@@ -6,7 +6,7 @@ import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { inject, injectable } from 'tsyringe'
 import { SignUpRequest } from '../../auth/sign-up/sign-up.use-case'
-import { CreateDefaultCategoryUseCase } from '../../category/create-category/create-default-category.use-case'
+import { CreateDefaultCategoryUseCase } from '../../category/create-default-categories/create-default-categories.use-case'
 
 @injectable()
 export class CreateUserUseCase {
