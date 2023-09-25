@@ -18,6 +18,10 @@ export interface SignUpRequest {
   phone: string
 }
 
+export interface SignUpResponse {
+  id: string
+}
+
 @injectable()
 export class SignUpUseCase {
   constructor(
@@ -25,7 +29,7 @@ export class SignUpUseCase {
     @inject('CreateUserUseCase') private createUserUseCase: CreateUserUseCase
   ) {}
 
-  public async execute(request: SignUpRequest): Promise<string> {
+  public async execute(request: SignUpRequest): Promise<SignUpResponse> {
     logger.info(`Signing up user with email ${request.email}`)
 
     const cognitoId = await this.authService.signUp(request)
@@ -34,6 +38,8 @@ export class SignUpUseCase {
     const user = await this.createUserUseCase.execute(request, cognitoId)
 
     logger.info(`User ${request.email} created in database with id ${user.id}`)
-    return user.id!
+    return {
+      id: user.id!
+    }
   }
 }

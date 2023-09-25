@@ -26,7 +26,7 @@ export async function authenticateToken(
       clientId: process.env['COGNITO_CLIENT_ID']!
     })
   } catch {
-    throw new AppError('Unauthorized', 401)
+    throw new AppError('Unauthorized', 401, true)
   }
 
   req.user = payload.sub

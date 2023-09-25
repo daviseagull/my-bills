@@ -5,7 +5,7 @@ export class CategoryPrismaMapper {
   static toDomain(raw: RawCategory): Category {
     const category = Category.create(
       {
-        user: raw.user,
+        user: raw.cognitoUser,
         incomes: raw.incomes,
         expenses: raw.expenses
       },

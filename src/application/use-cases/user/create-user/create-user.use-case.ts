@@ -35,7 +35,7 @@ export class CreateUserUseCase {
 
     const user = await this.userRepository.create(newUser)
 
-    this.categoryUseCase.execute(user.id!)
+    this.categoryUseCase.execute(user.props.cognitoId!)
 
     return user
   }

@@ -1,6 +1,6 @@
 import { AppError } from '@/application/errors/app-error'
 import logger from '@/infra/logger/logger'
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 export const errorHandler = (
   err: Error,
@@ -25,6 +25,4 @@ export const errorHandler = (
       message: `Internal server error - ${err.message}`
     })
   }
-
-  next()
 }

@@ -1,5 +1,3 @@
-import { Request, Response } from 'express'
-
 import {
   ConfirmForgotPasswordRequest,
   ConfirmForgotPasswordUseCase
@@ -25,6 +23,7 @@ import {
   SignUpRequest,
   SignUpUseCase
 } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
+import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
 export class AuthController {

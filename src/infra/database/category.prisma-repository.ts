@@ -9,7 +9,7 @@ export class CategoryPrismaRepository implements CategoryRepository {
   async create(category: Category): Promise<Category> {
     const createdCategory = await this.prisma.category.create({
       data: {
-        user: category.props.user,
+        cognitoUser: category.props.user,
         incomes: category.props.incomes,
         expenses: category.props.expenses
       }
@@ -17,10 +17,10 @@ export class CategoryPrismaRepository implements CategoryRepository {
     return CategoryPrismaMapper.toDomain(createdCategory)
   }
 
-  async findByUser(userId: string): Promise<Category | null> {
+  async findByUser(userCognitoId: string): Promise<Category | null> {
     const category = await this.prisma.category.findUnique({
       where: {
-        user: userId
+        cognitoUser: userCognitoId
       }
     })
 

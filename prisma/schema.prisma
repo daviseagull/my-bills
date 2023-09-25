@@ -27,13 +27,13 @@ type Name {
 }
 
 model Category {
-  id       String      @id @default(auto()) @map("_id") @db.ObjectId
-  user     String      @unique @db.ObjectId
-  incomes  ICategory[]
-  expenses ICategory[]
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  cognitoUser String           @unique
+  incomes     PrismaCategory[]
+  expenses    PrismaCategory[]
 }
 
-type ICategory {
+type PrismaCategory {
   description String
   parent      String?
 }
