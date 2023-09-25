@@ -1,7 +1,7 @@
 import { CategoryUtils } from './category.utils'
 
-describe('createDefaultIncome', () => {
-  it('should return an array of income categories with descriptions', () => {
+describe('Category utils tests', () => {
+  it('It should return an array of income categories with descriptions', () => {
     const result = CategoryUtils.createDefaultIncome()
 
     const expected = [
@@ -15,7 +15,7 @@ describe('createDefaultIncome', () => {
     expect(result).toEqual(expected)
   })
 
-  it('should return an array of expenses categories with descriptions', () => {
+  it('It should return an array of expenses categories with descriptions', () => {
     const result = CategoryUtils.createDefaultExpense()
 
     const expected = [
