@@ -1,5 +1,5 @@
 import { UnauthorizedError } from '@/application/errors/app-error'
-import { CognitoJwtVerifier } from 'aws-jwt-verify'
+import { verifier } from '@/infra/authentication/utils/cognito.utils'
 import { NextFunction, Request, Response } from 'express'
 
 export async function authenticateToken(
@@ -9,28 +9,22 @@ export async function authenticateToken(
 ) {
   let token = req.headers.authorization
 
-  if (!token) {
+  if (!token && token?.startsWith('Bearer')) {
     throw new UnauthorizedError('Unauthorized')
   }
 
   token = token!.replace('Bearer ', '')
 
-  const verifier = CognitoJwtVerifier.create({
-    userPoolId: process.env['COGNITO_USER_POOL_ID']!,
-    tokenUse: 'access'
-  })
-
-  let payload
   try {
-    payload = await verifier.verify(token, {
+    const payload = await verifier.verify(token, {
       clientId: process.env['COGNITO_CLIENT_ID']!
     })
+
+    req.user = payload.sub
+    req.token = token
   } catch {
     throw new UnauthorizedError('Unauthorized')
   }
-
-  req.user = payload.sub
-  req.token = token
 
   next()
 }
