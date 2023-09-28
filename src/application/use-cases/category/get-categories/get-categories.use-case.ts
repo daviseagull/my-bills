@@ -1,4 +1,4 @@
-import { AppError } from '@/application/errors/app-error'
+import { InternalServerError } from '@/application/errors/app-error'
 import { CategoryRepository } from '@/application/repositories/category.repository'
 import { ICategory } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
@@ -17,13 +17,11 @@ export class GetCategoriesUseCase {
     const categories = await this.categoryRepository.findByUser(user)
 
     if (!categories) {
-      throw new AppError(
-        "Something bad happened... We couldn't found yours categories",
-        500,
-        true
+      throw new InternalServerError(
+        "Something bad happened... We couldn't found yours categories"
       )
     }
-    
+
     return type === CategoryTypeEnum.expenses
       ? categories!.props.expenses
       : categories!.props.incomes

@@ -3,21 +3,25 @@ import {
   AuthenticationService
 } from '@/application/authentication/authentication.service'
 import {
-  cognitoClientId,
-  cognitoServiceProvider,
-  hashCognitoSecret
-} from '../utils/cognito.utils'
+  BadRequestError,
+  InternalServerError
+} from '@/application/errors/app-error'
+import { SignUpRequest } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
 import {
   AttributeType,
   CodeMismatchException,
   ExpiredCodeException,
+  InvalidPasswordException,
   NotAuthorizedException,
   UserNotConfirmedException,
   UsernameExistsException
 } from '@aws-sdk/client-cognito-identity-provider'
 import { cpf } from 'cpf-cnpj-validator'
-import { SignUpRequest } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
-import { AppError } from '@/application/errors/app-error'
+import {
+  cognitoClientId,
+  cognitoServiceProvider,
+  hashCognitoSecret
+} from '../utils/cognito.utils'
 
 class UserAttribute implements AttributeType {
   private constructor(name: string, value: string) {
@@ -56,16 +60,14 @@ export class CognitoService implements AuthenticationService {
       }
     } catch (err) {
       if (err instanceof UserNotConfirmedException) {
-        throw new AppError(`User ${username} not confirmed`, 400, false)
+        throw new BadRequestError(`User ${username} not confirmed`)
       }
       if (err instanceof NotAuthorizedException) {
-        throw new AppError('Invalid username or password', 400, false)
+        throw new BadRequestError('Invalid username or password')
       }
 
-      throw new AppError(
-        'Unknown error while trying to authenticate',
-        500,
-        false
+      throw new InternalServerError(
+        'Unknown error while trying to authenticate'
       )
     }
   }
@@ -84,16 +86,16 @@ export class CognitoService implements AuthenticationService {
       return cognitoUser.UserSub!
     } catch (err) {
       if (err instanceof UsernameExistsException) {
-        throw new AppError(
-          `User with email ${user.email} already exists`,
-          400,
-          false
+        throw new BadRequestError(
+          `User with email ${user.email} already exists`
         )
       }
-      throw new AppError(
-        `Unknown error while trying to create user in IAM`,
-        500,
-        false
+
+      if (err instanceof InvalidPasswordException) {
+        throw new BadRequestError(err.message)
+      }
+      throw new InternalServerError(
+        `Unknown error while trying to create user in IAM`
       )
     }
   }
@@ -130,20 +132,14 @@ export class CognitoService implements AuthenticationService {
       await cognitoServiceProvider().confirmSignUp(params)
     } catch (err) {
       if (err instanceof ExpiredCodeException) {
-        throw new AppError('Code has expired', 400, false)
+        throw new BadRequestError('Code has expired')
       }
       if (err instanceof CodeMismatchException) {
-        throw new AppError(
-          "Code doesn't match with what server was expecting",
-          400,
-          false
+        throw new BadRequestError(
+          "Code doesn't match with what server was expecting"
         )
       }
-      throw new AppError(
-        'Unknown error while trying to confirm user',
-        500,
-        false
-      )
+      throw new BadRequestError('Unknown error while trying to confirm user')
     }
   }
 
@@ -156,10 +152,8 @@ export class CognitoService implements AuthenticationService {
     try {
       await cognitoServiceProvider().resendConfirmationCode(params)
     } catch (err) {
-      throw new AppError(
-        'Unknown error while trying to resend confirmation code',
-        500,
-        false
+      throw new InternalServerError(
+        'Unknown error while trying to resend confirmation code'
       )
     }
   }
@@ -174,10 +168,8 @@ export class CognitoService implements AuthenticationService {
     try {
       await cognitoServiceProvider().forgotPassword(params)
     } catch (err) {
-      throw new AppError(
-        'Unknown error while trying to forgot password',
-        500,
-        false
+      throw new InternalServerError(
+        'Unknown error while trying to forgot password'
       )
     }
   }
@@ -198,9 +190,8 @@ export class CognitoService implements AuthenticationService {
     try {
       await cognitoServiceProvider().confirmForgotPassword(params)
     } catch (err) {
-      throw new AppError(
-        'Unknown error while trying to resend confirmation code',
-        500
+      throw new InternalServerError(
+        'Unknown error while trying to resend confirmation code'
       )
     }
   }
@@ -213,10 +204,8 @@ export class CognitoService implements AuthenticationService {
     try {
       await cognitoServiceProvider().globalSignOut(params)
     } catch (err) {
-      throw new AppError(
-        'Unknown error while trying to resend confirmation code',
-        500,
-        true
+      throw new InternalServerError(
+        'Unknown error while trying to resend confirmation code'
       )
     }
   }

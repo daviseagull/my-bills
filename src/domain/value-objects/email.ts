@@ -1,4 +1,4 @@
-import { AppError } from '@/application/errors/app-error'
+import { BadRequestError } from '@/application/errors/app-error'
 import { ValueObject } from '../abstracts/value-object'
 
 interface EmailProps {
@@ -14,7 +14,7 @@ export class Email extends ValueObject<EmailProps> {
     const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 
     if (!expression.test(value)) {
-      throw new AppError('Email must be a valid email', 400)
+      throw new BadRequestError('Email must be a valid email')
     }
 
     return new Email({ value: value.toLowerCase() })

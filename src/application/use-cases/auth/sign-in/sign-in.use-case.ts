@@ -2,7 +2,7 @@ import {
   AuthenticationResult,
   AuthenticationService
 } from '@/application/authentication/authentication.service'
-import { AppError } from '@/application/errors/app-error'
+import { NotFoundError } from '@/application/errors/app-error'
 import { UserRepository } from '@/application/repositories/user.repository'
 import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
@@ -27,10 +27,8 @@ export class SignInUseCase {
     const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
-      throw new AppError(
-        `Couldn't find user in the database ${request.email}`,
-        404,
-        false
+      throw new NotFoundError(
+        `Couldn't find user in the database ${request.email}`
       )
     }
 

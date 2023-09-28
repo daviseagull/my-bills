@@ -3,26 +3,16 @@ import logger from '@/infra/logger/logger'
 import { NextFunction, Request, Response } from 'express'
 
 export const errorHandler = (
-  err: Error,
+  err: Error & Partial<AppError>,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (err instanceof AppError) {
-    const message = err.authenticated
-      ? `User: ${req.user} - ${err.message}`
-      : err.message
+  let message = req.user ? `User: ${req.user} - ${err.message}` : err.message
 
-    logger.error(message)
-    res.status(err.statusCode).json({
-      statusCode: err.statusCode,
-      message: err.message
-    })
-  } else {
-    logger.error(`User: ${req.user} - ${err.message}`)
-    res.status(500).json({
-      status: 500,
-      message: `Internal server error - ${err.message}`
-    })
-  }
+  const status = err.statusCode ?? 500
+  message = err.statusCode ? message : `Internal server error - ${err.message}`
+
+  logger.error(message)
+  res.status(status).json({ statusCode: err.statusCode, message: message })
 }

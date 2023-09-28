@@ -1,6 +1,6 @@
-import { AppError } from '@/application/errors/app-error'
-import { ValueObject } from '../abstracts/value-object'
+import { BadRequestError } from '@/application/errors/app-error'
 import { cpf as CPF } from 'cpf-cnpj-validator'
+import { ValueObject } from '../abstracts/value-object'
 
 interface FiscalDocumentProps {
   value: string
@@ -13,7 +13,7 @@ export class FiscalDocument extends ValueObject<FiscalDocumentProps> {
 
   public static create(value: string): FiscalDocument {
     if (!CPF.isValid(value)) {
-      throw new AppError('Fiscal document must be valid', 400)
+      throw new BadRequestError('Fiscal document must be valid')
     }
 
     return new FiscalDocument({ value: CPF.strip(value) })

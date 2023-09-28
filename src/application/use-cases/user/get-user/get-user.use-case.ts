@@ -1,4 +1,4 @@
-import { AppError } from '@/application/errors/app-error'
+import { NotFoundError } from '@/application/errors/app-error'
 import { UserRepository } from '@/application/repositories/user.repository'
 import { UserDto } from '@/domain/dtos/user.dto'
 import { UserMapper } from '@/domain/mappers/user.mapper'
@@ -14,7 +14,7 @@ export class GetUserUseCase {
     const user = await this.userRepository.findByCognitoId(id)
 
     if (!user) {
-      throw new AppError(`User with cognitoId ${id} not found`, 404, true)
+      throw new NotFoundError(`User with cognitoId ${id} not found`)
     }
 
     return UserMapper.toDto(user)
