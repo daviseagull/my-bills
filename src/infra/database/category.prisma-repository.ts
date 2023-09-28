@@ -1,9 +1,9 @@
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { Category } from '@/domain/entities/category.entity'
 import { PrismaClient } from '@prisma/client'
 import { CategoryPrismaMapper } from './prisma/mappers/category.prisma-mapper'
 
-export class CategoryPrismaRepository implements CategoryRepository {
+export class CategoryPrismaRepository implements ICategoryRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
 
   async create(category: Category): Promise<Category> {

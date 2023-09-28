@@ -1,6 +1,6 @@
-import { AuthenticationService } from '@/application/authentication/authentication.service'
-import { CategoryRepository } from '@/application/repositories/category.repository'
-import { UserRepository } from '@/application/repositories/user.repository'
+import { IAuthenticationService } from '@/application/authentication/authentication.service'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
+import { IUserRepository } from '@/application/repositories/user.repository'
 import { CreateDefaultCategoryUseCase } from '@/application/use-cases/category/create-default-categories/create-default-categories.use-case'
 import { CreateUserUseCase } from '@/application/use-cases/user/create-user/create-user.use-case'
 import { CognitoService } from '@/infra/authentication/service/cognito.service'
@@ -10,19 +10,19 @@ import { container } from 'tsyringe'
 
 // Repositories
 
-container.registerSingleton<UserRepository>(
+container.registerSingleton<IUserRepository>(
   'UserRepository',
   UserPrismaRepository
 )
 
-container.registerSingleton<CategoryRepository>(
+container.registerSingleton<ICategoryRepository>(
   'CategoryRepository',
   CategoryPrismaRepository
 )
 
 // Services
 
-container.registerSingleton<AuthenticationService>(
+container.registerSingleton<IAuthenticationService>(
   'AuthService',
   CognitoService
 )

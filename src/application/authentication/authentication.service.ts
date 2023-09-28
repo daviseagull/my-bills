@@ -6,7 +6,7 @@ export interface AuthenticationResult {
   accessToken: string
 }
 
-export interface AuthenticationService {
+export interface IAuthenticationService {
   signIn(email: string, password: string): Promise<AuthenticationResult>
 
   signUp(user: SignUpRequest): Promise<string>

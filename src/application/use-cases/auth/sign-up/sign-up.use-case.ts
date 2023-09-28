@@ -1,4 +1,4 @@
-import { AuthenticationService } from '@/application/authentication/authentication.service'
+import { IAuthenticationService } from '@/application/authentication/authentication.service'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 import { CreateUserUseCase } from '../../user/create-user/create-user.use-case'
@@ -25,7 +25,7 @@ export interface SignUpResponse {
 @injectable()
 export class SignUpUseCase {
   constructor(
-    @inject('AuthService') private authService: AuthenticationService,
+    @inject('AuthService') private authService: IAuthenticationService,
     @inject('CreateUserUseCase') private createUserUseCase: CreateUserUseCase
   ) {}
 

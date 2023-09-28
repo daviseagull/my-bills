@@ -1,9 +1,9 @@
-import { UserRepository } from '@/application/repositories/user.repository'
+import { IUserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { PrismaClient } from '@prisma/client'
 import { UserPrismaMapper } from './prisma/mappers/user.prisma-mapper'
 
-export class UserPrismaRepository implements UserRepository {
+export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
   findByUsername(username: string): Promise<User | null> {
     throw new Error('Method not implemented.')

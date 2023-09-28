@@ -1,5 +1,5 @@
 import { InternalServerError } from '@/application/errors/app-error'
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { ICategory } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
 import logger from '@/infra/logger/logger'
@@ -8,7 +8,8 @@ import { inject, injectable } from 'tsyringe'
 @injectable()
 export class GetCategoriesUseCase {
   constructor(
-    @inject('CategoryRepository') private categoryRepository: CategoryRepository
+    @inject('CategoryRepository')
+    private categoryRepository: ICategoryRepository
   ) {}
 
   public async execute(user: string, type: string): Promise<ICategory[]> {

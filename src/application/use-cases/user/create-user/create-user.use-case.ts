@@ -1,4 +1,4 @@
-import { UserRepository } from '@/application/repositories/user.repository'
+import { IUserRepository } from '@/application/repositories/user.repository'
 import { PasswordUtils } from '@/application/utils/password.utils'
 import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
@@ -11,7 +11,7 @@ import { CreateDefaultCategoryUseCase } from '../../category/create-default-cate
 @injectable()
 export class CreateUserUseCase {
   constructor(
-    @inject('UserRepository') private userRepository: UserRepository,
+    @inject('UserRepository') private userRepository: IUserRepository,
     @inject('CreateDefaultCategoryUseCase')
     private categoryUseCase: CreateDefaultCategoryUseCase
   ) {}

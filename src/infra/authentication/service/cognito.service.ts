@@ -1,6 +1,6 @@
 import {
   AuthenticationResult,
-  AuthenticationService
+  IAuthenticationService
 } from '@/application/authentication/authentication.service'
 import {
   BadRequestError,
@@ -37,7 +37,7 @@ class UserAttribute implements AttributeType {
   Value: string
 }
 
-export class CognitoService implements AuthenticationService {
+export class CognitoService implements IAuthenticationService {
   async signIn(
     username: string,
     password: string
