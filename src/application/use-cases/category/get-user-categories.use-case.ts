@@ -8,7 +8,7 @@ import { inject, injectable } from 'tsyringe'
 @injectable()
 export class GetUserCategoriesUseCase {
   constructor(
-    @inject('CategoryRepository')
+    @inject('UserCategoriesRepository')
     private categoryRepository: IUserCategoriesRepository
   ) {}
 
