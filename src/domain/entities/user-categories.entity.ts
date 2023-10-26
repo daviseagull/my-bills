@@ -13,7 +13,7 @@ type CategoryProps = {
   expenses: ICategory[]
 }
 
-export class Category extends Entity<CategoryProps> {
+export class UserCategories extends Entity<CategoryProps> {
   private constructor(props: CategoryProps, id?: string) {
     super(props, id)
   }
@@ -23,6 +23,6 @@ export class Category extends Entity<CategoryProps> {
   }
 
   static create(props: CategoryProps, id?: string) {
-    return new Category(props, id)
+    return new UserCategories(props, id)
   }
 }

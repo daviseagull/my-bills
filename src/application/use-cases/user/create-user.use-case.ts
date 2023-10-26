@@ -6,14 +6,14 @@ import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { inject, injectable } from 'tsyringe'
 import { SignUpRequest } from '../auth/sign-up.use-case'
-import { CreateDefaultCategoryUseCase } from '../category/create-default-categories.use-case'
+import { CreateDefaultCategoriesUseCase } from '../category/create-default-categories.use-case'
 
 @injectable()
 export class CreateUserUseCase {
   constructor(
     @inject('UserRepository') private userRepository: IUserRepository,
-    @inject('CreateDefaultCategoryUseCase')
-    private categoryUseCase: CreateDefaultCategoryUseCase
+    @inject('CreateDefaultCategoriesUseCase')
+    private categoryUseCase: CreateDefaultCategoriesUseCase
   ) {}
 
   public async execute(

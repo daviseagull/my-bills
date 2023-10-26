@@ -1,10 +1,10 @@
-import { ICategoryRepository } from '@/application/repositories/category.repository'
+import { IUserCategoriesRepository } from '@/application/repositories/user-categories.repository'
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { IAuthenticationService } from '@/application/services/authentication.service'
-import { CreateDefaultCategoryUseCase } from '@/application/use-cases/category/create-default-categories.use-case'
+import { CreateDefaultCategoriesUseCase } from '@/application/use-cases/category/create-default-categories.use-case'
 import { CreateUserUseCase } from '@/application/use-cases/user/create-user.use-case'
 import { CognitoService } from '@/infra/authentication/service/cognito.service'
-import { CategoryPrismaRepository } from '@/infra/database/category.prisma-repository'
+import { UserCategoriesPrismaRepository } from '@/infra/database/user-categories.prisma-repository'
 import { UserPrismaRepository } from '@/infra/database/user.prisma-repository'
 import { container } from 'tsyringe'
 
@@ -15,9 +15,9 @@ container.registerSingleton<IUserRepository>(
   UserPrismaRepository
 )
 
-container.registerSingleton<ICategoryRepository>(
-  'CategoryRepository',
-  CategoryPrismaRepository
+container.registerSingleton<IUserCategoriesRepository>(
+  'UserCategoriesPrismaRepository',
+  UserCategoriesPrismaRepository
 )
 
 // Services
@@ -29,9 +29,9 @@ container.registerSingleton<IAuthenticationService>(
 
 // Use-cases
 
-container.register<CreateDefaultCategoryUseCase>(
-  'CreateDefaultCategoryUseCase',
-  CreateDefaultCategoryUseCase
+container.register<CreateDefaultCategoriesUseCase>(
+  'CreateDefaultCategoriesUseCase',
+  CreateDefaultCategoriesUseCase
 )
 
 container.register<CreateUserUseCase>('CreateUserUseCase', CreateUserUseCase)
