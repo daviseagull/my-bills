@@ -2,6 +2,7 @@ import { ICategoryRepository } from '@/application/repositories/category.reposit
 import { Category } from '@/domain/entities/category.entity'
 import { PrismaClient } from '@prisma/client'
 import { CategoryPrismaMapper } from './prisma/mappers/category.prisma-mapper'
+import { CategoryPrismaUtils } from './prisma/utils/category.prisma-utils'
 
 export class CategoryPrismaRepository implements ICategoryRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
@@ -10,8 +11,10 @@ export class CategoryPrismaRepository implements ICategoryRepository {
     const createdCategory = await this.prisma.category.create({
       data: {
         cognitoUser: category.props.user,
-        incomes: category.props.incomes,
-        expenses: category.props.expenses
+        incomes: CategoryPrismaUtils.toPrismaCategories(category.props.incomes),
+        expenses: CategoryPrismaUtils.toPrismaCategories(
+          category.props.expenses
+        )
       }
     })
     return CategoryPrismaMapper.toDomain(createdCategory)

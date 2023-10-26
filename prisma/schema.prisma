@@ -35,5 +35,6 @@ model Category {
 
 type PrismaCategory {
   description String
+  color       String
   parent      String?
 }
