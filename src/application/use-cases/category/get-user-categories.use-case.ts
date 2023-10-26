@@ -1,15 +1,15 @@
 import { InternalServerError } from '@/application/errors/app-error'
-import { ICategoryRepository } from '@/application/repositories/category.repository'
-import { ICategory } from '@/domain/entities/category.entity'
+import { IUserCategoriesRepository } from '@/application/repositories/user-categories.repository'
+import { ICategory } from '@/domain/entities/user-categories.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-export class GetCategoriesUseCase {
+export class GetUserCategoriesUseCase {
   constructor(
     @inject('CategoryRepository')
-    private categoryRepository: ICategoryRepository
+    private categoryRepository: IUserCategoriesRepository
   ) {}
 
   public async execute(user: string, type: string): Promise<ICategory[]> {

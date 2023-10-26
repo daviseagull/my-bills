@@ -1,10 +1,13 @@
-import { Category, ICategory } from '@/domain/entities/category.entity'
+import {
+  ICategory,
+  UserCategories
+} from '@/domain/entities/user-categories.entity'
 import { Color } from '@/domain/value-objects/color'
-import { PrismaCategory, Category as RawCategory } from '@prisma/client'
+import { PrismaCategory, UserCategories as RawCategory } from '@prisma/client'
 
 export class CategoryPrismaMapper {
-  static toDomain(raw: RawCategory): Category {
-    const category = Category.create(
+  static toDomain(raw: RawCategory): UserCategories {
+    const category = UserCategories.create(
       {
         user: raw.cognitoUser,
         incomes: this.mapCategories(raw.incomes),

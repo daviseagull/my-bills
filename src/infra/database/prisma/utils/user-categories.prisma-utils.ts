@@ -1,9 +1,9 @@
-import { ICategory } from '@/domain/entities/category.entity'
+import { ICategory } from '@/domain/entities/user-categories.entity'
 import { Color } from '@/domain/value-objects/color'
 import { PrismaCategory } from '@prisma/client'
 
-export class CategoryPrismaUtils {
-  static toCategories(prismaCategories: PrismaCategory[]): ICategory[] {
+export class UserCategoriesPrismaUtils {
+  static toUserCategories(prismaCategories: PrismaCategory[]): ICategory[] {
     const categories = prismaCategories.map((category: PrismaCategory) => {
       return {
         description: category.description,

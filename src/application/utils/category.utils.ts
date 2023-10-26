@@ -1,4 +1,4 @@
-import { ICategory } from '@/domain/entities/category.entity'
+import { ICategory } from '@/domain/entities/user-categories.entity'
 import {
   ExpenseCategoriesColor,
   ExpenseCategoriesEnum

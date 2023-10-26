@@ -26,7 +26,7 @@ type Name {
   fullname String
 }
 
-model Category {
+model UserCategories {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   cognitoUser String           @unique
   incomes     PrismaCategory[]
