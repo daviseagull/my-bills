@@ -1,4 +1,3 @@
-import { AppError } from '../errors/app-error'
 import { PasswordUtils } from './password.utils'
 
 describe('Password utils tests', () => {
@@ -11,8 +10,6 @@ describe('Password utils tests', () => {
   it('It should validate if password is valid', () => {
     const invalidPassword = 'P@ssword32'
 
-    expect(() => PasswordUtils.validatePassword(invalidPassword)).not.toThrow(
-      AppError
-    )
+    expect(() => PasswordUtils.validatePassword(invalidPassword)).not.toThrow()
   })
 })
