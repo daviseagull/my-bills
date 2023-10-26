@@ -10,7 +10,7 @@ export async function authenticateToken(
   let token = req.headers.authorization
 
   if (!token && token?.startsWith('Bearer')) {
-    throw new UnauthorizedError('Unauthorized')
+    throw new UnauthorizedError('Unauthorized - Invalid token')
   }
 
   token = token!.replace('Bearer ', '')
@@ -23,7 +23,7 @@ export async function authenticateToken(
     req.user = payload.sub
     req.token = token
   } catch {
-    throw new UnauthorizedError('Unauthorized')
+    throw new UnauthorizedError('Unauthorized - Invalid credentials')
   }
 
   next()
