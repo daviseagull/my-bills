@@ -1,7 +1,7 @@
-import { IAuthenticationService } from '@/application/authentication/authentication.service'
+import { IAuthenticationService } from '@/application/services/authentication.service'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
-import { CreateUserUseCase } from '../../user/create-user/create-user.use-case'
+import { CreateUserUseCase } from '../user/create-user.use-case'
 
 export interface NameRequest {
   first: string

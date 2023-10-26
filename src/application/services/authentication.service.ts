@@ -1,4 +1,4 @@
-import { SignUpRequest } from '../use-cases/auth/sign-up/sign-up.use-case'
+import { SignUpRequest } from '../use-cases/auth/sign-up.use-case'
 
 export interface AuthenticationResult {
   status: string

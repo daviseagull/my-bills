@@ -14,10 +14,11 @@ export class CreateDefaultCategoryUseCase {
   public execute(user: string): void {
     logger.info(`Creating categories for user ${user}`)
 
-    const expenses = CategoryUtils.createDefaultExpense()
-    const incomes = CategoryUtils.createDefaultIncome()
-
-    const userCategories = Category.create({ user, incomes, expenses })
+    const userCategories = Category.create({
+      user,
+      incomes: CategoryUtils.createDefaultIncome(),
+      expenses: CategoryUtils.createDefaultExpense()
+    })
 
     this.categoryRepository.create(userCategories)
   }

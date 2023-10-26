@@ -1,23 +1,27 @@
-import { IAuthenticationService } from '@/application/authentication/authentication.service'
 import { NotFoundError } from '@/application/errors/app-error'
 import { IUserRepository } from '@/application/repositories/user.repository'
+import { IAuthenticationService } from '@/application/services/authentication.service'
+import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface ConfirmUserRequest {
+export interface ConfirmForgotPasswordRequest {
   email: string
   code: string
+  password: string
 }
 
 @injectable()
-export class ConfirmUserUseCase {
+export class ConfirmForgotPasswordUseCase {
   constructor(
     @inject('UserRepository') private userRepository: IUserRepository,
     @inject('AuthService') private authService: IAuthenticationService
   ) {}
 
-  public async execute(request: ConfirmUserRequest): Promise<void> {
-    logger.info(`Confirming user ${request.email} sign up`)
+  public async execute(request: ConfirmForgotPasswordRequest): Promise<void> {
+    logger.info(`Confirming password reset for user ${request.email}`)
+    PasswordUtils.validatePassword(request.password)
+
     const user = this.userRepository.findByEmail(request.email)
 
     if (!user) {
@@ -26,6 +30,10 @@ export class ConfirmUserUseCase {
       )
     }
 
-    this.authService.confirmUser(request.email, request.code)
+    this.authService.confirmResetPassword(
+      request.email,
+      request.code,
+      request.password
+    )
   }
 }

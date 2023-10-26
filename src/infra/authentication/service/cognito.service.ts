@@ -1,12 +1,12 @@
 import {
-  AuthenticationResult,
-  IAuthenticationService
-} from '@/application/authentication/authentication.service'
-import {
   BadRequestError,
   InternalServerError
 } from '@/application/errors/app-error'
-import { SignUpRequest } from '@/application/use-cases/auth/sign-up/sign-up.use-case'
+import {
+  AuthenticationResult,
+  IAuthenticationService
+} from '@/application/services/authentication.service'
+import { SignUpRequest } from '@/application/use-cases/auth/sign-up.use-case'
 import {
   AttributeType,
   CodeMismatchException,
@@ -17,11 +17,7 @@ import {
   UsernameExistsException
 } from '@aws-sdk/client-cognito-identity-provider'
 import { cpf } from 'cpf-cnpj-validator'
-import {
-  cognitoClientId,
-  cognitoServiceProvider,
-  hashCognitoSecret
-} from '../utils/cognito.utils'
+import { CognitoUtils } from '../utils/cognito.utils'
 
 class UserAttribute implements AttributeType {
   private constructor(name: string, value: string) {
@@ -44,15 +40,15 @@ export class CognitoService implements IAuthenticationService {
   ): Promise<AuthenticationResult> {
     const params = {
       AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: cognitoClientId(),
+      ClientId: CognitoUtils.cognitoClientId(),
       AuthParameters: {
         USERNAME: username,
         PASSWORD: password,
-        SECRET_HASH: hashCognitoSecret(username)
+        SECRET_HASH: CognitoUtils.hashCognitoSecret(username)
       }
     }
     try {
-      const data = await cognitoServiceProvider().initiateAuth(params)
+      const data = await CognitoUtils.cognitoServiceProvider().initiateAuth(params)
       return {
         status: 'OK',
         accessToken: data.AuthenticationResult!.AccessToken!,
@@ -74,15 +70,15 @@ export class CognitoService implements IAuthenticationService {
 
   async signUp(user: SignUpRequest): Promise<string> {
     const params = {
-      ClientId: cognitoClientId(),
+      ClientId: CognitoUtils.cognitoClientId(),
       Password: user.password,
       Username: user.email,
-      SecretHash: hashCognitoSecret(user.email),
+      SecretHash: CognitoUtils.hashCognitoSecret(user.email),
       UserAttributes: this.getUserAttributes(user)
     }
 
     try {
-      const cognitoUser = await cognitoServiceProvider().signUp(params)
+      const cognitoUser = await CognitoUtils.cognitoServiceProvider().signUp(params)
       return cognitoUser.UserSub!
     } catch (err) {
       if (err instanceof UsernameExistsException) {
@@ -123,13 +119,13 @@ export class CognitoService implements IAuthenticationService {
 
   async confirmUser(email: string, code: string): Promise<void> {
     const params = {
-      ClientId: cognitoClientId(),
+      ClientId: CognitoUtils.cognitoClientId(),
       ConfirmationCode: code,
       Username: email,
-      SecretHash: hashCognitoSecret(email)
+      SecretHash: CognitoUtils.hashCognitoSecret(email)
     }
     try {
-      await cognitoServiceProvider().confirmSignUp(params)
+      await CognitoUtils.cognitoServiceProvider().confirmSignUp(params)
     } catch (err) {
       if (err instanceof ExpiredCodeException) {
         throw new BadRequestError('Code has expired')
@@ -145,12 +141,12 @@ export class CognitoService implements IAuthenticationService {
 
   async resendConfirmationCode(email: string) {
     const params = {
-      ClientId: cognitoClientId(),
-      SecretHash: hashCognitoSecret(email),
+      ClientId: CognitoUtils.cognitoClientId(),
+      SecretHash: CognitoUtils.hashCognitoSecret(email),
       Username: email
     }
     try {
-      await cognitoServiceProvider().resendConfirmationCode(params)
+      await CognitoUtils.cognitoServiceProvider().resendConfirmationCode(params)
     } catch (err) {
       throw new InternalServerError(
         'Unknown error while trying to resend confirmation code'
@@ -160,13 +156,13 @@ export class CognitoService implements IAuthenticationService {
 
   async forgotPassword(email: string) {
     const params = {
-      ClientId: cognitoClientId(),
-      SecretHash: hashCognitoSecret(email),
+      ClientId: CognitoUtils.cognitoClientId(),
+      SecretHash: CognitoUtils.hashCognitoSecret(email),
       Username: email
     }
 
     try {
-      await cognitoServiceProvider().forgotPassword(params)
+      await CognitoUtils.cognitoServiceProvider().forgotPassword(params)
     } catch (err) {
       throw new InternalServerError(
         'Unknown error while trying to forgot password'
@@ -180,15 +176,15 @@ export class CognitoService implements IAuthenticationService {
     password: string
   ): Promise<void> {
     const params = {
-      ClientId: cognitoClientId(),
-      SecretHash: hashCognitoSecret(email),
+      ClientId: CognitoUtils.cognitoClientId(),
+      SecretHash: CognitoUtils.hashCognitoSecret(email),
       Username: email,
       ConfirmationCode: code,
       Password: password
     }
 
     try {
-      await cognitoServiceProvider().confirmForgotPassword(params)
+      await CognitoUtils.cognitoServiceProvider().confirmForgotPassword(params)
     } catch (err) {
       throw new InternalServerError(
         'Unknown error while trying to resend confirmation code'
@@ -202,7 +198,7 @@ export class CognitoService implements IAuthenticationService {
     }
 
     try {
-      await cognitoServiceProvider().globalSignOut(params)
+      await CognitoUtils.cognitoServiceProvider().globalSignOut(params)
     } catch (err) {
       throw new InternalServerError(
         'Unknown error while trying to resend confirmation code'

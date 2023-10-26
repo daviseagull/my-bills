@@ -5,8 +5,8 @@ import { Email } from '@/domain/value-objects/email'
 import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { inject, injectable } from 'tsyringe'
-import { SignUpRequest } from '../../auth/sign-up/sign-up.use-case'
-import { CreateDefaultCategoryUseCase } from '../../category/create-default-categories/create-default-categories.use-case'
+import { SignUpRequest } from '../auth/sign-up.use-case'
+import { CreateDefaultCategoryUseCase } from '../category/create-default-categories.use-case'
 
 @injectable()
 export class CreateUserUseCase {

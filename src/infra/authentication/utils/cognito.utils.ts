@@ -3,28 +3,32 @@ import { CognitoJwtVerifier } from 'aws-jwt-verify/cognito-verifier'
 import crypto from 'crypto'
 import process from 'process'
 
-export const cognitoServiceProvider = () => {
-  return new CognitoIdentityServiceProvider({
-    region: 'sa-east-1'
-  })
-}
+export class CognitoUtils {
+  public static cognitoServiceProvider() {
+    return new CognitoIdentityServiceProvider({
+      region: 'sa-east-1'
+    })
+  }
 
-export const cognitoClientId = () => {
-  return process.env['COGNITO_CLIENT_ID']!
-}
+  public static cognitoClientId() {
+    return process.env['COGNITO_CLIENT_ID']!
+  }
 
-export const cognitoClientSecret = () => {
-  return process.env['COGNITO_CLIENT_SECRET']!
-}
+  public static cognitoClientSecret() {
+    return process.env['COGNITO_CLIENT_SECRET']!
+  }
 
-export const hashCognitoSecret = (username: string) => {
-  return crypto
-    .createHmac('SHA256', cognitoClientSecret())
-    .update(username + cognitoClientId())
-    .digest('base64')
-}
+  public static hashCognitoSecret(username: string) {
+    return crypto
+      .createHmac('SHA256', this.cognitoClientSecret())
+      .update(username + this.cognitoClientId())
+      .digest('base64')
+  }
 
-export const verifier = CognitoJwtVerifier.create({
-  userPoolId: process.env['COGNITO_USER_POOL_ID']!,
-  tokenUse: 'access'
-})
+  public static getVerifier() {
+    return CognitoJwtVerifier.create({
+      userPoolId: process.env['COGNITO_USER_POOL_ID']!,
+      tokenUse: 'access'
+    })
+  }
+}
