@@ -16,7 +16,7 @@ container.registerSingleton<IUserRepository>(
 )
 
 container.registerSingleton<IUserCategoriesRepository>(
-  'UserCategoriesPrismaRepository',
+  'UserCategoriesRepository',
   UserCategoriesPrismaRepository
 )
 
