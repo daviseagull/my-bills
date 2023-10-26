@@ -1,7 +1,8 @@
 import { InternalServerError } from '@/application/errors/app-error'
 import { IUserCategoriesRepository } from '@/application/repositories/user-categories.repository'
-import { ICategory } from '@/domain/entities/user-categories.entity'
+import { CategoryDto } from '@/domain/dtos/user-categories.dto'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
+import { CategoryMapper } from '@/domain/mappers/category.mapper'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
@@ -12,7 +13,7 @@ export class GetUserCategoriesUseCase {
     private categoryRepository: IUserCategoriesRepository
   ) {}
 
-  public async execute(user: string, type: string): Promise<ICategory[]> {
+  public async execute(user: string, type: string): Promise<CategoryDto[]> {
     logger.info(`Getting ${type} categories for user ${user}`)
 
     const categories = await this.categoryRepository.findByUser(user)
@@ -24,7 +25,7 @@ export class GetUserCategoriesUseCase {
     }
 
     return type === CategoryTypeEnum.expenses
-      ? categories!.props.expenses
-      : categories!.props.incomes
+      ? CategoryMapper.toCategoryDto(categories!.props.expenses)
+      : CategoryMapper.toCategoryDto(categories!.props.incomes)
   }
 }

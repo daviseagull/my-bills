@@ -26,7 +26,7 @@ export class CategoryUtils {
   public static createDefaultExpense() {
     const categories: ICategory[] = []
 
-    Object.keys(ExpenseCategoriesEnum).forEach((key, index) => {
+    Object.values(ExpenseCategoriesEnum).forEach((key, index) => {
       categories.push({
         color: Color.create(ExpenseCategoriesColor.get(key)!),
         description: key.toString()
