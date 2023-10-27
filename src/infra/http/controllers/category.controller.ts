@@ -1,3 +1,4 @@
+import { AddCategoryUseCase } from '@/application/use-cases/category/add-category.use-case'
 import { GetUserCategoriesUseCase } from '@/application/use-cases/category/get-user-categories.use-case'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
@@ -9,5 +10,13 @@ export class CategoryController {
     const result = await useCase.execute(req.user!, req.params.type!)
 
     return res.status(200).json(result)
+  }
+
+  async addCategory(req: Request, res: Response) {
+    const useCase = container.resolve(AddCategoryUseCase)
+
+    const result = await useCase.execute(req.user!, req.params.type!, req.body)
+
+    return res.status(204).json(result)
   }
 }

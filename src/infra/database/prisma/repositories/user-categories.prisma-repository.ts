@@ -9,6 +9,22 @@ export class UserCategoriesPrismaRepository
 {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
 
+  async save(userCategories: UserCategories): Promise<void> {
+    await this.prisma.userCategories.update({
+      where: {
+        id: userCategories.id
+      },
+      data: {
+        incomes: UserCategoriesPrismaUtils.toPrismaCategories(
+          userCategories.props.incomes
+        ),
+        expenses: UserCategoriesPrismaUtils.toPrismaCategories(
+          userCategories.props.expenses
+        )
+      }
+    })
+  }
+
   async create(category: UserCategories): Promise<UserCategories> {
     const createdCategory = await this.prisma.userCategories.create({
       data: {
