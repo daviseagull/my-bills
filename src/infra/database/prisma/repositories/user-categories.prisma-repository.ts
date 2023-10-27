@@ -1,13 +1,29 @@
 import { IUserCategoriesRepository } from '@/application/repositories/user-categories.repository'
 import { UserCategories } from '@/domain/entities/user-categories.entity'
 import { PrismaClient } from '@prisma/client'
-import { CategoryPrismaMapper } from './prisma/mappers/category.prisma-mapper'
-import { UserCategoriesPrismaUtils } from './prisma/utils/user-categories.prisma-utils'
+import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
+import { UserCategoriesPrismaUtils } from '../utils/user-categories.prisma-utils'
 
 export class UserCategoriesPrismaRepository
   implements IUserCategoriesRepository
 {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
+
+  async save(userCategories: UserCategories): Promise<void> {
+    await this.prisma.userCategories.update({
+      where: {
+        id: userCategories.id
+      },
+      data: {
+        incomes: UserCategoriesPrismaUtils.toPrismaCategories(
+          userCategories.props.incomes
+        ),
+        expenses: UserCategoriesPrismaUtils.toPrismaCategories(
+          userCategories.props.expenses
+        )
+      }
+    })
+  }
 
   async create(category: UserCategories): Promise<UserCategories> {
     const createdCategory = await this.prisma.userCategories.create({
