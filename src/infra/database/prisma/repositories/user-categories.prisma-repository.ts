@@ -1,8 +1,8 @@
 import { IUserCategoriesRepository } from '@/application/repositories/user-categories.repository'
 import { UserCategories } from '@/domain/entities/user-categories.entity'
 import { PrismaClient } from '@prisma/client'
-import { CategoryPrismaMapper } from './prisma/mappers/category.prisma-mapper'
-import { UserCategoriesPrismaUtils } from './prisma/utils/user-categories.prisma-utils'
+import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
+import { UserCategoriesPrismaUtils } from '../utils/user-categories.prisma-utils'
 
 export class UserCategoriesPrismaRepository
   implements IUserCategoriesRepository

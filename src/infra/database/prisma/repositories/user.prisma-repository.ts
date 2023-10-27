@@ -1,7 +1,7 @@
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { PrismaClient } from '@prisma/client'
-import { UserPrismaMapper } from './prisma/mappers/user.prisma-mapper'
+import { UserPrismaMapper } from '../mappers/user.prisma-mapper'
 
 export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}

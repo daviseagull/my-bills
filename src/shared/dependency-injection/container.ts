@@ -4,8 +4,8 @@ import { IAuthenticationService } from '@/application/services/authentication.se
 import { CreateDefaultCategoriesUseCase } from '@/application/use-cases/category/create-default-categories.use-case'
 import { CreateUserUseCase } from '@/application/use-cases/user/create-user.use-case'
 import { CognitoService } from '@/infra/authentication/service/cognito.service'
-import { UserCategoriesPrismaRepository } from '@/infra/database/user-categories.prisma-repository'
-import { UserPrismaRepository } from '@/infra/database/user.prisma-repository'
+import { UserCategoriesPrismaRepository } from '@/infra/database/prisma/repositories/user-categories.prisma-repository'
+import { UserPrismaRepository } from '@/infra/database/prisma/repositories/user.prisma-repository'
 import { container } from 'tsyringe'
 
 // Repositories
