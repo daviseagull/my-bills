@@ -37,4 +37,5 @@ type PrismaCategory {
   description String
   color       String
   parent      String?
+  active      Boolean
 }

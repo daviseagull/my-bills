@@ -16,7 +16,8 @@ export class CategoryUtils {
     Object.values(IncomeCategoriesEnum).forEach((key, index) => {
       categories.push({
         color: Color.create(IncomeCategoriesColor.get(key)!),
-        description: key.toString()
+        description: key.toString(),
+        active: true
       })
     })
 
@@ -29,7 +30,8 @@ export class CategoryUtils {
     Object.values(ExpenseCategoriesEnum).forEach((key, index) => {
       categories.push({
         color: Color.create(ExpenseCategoriesColor.get(key)!),
-        description: key.toString()
+        description: key.toString(),
+        active: true
       })
     })
 

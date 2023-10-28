@@ -26,7 +26,8 @@ export class CategoryPrismaMapper {
       return {
         description: category.description,
         color: Color.create(category.color),
-        parent: category.parent
+        parent: category.parent ?? undefined,
+        active: category.active
       }
     })
     return categories

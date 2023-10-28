@@ -48,7 +48,8 @@ export class CognitoService implements IAuthenticationService {
       }
     }
     try {
-      const data = await CognitoUtils.cognitoServiceProvider().initiateAuth(params)
+      const data =
+        await CognitoUtils.cognitoServiceProvider().initiateAuth(params)
       return {
         status: 'OK',
         accessToken: data.AuthenticationResult!.AccessToken!,
@@ -56,7 +57,7 @@ export class CognitoService implements IAuthenticationService {
       }
     } catch (err) {
       if (err instanceof UserNotConfirmedException) {
-        throw new BadRequestError(`User ${username} not confirmed`)
+        throw new BadRequestError(`User ${username} isn't confirmed`)
       }
       if (err instanceof NotAuthorizedException) {
         throw new BadRequestError('Invalid username or password')
@@ -78,7 +79,8 @@ export class CognitoService implements IAuthenticationService {
     }
 
     try {
-      const cognitoUser = await CognitoUtils.cognitoServiceProvider().signUp(params)
+      const cognitoUser =
+        await CognitoUtils.cognitoServiceProvider().signUp(params)
       return cognitoUser.UserSub!
     } catch (err) {
       if (err instanceof UsernameExistsException) {

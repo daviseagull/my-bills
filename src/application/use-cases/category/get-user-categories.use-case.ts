@@ -25,7 +25,13 @@ export class GetUserCategoriesUseCase {
     }
 
     return type === CategoryTypeEnum.expenses
-      ? CategoryMapper.toCategoryDto(categories!.props.expenses)
-      : CategoryMapper.toCategoryDto(categories!.props.incomes)
+      ? CategoryMapper.toCategoryDto(
+          categories!.props.expenses.filter(
+            (expense) => expense.active === true
+          )
+        )
+      : CategoryMapper.toCategoryDto(
+          categories!.props.incomes.filter((income) => income.active === true)
+        )
   }
 }

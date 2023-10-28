@@ -53,7 +53,8 @@ export class AddCategoryUseCase {
     userCategories.props.expenses.push({
       description: request.description,
       color: Color.create(request.color),
-      parent: request.parent
+      parent: request.parent,
+      active: true
     })
 
     this.categoryRepository.save(userCategories)
@@ -68,7 +69,8 @@ export class AddCategoryUseCase {
     userCategories.props.incomes.push({
       description: request.description,
       color: Color.create(request.color),
-      parent: request.parent
+      parent: request.parent,
+      active: true
     })
 
     this.categoryRepository.save(userCategories)
