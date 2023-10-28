@@ -4,7 +4,8 @@ import { Color } from '../value-objects/color'
 export interface ICategory {
   description: string
   color: Color
-  parent?: string | null
+  parent?: string
+  active: boolean
 }
 
 type CategoryProps = {

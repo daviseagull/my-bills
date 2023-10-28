@@ -8,7 +8,8 @@ export class UserCategoriesPrismaUtils {
       return {
         description: category.description,
         color: Color.create(category.color),
-        parent: category.parent
+        parent: category.parent ?? undefined,
+        active: category.active
       }
     })
     return categories
@@ -19,7 +20,8 @@ export class UserCategoriesPrismaUtils {
       return {
         description: category.description,
         color: category.color.props.value,
-        parent: category.parent!
+        parent: category.parent!,
+        active: category.active
       }
     })
     return prismaCategories
