@@ -26,16 +26,12 @@ type Name {
   fullname String
 }
 
-model UserCategories {
-  id          String           @id @default(auto()) @map("_id") @db.ObjectId
-  cognitoUser String           @unique
-  incomes     PrismaCategory[]
-  expenses    PrismaCategory[]
-}
-
-type PrismaCategory {
+model Category {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  user        String  @unique
   description String
   color       String
   parent      String?
   active      Boolean
+  type        String
 }

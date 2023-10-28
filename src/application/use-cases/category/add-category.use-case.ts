@@ -1,10 +1,7 @@
 import { BadRequestError } from '@/application/errors/app-error'
-import { IUserCategoriesRepository } from '@/application/repositories/user-categories.repository'
-import {
-  ICategory,
-  UserCategories
-} from '@/domain/entities/user-categories.entity'
-import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
+import { CategoryRepository } from '@/application/repositories/category.repository'
+import { CategoryUtils } from '@/application/utils/category.utils'
+import { Category } from '@/domain/entities/category.entity'
 import { Color } from '@/domain/value-objects/color'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
@@ -13,93 +10,71 @@ export interface AddCategoryRequest {
   description: string
   color: string
   parent?: string
+  active: boolean
+  type: string
+}
+
+export interface AddCategoryResponse {
+  id: string
 }
 
 @injectable()
 export class AddCategoryUseCase {
   constructor(
-    @inject('UserCategoriesRepository')
-    private categoryRepository: IUserCategoriesRepository
+    @inject('CategoryRepository')
+    private categoryRepository: CategoryRepository
   ) {}
 
   public async execute(
     user: string,
-    type: string,
     request: AddCategoryRequest
-  ): Promise<void> {
-    logger.info(`Add ${type} category ${request.description} to user ${user}`)
-
-    const userCategories = await this.categoryRepository.findByUser(user)
-
-    if (!userCategories) {
-      throw new BadRequestError(`Couldn't found categories for user ${user}`)
-    }
-
-    if (type === CategoryTypeEnum.incomes) {
-      await this.addIncome(userCategories!, request)
-    } else if (type === CategoryTypeEnum.expenses) {
-      await this.addExpense(userCategories!, request)
-    } else {
-      throw new BadRequestError('Invalid type')
-    }
-  }
-
-  private async addExpense(
-    userCategories: UserCategories,
-    request: AddCategoryRequest
-  ) {
-    this.validateCategory(userCategories.props.expenses, request)
-
-    userCategories.props.expenses.push({
-      description: request.description,
-      color: Color.create(request.color),
-      parent: request.parent,
-      active: true
-    })
-
-    this.categoryRepository.save(userCategories)
-  }
-
-  private addIncome(
-    userCategories: UserCategories,
-    request: AddCategoryRequest
-  ): void {
-    this.validateCategory(userCategories.props.incomes, request)
-
-    userCategories.props.incomes.push({
-      description: request.description,
-      color: Color.create(request.color),
-      parent: request.parent,
-      active: true
-    })
-
-    this.categoryRepository.save(userCategories)
-  }
-
-  private validateCategory(
-    categories: ICategory[],
-    request: AddCategoryRequest
-  ) {
-    const parentCategory = categories.find(
-      (category) => category.description === request.parent
+  ): Promise<AddCategoryResponse> {
+    logger.info(
+      `Add ${request.type} category ${request.description} to user ${user}`
     )
 
-    if (!parentCategory) {
+    await this.validateCategory(user, request)
+
+    const createdCategory = await this.categoryRepository.create(
+      Category.create({
+        user,
+        description: request.description,
+        color: Color.create(request.color),
+        parent: request.parent,
+        active: request.active,
+        type: CategoryUtils.mapCategoryTypeEnum(request.type)
+      })
+    )
+
+    return { id: createdCategory.id! }
+  }
+
+  private async validateCategory(user: string, request: AddCategoryRequest) {
+    const category = await this.categoryRepository.findByUserAndDescription(
+      user,
+      request.description
+    )
+    logger.info(`${JSON.stringify(request)}`)
+
+    logger.info(`${JSON.stringify(category)}`)
+    if (category && category.props.type === request.type) {
       throw new BadRequestError(
-        `Couldn't add category ${request.description} because ${request.parent} parent doesn't exists`
+        `Couldn't add category '${request.description}' because it already exists`
       )
     }
 
-    const category = categories.find(
-      (category) =>
-        category.description === request.description ||
-        category.color.props.value === request.color
-    )
+    if (request.parent) {
+      const parentCategory =
+        await this.categoryRepository.findByUserAndDescription(
+          user,
+          request.parent
+        )
 
-    if (category) {
-      throw new BadRequestError(
-        `Couldn't add category ${request.description} because it already exists`
-      )
+      if (!parentCategory) {
+        throw new BadRequestError(
+          `Couldn't add category ${request.description} because ${request.parent} parent doesn't exists`
+        )
+      }
     }
   }
 }

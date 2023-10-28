@@ -1,20 +1,17 @@
 import { Entity } from '../abstracts/entity'
+import { CategoryTypeEnum } from '../enums/category-type.enum'
 import { Color } from '../value-objects/color'
 
-export interface ICategory {
+type CategoryProps = {
+  user: string
+  type: CategoryTypeEnum
   description: string
   color: Color
   parent?: string
   active: boolean
 }
 
-type CategoryProps = {
-  user: string
-  incomes: ICategory[]
-  expenses: ICategory[]
-}
-
-export class UserCategories extends Entity<CategoryProps> {
+export class Category extends Entity<CategoryProps> {
   private constructor(props: CategoryProps, id?: string) {
     super(props, id)
   }
@@ -24,6 +21,6 @@ export class UserCategories extends Entity<CategoryProps> {
   }
 
   static create(props: CategoryProps, id?: string) {
-    return new UserCategories(props, id)
+    return new Category(props, id)
   }
 }
