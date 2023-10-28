@@ -54,9 +54,7 @@ export class AddCategoryUseCase {
       user,
       request.description
     )
-    logger.info(`${JSON.stringify(request)}`)
 
-    logger.info(`${JSON.stringify(category)}`)
     if (category && category.props.type === request.type) {
       throw new BadRequestError(
         `Couldn't add category '${request.description}' because it already exists`
