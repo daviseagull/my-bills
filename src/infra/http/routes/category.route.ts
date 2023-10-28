@@ -11,6 +11,6 @@ categoryRoutes.get(
   categoryController.getCategories
 )
 
-categoryRoutes.post('/:type', authenticateToken, categoryController.addCategory)
+categoryRoutes.post('', authenticateToken, categoryController.addCategory)
 
 export default categoryRoutes
