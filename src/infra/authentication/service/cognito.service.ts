@@ -63,6 +63,14 @@ export class CognitoService implements IAuthenticationService {
         throw new BadRequestError('Invalid username or password')
       }
 
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          'Unknown error while trying to authenticate',
+          err.name,
+          err.stack
+        )
+      }
+
       throw new InternalServerError(
         'Unknown error while trying to authenticate'
       )
@@ -92,6 +100,15 @@ export class CognitoService implements IAuthenticationService {
       if (err instanceof InvalidPasswordException) {
         throw new BadRequestError(err.message)
       }
+
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          `Unknown error while trying to create user in IAM`,
+          err.name,
+          err.stack
+        )
+      }
+
       throw new InternalServerError(
         `Unknown error while trying to create user in IAM`
       )
@@ -132,12 +149,24 @@ export class CognitoService implements IAuthenticationService {
       if (err instanceof ExpiredCodeException) {
         throw new BadRequestError('Code has expired')
       }
+
       if (err instanceof CodeMismatchException) {
         throw new BadRequestError(
           "Code doesn't match with what server was expecting"
         )
       }
-      throw new BadRequestError('Unknown error while trying to confirm user')
+
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          'Unknown error while trying to confirm user',
+          err.name,
+          err.stack
+        )
+      }
+
+      throw new InternalServerError(
+        'Unknown error while trying to confirm user'
+      )
     }
   }
 
@@ -150,6 +179,14 @@ export class CognitoService implements IAuthenticationService {
     try {
       await CognitoUtils.cognitoServiceProvider().resendConfirmationCode(params)
     } catch (err) {
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          'Unknown error while trying to resend confirmation code',
+          err.name,
+          err.stack
+        )
+      }
+
       throw new InternalServerError(
         'Unknown error while trying to resend confirmation code'
       )
@@ -166,6 +203,14 @@ export class CognitoService implements IAuthenticationService {
     try {
       await CognitoUtils.cognitoServiceProvider().forgotPassword(params)
     } catch (err) {
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          'Unknown error while trying to forgot password',
+          err.name,
+          err.stack
+        )
+      }
+
       throw new InternalServerError(
         'Unknown error while trying to forgot password'
       )
@@ -188,6 +233,14 @@ export class CognitoService implements IAuthenticationService {
     try {
       await CognitoUtils.cognitoServiceProvider().confirmForgotPassword(params)
     } catch (err) {
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          'Unknown error while trying to resend confirmation code',
+          err.name,
+          err.stack
+        )
+      }
+
       throw new InternalServerError(
         'Unknown error while trying to resend confirmation code'
       )
@@ -202,6 +255,14 @@ export class CognitoService implements IAuthenticationService {
     try {
       await CognitoUtils.cognitoServiceProvider().globalSignOut(params)
     } catch (err) {
+      if (err instanceof Error) {
+        throw new InternalServerError(
+          'Unknown error while trying to resend confirmation code',
+          err.name,
+          err.stack
+        )
+      }
+
       throw new InternalServerError(
         'Unknown error while trying to resend confirmation code'
       )

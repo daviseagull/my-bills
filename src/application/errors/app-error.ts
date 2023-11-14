@@ -1,9 +1,16 @@
 export class AppError extends Error {
   public readonly statusCode: number
 
-  protected constructor(message: string, statusCode: number) {
+  protected constructor(
+    message: string,
+    statusCode: number,
+    name?: string,
+    stack?: string
+  ) {
     super(message)
     this.statusCode = statusCode
+    this.stack = stack
+    this.name = name ?? ''
   }
 }
 
@@ -26,7 +33,7 @@ export class NotFoundError extends AppError {
 }
 
 export class InternalServerError extends AppError {
-  constructor(message: string) {
-    super(message, 500)
+  constructor(message: string, name?: string, stack?: string) {
+    super(message, 500, name, stack)
   }
 }
