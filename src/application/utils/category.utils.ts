@@ -29,9 +29,6 @@ export class CategoryUtils {
 
   private static createExpenses(categories: Category[], user: string) {
     Object.values(ExpenseCategoriesEnum).forEach((key) => {
-      logger.info(
-        `Key ${key.toString()} color ${IncomeCategoriesColor.get(key)}`
-      )
       categories.push(
         Category.create({
           type: CategoryTypeEnum.expenses,
@@ -46,9 +43,6 @@ export class CategoryUtils {
 
   private static createIncomes(categories: Category[], user: string) {
     Object.values(IncomeCategoriesEnum).forEach((key) => {
-      logger.info(
-        `Key ${key.toString()} color ${IncomeCategoriesColor.get(key)}`
-      )
       categories.push(
         Category.create({
           type: CategoryTypeEnum.incomes,

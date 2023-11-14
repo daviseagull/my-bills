@@ -1,4 +1,7 @@
-import { InternalServerError } from '@/application/errors/app-error'
+import {
+  BadRequestError,
+  InternalServerError
+} from '@/application/errors/app-error'
 import { CategoryRepository } from '@/application/repositories/category.repository'
 import { Category } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
@@ -97,5 +100,53 @@ export class CategoryPrismaRepository implements CategoryRepository {
     return categories.map((category) =>
       CategoryPrismaMapper.toDomain(category!)
     )
+  }
+
+  async findByUserAndId(user: string, id: string): Promise<Category | null> {
+    const category = await this.prisma.category.findFirst({
+      where: {
+        user: user,
+        id: id
+      }
+    })
+
+    if (!category) {
+      return null
+    }
+
+    return CategoryPrismaMapper.toDomain(category!)
+  }
+
+  async update(categoryToUpdate: Category): Promise<Category> {
+    const category = await this.findByUserAndId(
+      categoryToUpdate.props.user,
+      categoryToUpdate.id!
+    )
+
+    if (!category) {
+      throw new BadRequestError(
+        `Couldn't find category with id ${categoryToUpdate.id} and user ${categoryToUpdate.props.user}`
+      )
+    }
+
+    const updatedCategory = await this.prisma.category.update({
+      where: {
+        id: category.id
+      },
+      data: {
+        description: categoryToUpdate.props.description,
+        color: categoryToUpdate.props.color.props.value,
+        parent: categoryToUpdate.props.parent,
+        active: categoryToUpdate.props.active
+      }
+    })
+
+    if (!updatedCategory) {
+      throw new InternalServerError(
+        `Couldn't update category ${categoryToUpdate.id}`
+      )
+    }
+
+    return CategoryPrismaMapper.toDomain(updatedCategory)
   }
 }

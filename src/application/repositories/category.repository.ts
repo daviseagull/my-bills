@@ -11,4 +11,6 @@ export interface CategoryRepository {
     description: string
   ): Promise<Category | null>
   findByUserAndType(user: string, type: CategoryTypeEnum): Promise<Category[]>
+  findByUserAndId(user: string, id: string): Promise<Category | null>
+  update(category: Category): Promise<Category>
 }

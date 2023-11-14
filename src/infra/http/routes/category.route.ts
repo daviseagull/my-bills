@@ -13,4 +13,6 @@ categoryRoutes.get(
 
 categoryRoutes.post('', authenticateToken, categoryController.addCategory)
 
+categoryRoutes.put('', authenticateToken, categoryController.editCategory)
+
 export default categoryRoutes
