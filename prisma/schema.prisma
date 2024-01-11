@@ -23,12 +23,11 @@ model User {
 type Name {
   first    String
   last     String
-  fullname String
 }
 
 model Category {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  user        String  @unique
+  user        String  
   description String
   color       String
   parent      String?

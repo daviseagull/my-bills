@@ -1,7 +1,7 @@
 export interface NameDto {
   first: string
   last: string
-  fullname: string
+  full: string
 }
 
 export interface UserDto {

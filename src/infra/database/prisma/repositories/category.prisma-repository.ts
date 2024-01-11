@@ -68,7 +68,7 @@ export class CategoryPrismaRepository implements CategoryRepository {
     user: string,
     description: string
   ): Promise<Category | null> {
-    const category = await this.prisma.category.findUnique({
+    const category = await this.prisma.category.findFirst({
       where: {
         user: user,
         description: description

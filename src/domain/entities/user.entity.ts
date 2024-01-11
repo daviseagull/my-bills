@@ -1,7 +1,7 @@
 import { Entity } from '@/domain/abstracts/entity'
-import { Name } from '../value-objects/name'
 import { Email } from '../value-objects/email'
 import { FiscalDocument } from '../value-objects/fiscal-document'
+import { Name } from '../value-objects/name'
 
 type UserProps = {
   email: Email

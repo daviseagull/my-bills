@@ -5,7 +5,6 @@ import { ValueObject } from '../abstracts/value-object'
 interface NameProps {
   first: string
   last: string
-  fullname: string
 }
 
 export class Name extends ValueObject<NameProps> {
@@ -31,8 +30,7 @@ export class Name extends ValueObject<NameProps> {
 
     return new Name({
       first,
-      last,
-      fullname: `${first} ${last}`
+      last
     })
   }
 }

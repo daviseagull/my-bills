@@ -6,7 +6,7 @@ import process from 'process'
 export class CognitoUtils {
   public static cognitoServiceProvider() {
     return new CognitoIdentityServiceProvider({
-      region: 'sa-east-1'
+      region: process.env['AWS_REGION']
     })
   }
 

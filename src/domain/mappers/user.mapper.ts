@@ -10,7 +10,11 @@ export class UserMapper {
       birthday: entity.props.birthday,
       gender: entity.props.gender,
       phone: entity.props.phone,
-      name: entity.props.name.props
+      name: {
+        first: entity.props.name.props.first,
+        last: entity.props.name.props.last,
+        full: `${entity.props.name.props.first} ${entity.props.name.props.last}`
+      }
     }
     return user
   }
