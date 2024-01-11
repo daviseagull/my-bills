@@ -1,4 +1,4 @@
-service: my-bills
+service: my-bills-api
 
 provider:
   name: aws
