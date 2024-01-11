@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Backend project of My Bills App (link here)
+Backend project of My Bills App
 
 ## Table of contents
 
