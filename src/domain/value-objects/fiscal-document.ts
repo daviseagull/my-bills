@@ -1,13 +1,11 @@
 import { BadRequestError } from '@/application/errors/app-error'
 import { cpf as CPF } from 'cpf-cnpj-validator'
-import { ValueObject } from '../abstracts/value-object'
+import { StringProp, ValueObject } from '../abstracts/value-object'
 
-interface FiscalDocumentProps {
-  value: string
-}
+type FiscalDocumentProps = StringProp
 
 export class FiscalDocument extends ValueObject<FiscalDocumentProps> {
-  private constructor(props: FiscalDocumentProps) {
+  private constructor(props: StringProp) {
     super(props)
   }
 

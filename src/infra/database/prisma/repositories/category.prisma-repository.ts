@@ -2,13 +2,13 @@ import {
   BadRequestError,
   InternalServerError
 } from '@/application/errors/app-error'
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { Category } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
 import { PrismaClient } from '@prisma/client'
 import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
 
-export class CategoryPrismaRepository implements CategoryRepository {
+export class CategoryPrismaRepository implements ICategoryRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
 
   async create(category: Category): Promise<Category> {

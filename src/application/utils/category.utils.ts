@@ -9,7 +9,6 @@ import {
   IncomeCategoriesEnum
 } from '@/domain/enums/income-category.enum'
 import { Color } from '@/domain/value-objects/color'
-import logger from '@/infra/logger/logger'
 
 export class CategoryUtils {
   public static mapCategoryTypeEnum(value: string): CategoryTypeEnum {

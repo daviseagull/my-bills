@@ -1,4 +1,4 @@
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { IAuthenticationService } from '@/application/services/authentication.service'
 import { CreateDefaultCategoriesUseCase } from '@/application/use-cases/category/create-default-categories.use-case'
@@ -15,7 +15,7 @@ container.registerSingleton<IUserRepository>(
   UserPrismaRepository
 )
 
-container.registerSingleton<CategoryRepository>(
+container.registerSingleton<ICategoryRepository>(
   'CategoryRepository',
   CategoryPrismaRepository
 )

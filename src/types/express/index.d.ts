@@ -2,7 +2,7 @@ export {}
 
 declare global {
   namespace Express {
-    export interface Request {
+    export type Request = {
       user?: string | undefined
       token?: string | undefined
     }

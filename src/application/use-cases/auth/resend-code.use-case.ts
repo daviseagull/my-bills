@@ -4,7 +4,7 @@ import { IAuthenticationService } from '@/application/services/authentication.se
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface ResendCodeRequest {
+export type ResendCodeRequest = {
   email: string
 }
 

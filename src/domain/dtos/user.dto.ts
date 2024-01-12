@@ -1,10 +1,10 @@
-export interface NameDto {
+export type NameDto = {
   first: string
   last: string
   full: string
 }
 
-export interface UserDto {
+export type UserDto = {
   id: string
   email: string
   name: NameDto

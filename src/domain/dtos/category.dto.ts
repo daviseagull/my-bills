@@ -1,4 +1,4 @@
-export interface CategoryDto {
+export type CategoryDto = {
   id: string
   user: string
   type: string

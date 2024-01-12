@@ -1,7 +1,7 @@
 import { Category } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
 
-export interface CategoryRepository {
+export interface ICategoryRepository {
   create(category: Category): Promise<Category>
   createMany(categories: Category[]): Promise<void>
   findByUser(user: string): Promise<Category[] | null>

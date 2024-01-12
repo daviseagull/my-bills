@@ -5,7 +5,7 @@ import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface ConfirmForgotPasswordRequest {
+export type ConfirmForgotPasswordRequest = {
   email: string
   code: string
   password: string

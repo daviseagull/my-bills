@@ -1,11 +1,11 @@
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { CategoryUtils } from '@/application/utils/category.utils'
 import { Category } from '@/domain/entities/category.entity'
 import { Color } from '@/domain/value-objects/color'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface EditCategoryRequest {
+export type EditCategoryRequest = {
   id: string
   user: string
   type: string
@@ -15,7 +15,7 @@ export interface EditCategoryRequest {
   active: boolean
 }
 
-export interface EditCategoryResponse {
+export type EditCategoryResponse = {
   id: string
 }
 
@@ -23,7 +23,7 @@ export interface EditCategoryResponse {
 export class EditCategoryUseCase {
   constructor(
     @inject('CategoryRepository')
-    private categoryRepository: CategoryRepository
+    private categoryRepository: ICategoryRepository
   ) {}
 
   public async execute(

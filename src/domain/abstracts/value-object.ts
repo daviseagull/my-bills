@@ -1,5 +1,9 @@
 import { shallowEqual } from 'shallow-equal-object'
 
+export type StringProp = {
+  value: string
+}
+
 export abstract class ValueObject<T> {
   public readonly props: T
 

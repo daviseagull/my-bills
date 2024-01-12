@@ -1,12 +1,12 @@
 import { BadRequestError } from '@/application/errors/app-error'
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { CategoryUtils } from '@/application/utils/category.utils'
 import { Category } from '@/domain/entities/category.entity'
 import { Color } from '@/domain/value-objects/color'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface AddCategoryRequest {
+export type AddCategoryRequest = {
   description: string
   color: string
   parent?: string
@@ -14,7 +14,7 @@ export interface AddCategoryRequest {
   type: string
 }
 
-export interface AddCategoryResponse {
+export type AddCategoryResponse = {
   id: string
 }
 
@@ -22,7 +22,7 @@ export interface AddCategoryResponse {
 export class AddCategoryUseCase {
   constructor(
     @inject('CategoryRepository')
-    private categoryRepository: CategoryRepository
+    private categoryRepository: ICategoryRepository
   ) {}
 
   public async execute(

@@ -3,12 +3,12 @@ import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 import { CreateUserUseCase } from '../user/create-user.use-case'
 
-export interface NameRequest {
+export type NameRequest = {
   first: string
   last: string
 }
 
-export interface SignUpRequest {
+export type SignUpRequest = {
   password: string
   email: string
   fiscalDocument: string
@@ -18,7 +18,7 @@ export interface SignUpRequest {
   phone: string
 }
 
-export interface SignUpResponse {
+export type SignUpResponse = {
   id: string
 }
 

@@ -2,7 +2,7 @@ import { BadRequestError } from '@/application/errors/app-error'
 import { StringUtils } from '@/application/utils/string.utils'
 import { ValueObject } from '../abstracts/value-object'
 
-interface NameProps {
+type NameProps = {
   first: string
   last: string
 }

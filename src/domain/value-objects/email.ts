@@ -1,9 +1,7 @@
 import { BadRequestError } from '@/application/errors/app-error'
-import { ValueObject } from '../abstracts/value-object'
+import { StringProp, ValueObject } from '../abstracts/value-object'
 
-interface EmailProps {
-  value: string
-}
+type EmailProps = StringProp
 
 export class Email extends ValueObject<EmailProps> {
   private constructor(props: EmailProps) {

@@ -1,6 +1,6 @@
 import { SignUpRequest } from '../use-cases/auth/sign-up.use-case'
 
-export interface AuthenticationResult {
+export type AuthenticationResult = {
   status: string
   type: string
   accessToken: string

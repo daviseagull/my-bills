@@ -1,5 +1,5 @@
 import { InternalServerError } from '@/application/errors/app-error'
-import { CategoryRepository } from '@/application/repositories/category.repository'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { CategoryDto } from '@/domain/dtos/category.dto'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
 import { CategoryMapper } from '@/domain/mappers/category.mapper'
@@ -10,7 +10,7 @@ import { inject, injectable } from 'tsyringe'
 export class GetUserCategoriesUseCase {
   constructor(
     @inject('CategoryRepository')
-    private categoryRepository: CategoryRepository
+    private categoryRepository: ICategoryRepository
   ) {}
 
   public async execute(

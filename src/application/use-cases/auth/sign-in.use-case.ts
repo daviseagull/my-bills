@@ -8,7 +8,7 @@ import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface SignInRequest {
+export type SignInRequest = {
   email: string
   password: string
 }
