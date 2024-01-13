@@ -5,8 +5,14 @@ import { UserPrismaMapper } from '../mappers/user.prisma-mapper'
 
 export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
-  findByUsername(username: string): Promise<User | null> {
-    throw new Error('Method not implemented.')
+
+  async confirmUser(id: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: id },
+      data: {
+        confirmed: true
+      }
+    })
   }
 
   async create(user: User): Promise<User> {

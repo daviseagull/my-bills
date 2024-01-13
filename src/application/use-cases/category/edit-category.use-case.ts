@@ -1,3 +1,4 @@
+import { BadRequestError } from '@/application/errors/app-error'
 import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { CategoryUtils } from '@/application/utils/category.utils'
 import { Category } from '@/domain/entities/category.entity'
@@ -30,6 +31,10 @@ export class EditCategoryUseCase {
     user: string,
     request: EditCategoryRequest
   ): Promise<EditCategoryResponse> {
+    if (!request.id) {
+      throw new BadRequestError('Category id must be provided.')
+    }
+
     logger.info(`Edit ${request.id} category to user ${user}`)
 
     const category = Category.create(

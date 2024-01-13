@@ -125,13 +125,13 @@ export class CategoryPrismaRepository implements ICategoryRepository {
 
     if (!category) {
       throw new BadRequestError(
-        `Couldn't find category with id ${categoryToUpdate.id} and user ${categoryToUpdate.props.user}`
+        `Couldn't find category with id ${categoryToUpdate.id}`
       )
     }
 
     const updatedCategory = await this.prisma.category.update({
       where: {
-        id: category.id
+        id: categoryToUpdate.id
       },
       data: {
         description: categoryToUpdate.props.description,
