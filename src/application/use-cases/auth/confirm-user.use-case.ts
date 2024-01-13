@@ -18,7 +18,7 @@ export class ConfirmUserUseCase {
 
   public async execute(request: ConfirmUserRequest): Promise<void> {
     logger.info(`Confirming user ${request.email} sign up`)
-    const user = this.userRepository.findByEmail(request.email)
+    const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new NotFoundError(
@@ -27,5 +27,7 @@ export class ConfirmUserUseCase {
     }
 
     await this.authService.confirmUser(request.email, request.code)
+
+    this.userRepository.confirmUser(user.id!)
   }
 }

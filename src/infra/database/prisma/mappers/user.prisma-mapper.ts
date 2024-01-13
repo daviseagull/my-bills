@@ -19,7 +19,7 @@ export class UserPrismaMapper {
           raw.phone.number
         ),
         name: Name.create(raw.name.first, raw.name.last),
-        confirmed: false,
+        confirmed: raw.confirmed,
         cognitoId: raw.cognitoId
       },
       raw.id

@@ -44,7 +44,7 @@ export class AuthController {
 
     const result = await useCase.execute(body)
 
-    return res.status(200).json(result)
+    return res.status(204).json(result)
   }
 
   async signIn(req: Request, res: Response) {

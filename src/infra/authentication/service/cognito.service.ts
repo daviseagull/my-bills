@@ -12,6 +12,7 @@ import {
   CodeMismatchException,
   ExpiredCodeException,
   InvalidPasswordException,
+  LimitExceededException,
   NotAuthorizedException,
   UserNotConfirmedException,
   UsernameExistsException
@@ -185,6 +186,12 @@ export class CognitoService implements IAuthenticationService {
     try {
       await CognitoUtils.cognitoServiceProvider().resendConfirmationCode(params)
     } catch (err) {
+      if (err instanceof LimitExceededException) {
+        throw new InternalServerError(
+          'Attempt limit exceeded, please try after some time'
+        )
+      }
+
       if (err instanceof Error) {
         throw new InternalServerError(
           'Unknown error while trying to resend confirmation code',
