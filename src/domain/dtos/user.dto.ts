@@ -4,6 +4,12 @@ export type NameDto = {
   full: string
 }
 
+export type PhoneDto = {
+  country: string
+  areaCode: number
+  number: number
+}
+
 export type UserDto = {
   id: string
   email: string
@@ -11,5 +17,5 @@ export type UserDto = {
   birthday: Date
   fiscalDocument: string
   gender: string
-  phone: string
+  phone: PhoneDto
 }

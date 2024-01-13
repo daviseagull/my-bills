@@ -89,6 +89,7 @@ export class CognitoService implements IAuthenticationService {
     try {
       const cognitoUser =
         await CognitoUtils.cognitoServiceProvider().signUp(params)
+
       return cognitoUser.UserSub!
     } catch (err) {
       if (err instanceof UsernameExistsException) {
@@ -125,7 +126,12 @@ export class CognitoService implements IAuthenticationService {
     )
     userAttr.push(UserAttribute.create('given_name', user.name.first))
     userAttr.push(UserAttribute.create('family_name', user.name.last))
-    userAttr.push(UserAttribute.create('phone_number', user.phone))
+    userAttr.push(
+      UserAttribute.create(
+        'phone_number',
+        `${user.phone.country}${user.phone.areaCode}${user.phone.number}`
+      )
+    )
     userAttr.push(
       UserAttribute.create(
         'custom:fiscal_document',

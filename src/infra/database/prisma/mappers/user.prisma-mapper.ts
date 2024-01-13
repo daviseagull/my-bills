@@ -2,6 +2,7 @@ import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
 import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
+import { Phone } from '@/domain/value-objects/phone'
 import { Prisma, User as RawUser } from '@prisma/client'
 
 export class UserPrismaMapper {
@@ -12,7 +13,11 @@ export class UserPrismaMapper {
         fiscalDocument: FiscalDocument.create(raw.fiscalDocument),
         birthday: new Date(raw.birthday),
         gender: raw.gender,
-        phone: raw.phone,
+        phone: Phone.create(
+          raw.phone.country,
+          raw.phone.areaCode,
+          raw.phone.number
+        ),
         name: Name.create(raw.name.first, raw.name.last),
         confirmed: false,
         cognitoId: raw.cognitoId
@@ -29,7 +34,7 @@ export class UserPrismaMapper {
       fiscalDocument: user.props.fiscalDocument.props.value,
       birthday: new Date(user.props.birthday),
       gender: user.props.gender,
-      phone: user.props.phone,
+      phone: user.props.phone.props,
       name: user.props.name.props,
       confirmed: user.props.confirmed,
       cognitoId: user.props.cognitoId!

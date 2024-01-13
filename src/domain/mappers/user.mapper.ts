@@ -9,7 +9,7 @@ export class UserMapper {
       fiscalDocument: entity.props.fiscalDocument.props.value,
       birthday: entity.props.birthday,
       gender: entity.props.gender,
-      phone: entity.props.phone,
+      phone: entity.props.phone.props,
       name: {
         first: entity.props.name.props.first,
         last: entity.props.name.props.last,

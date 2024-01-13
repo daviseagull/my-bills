@@ -15,9 +15,17 @@ model User {
   fiscalDocument String   @unique
   birthday       DateTime
   gender         String
-  phone          String
+  phone          Phone
   name           Name
   confirmed      Boolean
+
+  @@map("users")
+}
+
+type Phone {
+  country   String
+  areaCode  Int
+  number    Int
 }
 
 type Name {
@@ -33,4 +41,6 @@ model Category {
   parent      String?
   active      Boolean
   type        String
+
+  @@map("categories")
 }

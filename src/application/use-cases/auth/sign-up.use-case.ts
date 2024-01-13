@@ -8,6 +8,12 @@ export type NameRequest = {
   last: string
 }
 
+export type PhoneRequest = {
+  country: string
+  areaCode: number
+  number: number
+}
+
 export type SignUpRequest = {
   password: string
   email: string
@@ -15,7 +21,7 @@ export type SignUpRequest = {
   name: NameRequest
   birthday: Date
   gender: string
-  phone: string
+  phone: PhoneRequest
 }
 
 export type SignUpResponse = {

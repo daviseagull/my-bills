@@ -4,6 +4,7 @@ import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
 import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
+import { Phone } from '@/domain/value-objects/phone'
 import { inject, injectable } from 'tsyringe'
 import { SignUpRequest } from '../auth/sign-up.use-case'
 import { CreateDefaultCategoriesUseCase } from '../category/create-default-categories.use-case'
@@ -25,7 +26,11 @@ export class CreateUserUseCase {
       fiscalDocument: FiscalDocument.create(request.fiscalDocument),
       birthday: new Date(request.birthday),
       gender: request.gender,
-      phone: request.phone,
+      phone: Phone.create(
+        request.phone.country,
+        request.phone.areaCode,
+        request.phone.number
+      ),
       name: Name.create(request.name.first, request.name.last),
       cognitoId: cognitoId,
       confirmed: false

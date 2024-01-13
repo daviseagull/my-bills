@@ -26,6 +26,6 @@ export class ConfirmUserUseCase {
       )
     }
 
-    this.authService.confirmUser(request.email, request.code)
+    await this.authService.confirmUser(request.email, request.code)
   }
 }

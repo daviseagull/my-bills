@@ -16,7 +16,7 @@ export class UserPrismaRepository implements IUserRepository {
         birthday: new Date(user.props.birthday),
         fiscalDocument: user.props.fiscalDocument.props.value,
         gender: user.props.gender,
-        phone: user.props.phone,
+        phone: user.props.phone.props,
         name: user.props.name.props,
         confirmed: user.props.confirmed,
         cognitoId: user.props.cognitoId!
