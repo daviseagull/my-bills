@@ -5,7 +5,7 @@ import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface ConfirmForgotPasswordRequest {
+export type ConfirmForgotPasswordRequest = {
   email: string
   code: string
   password: string
@@ -22,7 +22,7 @@ export class ConfirmForgotPasswordUseCase {
     logger.info(`Confirming password reset for user ${request.email}`)
     PasswordUtils.validatePassword(request.password)
 
-    const user = this.userRepository.findByEmail(request.email)
+    const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new NotFoundError(
@@ -30,7 +30,7 @@ export class ConfirmForgotPasswordUseCase {
       )
     }
 
-    this.authService.confirmResetPassword(
+    await this.authService.confirmResetPassword(
       request.email,
       request.code,
       request.password

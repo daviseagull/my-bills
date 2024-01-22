@@ -4,11 +4,10 @@ import {
   AuthenticationResult,
   IAuthenticationService
 } from '@/application/services/authentication.service'
-import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface SignInRequest {
+export type SignInRequest = {
   email: string
   password: string
 }
@@ -22,9 +21,8 @@ export class SignInUseCase {
 
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
     logger.info(`Trying to log in user ${request.email}`)
-    PasswordUtils.validatePassword(request.password)
 
-    const user = this.userRepository.findByEmail(request.email)
+    const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new NotFoundError(
@@ -32,6 +30,6 @@ export class SignInUseCase {
       )
     }
 
-    return this.authService.signIn(request.email, request.password)
+    return await this.authService.signIn(request.email, request.password)
   }
 }

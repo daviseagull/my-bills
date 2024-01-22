@@ -5,7 +5,7 @@ import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-export class CreateDefaultCategoryUseCase {
+export class CreateDefaultCategoriesUseCase {
   constructor(
     @inject('CategoryRepository')
     private categoryRepository: ICategoryRepository
@@ -13,13 +13,7 @@ export class CreateDefaultCategoryUseCase {
 
   public execute(user: string): void {
     logger.info(`Creating categories for user ${user}`)
-
-    const userCategories = Category.create({
-      user,
-      incomes: CategoryUtils.createDefaultIncome(),
-      expenses: CategoryUtils.createDefaultExpense()
-    })
-
-    this.categoryRepository.create(userCategories)
+    const categories: Category[] = CategoryUtils.createDefaultCategories(user)
+    this.categoryRepository.createMany(categories)
   }
 }

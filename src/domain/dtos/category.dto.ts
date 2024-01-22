@@ -1,8 +1,11 @@
-import { ICategory } from '../entities/category.entity'
-
-export interface CategoryDto {
+export type CategoryDto = {
   id: string
+  createdAt: string
+  updatedAt: string
   user: string
-  incomes: ICategory[]
-  expenses: ICategory[]
+  type: string
+  description: string
+  color: string
+  parent?: string
+  active: boolean
 }

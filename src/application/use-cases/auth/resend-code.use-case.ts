@@ -1,10 +1,10 @@
-import { NotFoundError } from '@/application/errors/app-error'
+import { BadRequestError, NotFoundError } from '@/application/errors/app-error'
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { IAuthenticationService } from '@/application/services/authentication.service'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface ResendCodeRequest {
+export type ResendCodeRequest = {
   email: string
 }
 
@@ -17,12 +17,18 @@ export class ResendCodeUseCase {
 
   public async execute(request: ResendCodeRequest): Promise<void> {
     logger.info(`Resend confirmation code for user ${request.email}`)
-    const user = this.userRepository.findByEmail(request.email)
+    const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new NotFoundError(
         `Couldn't find user in the database ${request.email}`
       )
+    }
+
+    logger.info(JSON.stringify(user))
+    if (user.props.confirmed) {
+      logger.info('teste')
+      throw new BadRequestError('User already confirmed')
     }
 
     await this.authService.resendConfirmationCode(request.email)

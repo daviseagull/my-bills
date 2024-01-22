@@ -1,12 +1,18 @@
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { PrismaClient } from '@prisma/client'
-import { UserPrismaMapper } from './prisma/mappers/user.prisma-mapper'
+import { UserPrismaMapper } from '../mappers/user.prisma-mapper'
 
 export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
-  findByUsername(username: string): Promise<User | null> {
-    throw new Error('Method not implemented.')
+
+  async confirmUser(id: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: id },
+      data: {
+        confirmed: true
+      }
+    })
   }
 
   async create(user: User): Promise<User> {
@@ -14,14 +20,20 @@ export class UserPrismaRepository implements IUserRepository {
       data: {
         email: user.props.email.props.value,
         birthday: new Date(user.props.birthday),
-        fiscalDocument: user.props.fiscalDocument.props.value,
-        gender: user.props.gender,
-        phone: user.props.phone,
-        name: user.props.name.props,
+        firstName: user.props.name.props.first,
+        lastName: user.props.name.props.last,
         confirmed: user.props.confirmed,
-        cognitoId: user.props.cognitoId!
+        cognitoId: user.props.cognitoId!,
+        phone: {
+          create: {
+            country: user.props.phone.props.country,
+            areaCode: user.props.phone.props.areaCode,
+            number: user.props.phone.props.number
+          }
+        }
       }
     })
+
     return UserPrismaMapper.toDomain(createdUser)
   }
 

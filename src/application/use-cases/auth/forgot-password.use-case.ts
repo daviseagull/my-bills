@@ -4,7 +4,7 @@ import { IAuthenticationService } from '@/application/services/authentication.se
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
-export interface ForgotPasswordRequest {
+export type ForgotPasswordRequest = {
   email: string
 }
 
@@ -17,7 +17,7 @@ export class ForgotPasswordUseCase {
 
   public async execute(request: ForgotPasswordRequest): Promise<void> {
     logger.info(`Resetting password for user ${request.email}`)
-    const user = this.userRepository.findByEmail(request.email)
+    const user = await this.userRepository.findByEmail(request.email)
 
     if (!user) {
       throw new NotFoundError(
@@ -25,6 +25,6 @@ export class ForgotPasswordUseCase {
       )
     }
 
-    this.authService.forgotPassword(request.email)
+    await this.authService.forgotPassword(request.email)
   }
 }

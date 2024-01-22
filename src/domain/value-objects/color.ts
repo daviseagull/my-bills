@@ -1,12 +1,8 @@
 import { BadRequestError } from '@/application/errors/app-error'
-import { ValueObject } from '../abstracts/value-object'
+import { StringProp, ValueObject } from '../abstracts/value-object'
 
-interface ColorProps {
-  value: string
-}
-
-export class Color extends ValueObject<ColorProps> {
-  private constructor(props: ColorProps) {
+export class Color extends ValueObject<StringProp> {
+  private constructor(props: StringProp) {
     super(props)
   }
 

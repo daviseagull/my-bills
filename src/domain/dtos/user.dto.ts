@@ -1,15 +1,21 @@
-export interface NameDto {
+export type NameDto = {
   first: string
   last: string
-  fullname: string
+  full: string
 }
 
-export interface UserDto {
+export type PhoneDto = {
+  country: string
+  areaCode: number
+  number: number
+}
+
+export type UserDto = {
   id: string
+  createdAt: string
+  updatedAt: string
   email: string
   name: NameDto
-  birthday: Date
-  fiscalDocument: string
-  gender: string
-  phone: string
+  birthday: string
+  phone: PhoneDto
 }

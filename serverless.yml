@@ -1,9 +1,9 @@
-service: my-bills
+service: my-bills-api
 
 provider:
   name: aws
-  runtime: nodejs18.x
-  region: sa-east-1
+  runtime: nodejs20.x
+  region: us-east-1
 
 plugins:
   - serverless-offline
