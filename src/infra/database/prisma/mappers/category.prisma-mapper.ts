@@ -9,29 +9,29 @@ export class CategoryPrismaMapper {
     return Category.create(
       {
         color: Color.create(category.color),
-        parent: category.parentId ?? undefined,
+        parent: category.parent_id ?? undefined,
         active: category.active,
-        user: category.cognitoId,
+        user: category.cognito_id,
         type: CategoryUtils.mapCategoryTypeEnum(category.type),
         description: Description.create(category.description)
       },
       category.id,
-      category.createdAt,
-      category.updatedAt
+      category.created_at,
+      category.updated_at
     )
   }
 
   static toPrismaCategory(category: Category): RawCategory {
     return {
       id: category.id!,
-      createdAt: category.createdAt!,
-      updatedAt: category.updatedAt!,
+      created_at: category.createdAt!,
+      updated_at: category.updatedAt!,
       description: category.props.description.props.value,
       color: category.props.color.props.value,
-      parentId: category.props.parent!,
+      parent_id: category.props.parent!,
       active: category.props.active,
       type: category.props.type,
-      cognitoId: category.props.user
+      cognito_id: category.props.user
     }
   }
 }

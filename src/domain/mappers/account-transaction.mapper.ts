@@ -8,14 +8,11 @@ export class AccountTransactionMapper {
         id: transaction.id!,
         createdAt: transaction.createdAt!.toISOString(),
         updatedAt: transaction.updatedAt!.toISOString(),
-        user: transaction.props.user,
         account: transaction.props.account,
         date: transaction.props.date.toISOString(),
         description: transaction.props.description.props.value,
         type: transaction.props.type.toString(),
         category: transaction.props.category,
-        recurrence: transaction.props.recurrence,
-        repeat: transaction.props.recurrence,
         value: transaction.props.value
       }
     })

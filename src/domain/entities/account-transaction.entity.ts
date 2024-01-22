@@ -1,16 +1,14 @@
 import { Entity } from '../abstracts/entity'
 import { TransacationTypeEnum } from '../enums/transaction-type.enum'
+
 import { Description } from '../value-objects/description'
 
 type AccountTransactionProps = {
-  user: string
   account: string
   date: Date
   description: Description
   type: TransacationTypeEnum
   category: string
-  recurrence: boolean
-  repeat: boolean
   value: number
 }
 

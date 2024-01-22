@@ -3,13 +3,11 @@ import { TransacationTypeEnum } from '../enums/transaction-type.enum'
 import { Description } from '../value-objects/description'
 
 type CardTransactionProps = {
-  user: string
   card: string
   date: Date
   description: Description
   type: TransacationTypeEnum
   category: string
-  recurrence: boolean
   payments: number
   value: number
 }

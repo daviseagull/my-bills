@@ -8,7 +8,7 @@ export class UserPrismaRepository implements IUserRepository {
 
   async confirmUser(id: string): Promise<void> {
     await this.prisma.user.update({
-      where: { id: id },
+      where: { id },
       data: {
         confirmed: true
       }
@@ -20,14 +20,14 @@ export class UserPrismaRepository implements IUserRepository {
       data: {
         email: user.props.email.props.value,
         birthday: new Date(user.props.birthday),
-        firstName: user.props.name.props.first,
-        lastName: user.props.name.props.last,
+        first_name: user.props.name.props.first,
+        last_name: user.props.name.props.last,
         confirmed: user.props.confirmed,
-        cognitoId: user.props.cognitoId!,
+        cognito_id: user.props.cognitoId!,
         phone: {
           create: {
             country: user.props.phone.props.country,
-            areaCode: user.props.phone.props.areaCode,
+            area_code: user.props.phone.props.areaCode,
             number: user.props.phone.props.number
           }
         }
@@ -68,7 +68,7 @@ export class UserPrismaRepository implements IUserRepository {
   async findByCognitoId(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
-        cognitoId: id
+        cognito_id: id
       }
     })
 
