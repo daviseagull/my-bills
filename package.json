@@ -1,8 +1,7 @@
 {
-  "name": "users-api",
+  "name": "my-bills-api",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:MyBillsApp/users-api.git",
+  "repository": "git@github.com:daviseagull/my-bills-api.git",
   "author": "Davi Seagull <davi.seagull@gmail.com>",
   "license": "MIT",
   "scripts": {
