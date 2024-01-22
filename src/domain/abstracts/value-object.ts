@@ -4,6 +4,10 @@ export type StringProp = {
   value: string
 }
 
+export type NumberProp = {
+  value: number
+}
+
 export abstract class ValueObject<T> {
   public readonly props: T
 
