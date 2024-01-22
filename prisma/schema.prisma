@@ -9,33 +9,35 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  email          String   @unique
-  cognitoId      String   @unique
-  fiscalDocument String   @unique
-  birthday       DateTime
-  gender         String
-  phone          Phone
-  name           Name
-  confirmed      Boolean
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  cognitoId String   @unique
+  birthday  DateTime
+  phone     Phone
+  name      Name
+  confirmed Boolean
 
   @@map("users")
 }
 
 type Phone {
-  country   String
-  areaCode  Int
-  number    Int
+  country  String
+  areaCode Int
+  number   Int
 }
 
 type Name {
-  first    String
-  last     String
+  first String
+  last  String
 }
 
 model Category {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  user        String  
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        String
   description String
   color       String
   parent      String?
@@ -43,4 +45,17 @@ model Category {
   type        String
 
   @@map("categories")
+}
+
+model Account {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  type        String
+  user        String
+  description String
+  balance     Float
+  color       String
+
+  @@map("accounts")
 }

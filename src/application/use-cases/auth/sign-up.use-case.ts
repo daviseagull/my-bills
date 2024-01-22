@@ -17,10 +17,8 @@ export type PhoneRequest = {
 export type SignUpRequest = {
   password: string
   email: string
-  fiscalDocument: string
   name: NameRequest
   birthday: Date
-  gender: string
   phone: PhoneRequest
 }
 

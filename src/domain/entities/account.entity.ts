@@ -1,20 +1,19 @@
 import { Entity } from '../abstracts/entity'
-import { CategoryTypeEnum } from '../enums/category-type.enum'
+import { AccountTypeEnum } from '../enums/account-type.enum'
 import { Color } from '../value-objects/color'
 import { Description } from '../value-objects/description'
 
-type CategoryProps = {
+type AccountProps = {
+  type: AccountTypeEnum
   user: string
-  type: CategoryTypeEnum
   description: Description
+  balance: number
   color: Color
-  parent?: string
-  active: boolean
 }
 
-export class Category extends Entity<CategoryProps> {
+export class Account extends Entity<AccountProps> {
   private constructor(
-    props: CategoryProps,
+    props: AccountProps,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date
@@ -35,11 +34,11 @@ export class Category extends Entity<CategoryProps> {
   }
 
   static create(
-    props: CategoryProps,
+    props: AccountProps,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date
   ) {
-    return new Category(props, id, createdAt, updatedAt)
+    return new Account(props, id, createdAt, updatedAt)
   }
 }

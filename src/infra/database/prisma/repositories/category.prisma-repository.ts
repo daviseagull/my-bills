@@ -134,7 +134,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
         id: categoryToUpdate.id
       },
       data: {
-        description: categoryToUpdate.props.description,
+        description: categoryToUpdate.props.description.props.value,
         color: categoryToUpdate.props.color.props.value,
         parent: categoryToUpdate.props.parent,
         active: categoryToUpdate.props.active

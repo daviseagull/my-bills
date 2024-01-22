@@ -5,10 +5,10 @@ export class UserMapper {
   static toDto(entity: User): UserDto {
     const user = {
       id: entity.id!,
+      createdAt: entity.createdAt!.toDateString(),
+      updatedAt: entity.updatedAt!.toDateString(),
       email: entity.props.email.props.value,
-      fiscalDocument: entity.props.fiscalDocument.props.value,
       birthday: entity.props.birthday,
-      gender: entity.props.gender,
       phone: entity.props.phone.props,
       name: {
         first: entity.props.name.props.first,

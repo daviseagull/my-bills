@@ -2,9 +2,9 @@ import { IUserRepository } from '@/application/repositories/user.repository'
 import { PasswordUtils } from '@/application/utils/password.utils'
 import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
-import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { Phone } from '@/domain/value-objects/phone'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 import { SignUpRequest } from '../auth/sign-up.use-case'
 import { CreateDefaultCategoriesUseCase } from '../category/create-default-categories.use-case'
@@ -21,11 +21,11 @@ export class CreateUserUseCase {
     request: SignUpRequest,
     cognitoId: string
   ): Promise<User> {
+    logger.info(`Creating user with email ${request.email}`)
+
     const newUser = User.create({
       email: Email.create(request.email),
-      fiscalDocument: FiscalDocument.create(request.fiscalDocument),
       birthday: new Date(request.birthday),
-      gender: request.gender,
       phone: Phone.create(
         request.phone.country,
         request.phone.areaCode,

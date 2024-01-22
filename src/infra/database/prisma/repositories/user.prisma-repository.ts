@@ -20,8 +20,6 @@ export class UserPrismaRepository implements IUserRepository {
       data: {
         email: user.props.email.props.value,
         birthday: new Date(user.props.birthday),
-        fiscalDocument: user.props.fiscalDocument.props.value,
-        gender: user.props.gender,
         phone: user.props.phone.props,
         name: user.props.name.props,
         confirmed: user.props.confirmed,

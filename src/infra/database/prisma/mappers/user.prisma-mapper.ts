@@ -1,18 +1,15 @@
 import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
-import { FiscalDocument } from '@/domain/value-objects/fiscal-document'
 import { Name } from '@/domain/value-objects/name'
 import { Phone } from '@/domain/value-objects/phone'
-import { Prisma, User as RawUser } from '@prisma/client'
+import { User as RawUser } from '@prisma/client'
 
 export class UserPrismaMapper {
   static toDomain(raw: RawUser): User {
     const user = User.create(
       {
         email: Email.create(raw.email),
-        fiscalDocument: FiscalDocument.create(raw.fiscalDocument),
         birthday: new Date(raw.birthday),
-        gender: raw.gender,
         phone: Phone.create(
           raw.phone.country,
           raw.phone.areaCode,
@@ -22,18 +19,21 @@ export class UserPrismaMapper {
         confirmed: raw.confirmed,
         cognitoId: raw.cognitoId
       },
-      raw.id
+      raw.id,
+      raw.createdAt,
+      raw.updatedAt
     )
 
     return user
   }
 
-  static toPersistence(user: User): Prisma.UserCreateInput {
+  static toPersistence(user: User): RawUser {
     return {
+      id: user.id!,
+      createdAt: user.createdAt!,
+      updatedAt: user.updatedAt!,
       email: user.props.email.props.value,
-      fiscalDocument: user.props.fiscalDocument.props.value,
       birthday: new Date(user.props.birthday),
-      gender: user.props.gender,
       phone: user.props.phone.props,
       name: user.props.name.props,
       confirmed: user.props.confirmed,

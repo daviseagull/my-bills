@@ -17,7 +17,6 @@ import {
   UserNotConfirmedException,
   UsernameExistsException
 } from '@aws-sdk/client-cognito-identity-provider'
-import { cpf } from 'cpf-cnpj-validator'
 import { CognitoUtils } from '../utils/cognito.utils'
 
 class UserAttribute implements AttributeType {
@@ -120,7 +119,6 @@ export class CognitoService implements IAuthenticationService {
   private getUserAttributes(user: SignUpRequest): UserAttribute[] {
     const userAttr: UserAttribute[] = []
     userAttr.push(UserAttribute.create('email', user.email))
-    userAttr.push(UserAttribute.create('gender', user.gender))
     userAttr.push(UserAttribute.create('birthdate', user.birthday.toString()))
     userAttr.push(
       UserAttribute.create('name', `${user.name.first} ${user.name.last}`)
@@ -131,12 +129,6 @@ export class CognitoService implements IAuthenticationService {
       UserAttribute.create(
         'phone_number',
         `${user.phone.country}${user.phone.areaCode}${user.phone.number}`
-      )
-    )
-    userAttr.push(
-      UserAttribute.create(
-        'custom:fiscal_document',
-        cpf.strip(user.fiscalDocument)
       )
     )
 

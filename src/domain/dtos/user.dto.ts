@@ -12,10 +12,10 @@ export type PhoneDto = {
 
 export type UserDto = {
   id: string
+  createdAt: string
+  updatedAt: string
   email: string
   name: NameDto
   birthday: Date
-  fiscalDocument: string
-  gender: string
   phone: PhoneDto
 }

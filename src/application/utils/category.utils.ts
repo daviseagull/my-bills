@@ -9,6 +9,7 @@ import {
   IncomeCategoriesEnum
 } from '@/domain/enums/income-category.enum'
 import { Color } from '@/domain/value-objects/color'
+import { Description } from '@/domain/value-objects/description'
 
 export class CategoryUtils {
   public static mapCategoryTypeEnum(value: string): CategoryTypeEnum {
@@ -33,7 +34,7 @@ export class CategoryUtils {
           type: CategoryTypeEnum.expenses,
           user: user,
           color: Color.create(ExpenseCategoriesColor.get(key)!),
-          description: key.toString(),
+          description: Description.create(key.toString()),
           active: true
         })
       )
@@ -47,7 +48,7 @@ export class CategoryUtils {
           type: CategoryTypeEnum.incomes,
           user: user,
           color: Color.create(IncomeCategoriesColor.get(key)!),
-          description: key.toString(),
+          description: Description.create(key.toString()),
           active: true
         })
       )
