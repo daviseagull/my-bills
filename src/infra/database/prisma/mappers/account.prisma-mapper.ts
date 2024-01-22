@@ -1,8 +1,8 @@
-import { AccountUtils } from '@/application/utils/account.utils'
-import { Account } from '@/domain/entities/account.entity'
-import { Color } from '@/domain/value-objects/color'
-import { Description } from '@/domain/value-objects/description'
 import { Account as RawAccount } from '@prisma/client'
+import { AccountUtils } from 'application/utils/account.utils'
+import { Account } from 'domain/entities/account.entity'
+import { Color } from 'domain/value-objects/color'
+import { Description } from 'domain/value-objects/description'
 
 export class AccountPrismaMapper {
   static toDomain(account: RawAccount): Account {

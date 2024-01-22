@@ -1,6 +1,6 @@
-import { AppError } from '@/application/errors/app-error'
-import logger from '@/infra/logger/logger'
+import { AppError } from 'application/errors/app-error'
 import { NextFunction, Request, Response } from 'express'
+import logger from 'infra/logger/logger'
 
 export const errorHandler = (
   err: Error & Partial<AppError>,

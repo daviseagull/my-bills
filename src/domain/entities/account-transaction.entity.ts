@@ -1,6 +1,5 @@
 import { Entity } from '../abstracts/entity'
 import { TransacationTypeEnum } from '../enums/transaction-type.enum'
-
 import { Description } from '../value-objects/description'
 
 type AccountTransactionProps = {

@@ -1,5 +1,5 @@
-import { Category } from '@/domain/entities/category.entity'
-import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
+import { Category } from 'domain/entities/category.entity'
+import { CategoryTypeEnum } from 'domain/enums/category-type.enum'
 
 export interface ICategoryRepository {
   create(category: Category): Promise<Category>

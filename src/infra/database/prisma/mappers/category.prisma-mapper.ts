@@ -1,8 +1,8 @@
-import { CategoryUtils } from '@/application/utils/category.utils'
-import { Category } from '@/domain/entities/category.entity'
-import { Color } from '@/domain/value-objects/color'
-import { Description } from '@/domain/value-objects/description'
 import { Category as RawCategory } from '@prisma/client'
+import { CategoryUtils } from 'application/utils/category.utils'
+import { Category } from 'domain/entities/category.entity'
+import { Color } from 'domain/value-objects/color'
+import { Description } from 'domain/value-objects/description'
 
 export class CategoryPrismaMapper {
   static toDomain(category: RawCategory): Category {

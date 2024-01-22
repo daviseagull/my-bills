@@ -1,8 +1,8 @@
-import { User } from '@/domain/entities/user.entity'
-import { Email } from '@/domain/value-objects/email'
-import { Name } from '@/domain/value-objects/name'
-import { Phone } from '@/domain/value-objects/phone'
 import { User as RawUser } from '@prisma/client'
+import { User } from 'domain/entities/user.entity'
+import { Email } from 'domain/value-objects/email'
+import { Name } from 'domain/value-objects/name'
+import { Phone } from 'domain/value-objects/phone'
 
 export class UserPrismaMapper {
   static toDomain(raw: RawUser): User {

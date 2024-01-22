@@ -1,7 +1,7 @@
 import {
   CreateAccountRequest,
   CreateAccountUseCase
-} from '@/application/use-cases/account/create-account.use-case'
+} from 'application/use-cases/account/create-account.use-case'
 import { Request, Response } from 'express'
 import { container, injectable } from 'tsyringe'
 

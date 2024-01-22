@@ -1,15 +1,15 @@
-import { Category } from '@/domain/entities/category.entity'
-import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
+import { Category } from 'domain/entities/category.entity'
+import { CategoryTypeEnum } from 'domain/enums/category-type.enum'
 import {
   ExpenseCategoriesColor,
   ExpenseCategoriesEnum
-} from '@/domain/enums/expense-category.enum'
+} from 'domain/enums/expense-category.enum'
 import {
   IncomeCategoriesColor,
   IncomeCategoriesEnum
-} from '@/domain/enums/income-category.enum'
-import { Color } from '@/domain/value-objects/color'
-import { Description } from '@/domain/value-objects/description'
+} from 'domain/enums/income-category.enum'
+import { Color } from 'domain/value-objects/color'
+import { Description } from 'domain/value-objects/description'
 
 export class CategoryUtils {
   public static mapCategoryTypeEnum(value: string): CategoryTypeEnum {

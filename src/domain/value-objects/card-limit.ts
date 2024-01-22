@@ -1,4 +1,4 @@
-import { BadRequestError } from '@/application/errors/app-error'
+import { BadRequestError } from 'application/errors/app-error'
 import { NumberProp, ValueObject } from '../abstracts/value-object'
 
 export class CardLimit extends ValueObject<NumberProp> {

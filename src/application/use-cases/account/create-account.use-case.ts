@@ -1,9 +1,9 @@
-import { IAccountRepository } from '@/application/repositories/account.repository'
-import { AccountUtils } from '@/application/utils/account.utils'
-import { Account } from '@/domain/entities/account.entity'
-import { Color } from '@/domain/value-objects/color'
-import { Description } from '@/domain/value-objects/description'
-import logger from '@/infra/logger/logger'
+import { IAccountRepository } from 'application/repositories/account.repository'
+import { AccountUtils } from 'application/utils/account.utils'
+import { Account } from 'domain/entities/account.entity'
+import { Color } from 'domain/value-objects/color'
+import { Description } from 'domain/value-objects/description'
+import logger from 'infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 export type CreateAccountRequest = {
