@@ -5,8 +5,8 @@ export class UserMapper {
   static toDto(entity: User): UserDto {
     const user = {
       id: entity.id!,
-      createdAt: entity.createdAt!.toDateString(),
-      updatedAt: entity.updatedAt!.toDateString(),
+      createdAt: entity.createdAt!.toISOString(),
+      updatedAt: entity.updatedAt!.toISOString(),
       email: entity.props.email.props.value,
       birthday: entity.props.birthday,
       phone: entity.props.phone.props,
