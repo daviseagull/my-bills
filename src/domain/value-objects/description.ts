@@ -2,10 +2,8 @@ import { BadRequestError } from '@/application/errors/app-error'
 import { StringUtils } from '@/application/utils/string.utils'
 import { StringProp, ValueObject } from '../abstracts/value-object'
 
-type DescriptionProps = StringProp
-
-export class Description extends ValueObject<DescriptionProps> {
-  private constructor(props: DescriptionProps) {
+export class Description extends ValueObject<StringProp> {
+  private constructor(props: StringProp) {
     super(props)
   }
 

@@ -1,10 +1,8 @@
 import { BadRequestError } from '@/application/errors/app-error'
 import { StringProp, ValueObject } from '../abstracts/value-object'
 
-type EmailProps = StringProp
-
-export class Email extends ValueObject<EmailProps> {
-  private constructor(props: EmailProps) {
+export class Email extends ValueObject<StringProp> {
+  private constructor(props: StringProp) {
     super(props)
   }
 

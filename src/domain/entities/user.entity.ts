@@ -22,18 +22,6 @@ export class User extends Entity<UserProps> {
     super(props, id, createdAt, updatedAt)
   }
 
-  get id() {
-    return this._id
-  }
-
-  get createdAt() {
-    return this._createdAt
-  }
-
-  get updatedAt() {
-    return this._updatedAt
-  }
-
   static create(
     props: UserProps,
     id?: string,

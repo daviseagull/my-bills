@@ -16,6 +16,6 @@ export type UserDto = {
   updatedAt: string
   email: string
   name: NameDto
-  birthday: Date
+  birthday: string
   phone: PhoneDto
 }
