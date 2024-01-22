@@ -20,12 +20,20 @@ export class UserPrismaRepository implements IUserRepository {
       data: {
         email: user.props.email.props.value,
         birthday: new Date(user.props.birthday),
-        phone: user.props.phone.props,
-        name: user.props.name.props,
+        firstName: user.props.name.props.first,
+        lastName: user.props.name.props.last,
         confirmed: user.props.confirmed,
-        cognitoId: user.props.cognitoId!
+        cognitoId: user.props.cognitoId!,
+        phone: {
+          create: {
+            country: user.props.phone.props.country,
+            areaCode: user.props.phone.props.areaCode,
+            number: user.props.phone.props.number
+          }
+        }
       }
     })
+
     return UserPrismaMapper.toDomain(createdUser)
   }
 

@@ -10,12 +10,8 @@ export class UserPrismaMapper {
       {
         email: Email.create(raw.email),
         birthday: new Date(raw.birthday),
-        phone: Phone.create(
-          raw.phone.country,
-          raw.phone.areaCode,
-          raw.phone.number
-        ),
-        name: Name.create(raw.name.first, raw.name.last),
+        phone: Phone.create('+1', 444, 12345566),
+        name: Name.create(raw.firstName, raw.lastName),
         confirmed: raw.confirmed,
         cognitoId: raw.cognitoId
       },
@@ -34,8 +30,9 @@ export class UserPrismaMapper {
       updatedAt: user.updatedAt!,
       email: user.props.email.props.value,
       birthday: new Date(user.props.birthday),
-      phone: user.props.phone.props,
-      name: user.props.name.props,
+      phoneId: '',
+      firstName: user.props.name.props.first,
+      lastName: user.props.name.props.last,
       confirmed: user.props.confirmed,
       cognitoId: user.props.cognitoId!
     }

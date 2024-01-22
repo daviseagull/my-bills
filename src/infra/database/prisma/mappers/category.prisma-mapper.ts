@@ -9,9 +9,9 @@ export class CategoryPrismaMapper {
     return Category.create(
       {
         color: Color.create(category.color),
-        parent: category.parent ?? undefined,
+        parent: category.parentId ?? undefined,
         active: category.active,
-        user: category.user,
+        user: category.cognitoId,
         type: CategoryUtils.mapCategoryTypeEnum(category.type),
         description: Description.create(category.description)
       },
@@ -28,10 +28,10 @@ export class CategoryPrismaMapper {
       updatedAt: category.updatedAt!,
       description: category.props.description.props.value,
       color: category.props.color.props.value,
-      parent: category.props.parent!,
+      parentId: category.props.parent!,
       active: category.props.active,
       type: category.props.type,
-      user: category.props.user
+      cognitoId: category.props.user
     }
   }
 }

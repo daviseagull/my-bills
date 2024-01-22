@@ -9,7 +9,7 @@ export class AccountPrismaMapper {
     return Account.create(
       {
         type: AccountUtils.mapAccountTypeEnum(account.type),
-        user: account.user,
+        user: account.cognitoId,
         description: Description.create(account.description),
         balance: account.balance,
         color: Color.create(account.color)
@@ -28,7 +28,7 @@ export class AccountPrismaMapper {
       description: account.props.description.props.value,
       color: account.props.color.props.value,
       type: account.props.type,
-      user: account.props.user,
+      cognitoId: account.props.user,
       balance: account.props.balance
     }
   }

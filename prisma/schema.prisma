@@ -4,55 +4,62 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  cognitoId String   @unique
-  birthday  DateTime
-  phone     Phone
-  name      Name
-  confirmed Boolean
+  id         String     @id @default(uuid())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  email      String     @unique
+  cognitoId  String     @unique
+  birthday   DateTime
+  phone      Phone      @relation(fields: [phoneId], references: [id])
+  phoneId    String     @unique
+  firstName  String
+  lastName   String
+  confirmed  Boolean
+  accounts   Account[]
+  categories Category[]
 
   @@map("users")
 }
 
-type Phone {
+model Phone {
+  id       String @id @default(uuid())
   country  String
   areaCode Int
   number   Int
-}
+  user     User?
 
-type Name {
-  first String
-  last  String
+  @@map("phones")
 }
 
 model Category {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        String
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  user        User       @relation(fields: [cognitoId], references: [cognitoId])
+  cognitoId   String
   description String
   color       String
-  parent      String?
   active      Boolean
   type        String
+  parentId    String?
+  parent      Category?  @relation("Parent", fields: [parentId], references: [id])
+  child       Category[] @relation("Parent")
 
   @@map("categories")
 }
 
 model Account {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   type        String
-  user        String
+  user        User     @relation(fields: [cognitoId], references: [cognitoId])
+  cognitoId   String
   description String
   balance     Float
   color       String
