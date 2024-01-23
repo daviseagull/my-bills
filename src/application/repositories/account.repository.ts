@@ -4,6 +4,6 @@ export interface IAccountRepository {
   create(account: Account): Promise<string>
   delete(id: string): Promise<void>
   update(account: Account): Promise<string>
-  findById(id: string): Promise<Account>
+  findByUserAndId(cognitoId: string, id: string): Promise<Account | null>
   findAllByUser(userId: string): Promise<Account[]>
 }
