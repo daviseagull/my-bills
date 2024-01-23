@@ -1,8 +1,8 @@
-import { User } from '@/domain/entities/user.entity'
-import { Email } from '@/domain/value-objects/email'
-import { Name } from '@/domain/value-objects/name'
-import { Phone } from '@/domain/value-objects/phone'
 import { User as RawUser } from '@prisma/client'
+import { User } from 'domain/entities/user.entity'
+import { Email } from 'domain/value-objects/email'
+import { Name } from 'domain/value-objects/name'
+import { Phone } from 'domain/value-objects/phone'
 
 export class UserPrismaMapper {
   static toDomain(raw: RawUser): User {
@@ -11,13 +11,13 @@ export class UserPrismaMapper {
         email: Email.create(raw.email),
         birthday: new Date(raw.birthday),
         phone: Phone.create('+1', 444, 12345566),
-        name: Name.create(raw.firstName, raw.lastName),
+        name: Name.create(raw.first_name, raw.last_name),
         confirmed: raw.confirmed,
-        cognitoId: raw.cognitoId
+        cognitoId: raw.cognito_id
       },
       raw.id,
-      raw.createdAt,
-      raw.updatedAt
+      raw.created_at,
+      raw.updated_at
     )
 
     return user
@@ -26,15 +26,15 @@ export class UserPrismaMapper {
   static toPersistence(user: User): RawUser {
     return {
       id: user.id!,
-      createdAt: user.createdAt!,
-      updatedAt: user.updatedAt!,
+      created_at: user.createdAt!,
+      updated_at: user.updatedAt!,
       email: user.props.email.props.value,
       birthday: new Date(user.props.birthday),
-      phoneId: '',
-      firstName: user.props.name.props.first,
-      lastName: user.props.name.props.last,
+      phone_id: '',
+      first_name: user.props.name.props.first,
+      last_name: user.props.name.props.last,
       confirmed: user.props.confirmed,
-      cognitoId: user.props.cognitoId!
+      cognito_id: user.props.cognitoId!
     }
   }
 }

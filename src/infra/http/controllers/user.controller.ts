@@ -1,4 +1,4 @@
-import { GetUserUseCase } from '@/application/use-cases/user/get-user.use-case'
+import { GetUserUseCase } from 'application/use-cases/user/get-user.use-case'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 

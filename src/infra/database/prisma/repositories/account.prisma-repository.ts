@@ -1,7 +1,7 @@
-import { InternalServerError } from '@/application/errors/app-error'
-import { IAccountRepository } from '@/application/repositories/account.repository'
-import { Account } from '@/domain/entities/account.entity'
 import { PrismaClient } from '@prisma/client'
+import { InternalServerError } from 'application/errors/app-error'
+import { IAccountRepository } from 'application/repositories/account.repository'
+import { Account } from 'domain/entities/account.entity'
 import { AccountPrismaMapper } from '../mappers/account.prisma-mapper'
 
 export class AccountPrismaRepository implements IAccountRepository {
@@ -31,11 +31,29 @@ export class AccountPrismaRepository implements IAccountRepository {
     throw new Error('Method not implemented.')
   }
 
-  findById(id: string): Promise<Account> {
-    throw new Error('Method not implemented.')
+  async findByUserAndId(
+    cognitoId: string,
+    id: string
+  ): Promise<Account | null> {
+    const account = await this.prisma.account.findUnique({
+      where: {
+        cognito_id: cognitoId,
+        id
+      }
+    })
+
+    return account ? AccountPrismaMapper.toDomain(account!) : null
   }
 
-  findAllByUser(userId: string): Promise<Account[]> {
-    throw new Error('Method not implemented.')
+  async findAllByUser(cognitoId: string): Promise<Account[]> {
+    const accounts = await this.prisma.account.findMany({
+      where: {
+        cognito_id: cognitoId
+      }
+    })
+
+    return accounts
+      ? accounts.map((account) => AccountPrismaMapper.toDomain(account!))
+      : []
   }
 }

@@ -1,7 +1,7 @@
-import { AddCategoryUseCase } from '@/application/use-cases/category/add-category.use-case'
-import { EditCategoryUseCase } from '@/application/use-cases/category/edit-category.use-case'
-import { GetUserCategoriesUseCase } from '@/application/use-cases/category/get-user-categories.use-case'
-import { CategoryUtils } from '@/application/utils/category.utils'
+import { AddCategoryUseCase } from 'application/use-cases/category/add-category.use-case'
+import { EditCategoryUseCase } from 'application/use-cases/category/edit-category.use-case'
+import { GetUserCategoriesUseCase } from 'application/use-cases/category/get-user-categories.use-case'
+import { CategoryUtils } from 'application/utils/category.utils'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 

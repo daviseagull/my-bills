@@ -1,7 +1,9 @@
 import {
   CreateAccountRequest,
   CreateAccountUseCase
-} from '@/application/use-cases/account/create-account.use-case'
+} from 'application/use-cases/account/create-account.use-case'
+import { GetAccountUseCase } from 'application/use-cases/account/get-account.use-case'
+import { GetAccountsUseCase } from 'application/use-cases/account/get-accounts.use-case'
 import { Request, Response } from 'express'
 import { container, injectable } from 'tsyringe'
 
@@ -21,7 +23,19 @@ export class AccountController {
 
   async disable(req: Request, res: Response) {}
 
-  async getAccount(req: Request, res: Response) {}
+  async getAccount(req: Request, res: Response) {
+    const useCase = container.resolve(GetAccountUseCase)
 
-  async getAccounts(req: Request, res: Response) {}
+    const result = await useCase.execute(req.user!, req.params.id)
+
+    return res.status(200).json(result)
+  }
+
+  async getAccounts(req: Request, res: Response) {
+    const useCase = container.resolve(GetAccountsUseCase)
+
+    const result = await useCase.execute(req.user!)
+
+    return res.status(200).json(result)
+  }
 }

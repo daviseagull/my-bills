@@ -10,59 +10,133 @@ datasource db {
 
 model User {
   id         String     @id @default(uuid())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   email      String     @unique
-  cognitoId  String     @unique
+  cognito_id String     @unique
   birthday   DateTime
-  phone      Phone      @relation(fields: [phoneId], references: [id])
-  phoneId    String     @unique
-  firstName  String
-  lastName   String
+  phone      Phone      @relation(fields: [phone_id], references: [id])
+  phone_id   String     @unique
+  first_name String
+  last_name  String
   confirmed  Boolean
   accounts   Account[]
   categories Category[]
+  cards      Card[]
+  Invoice    Invoice[]
 
-  @@map("users")
+  @@map("user")
 }
 
 model Phone {
-  id       String @id @default(uuid())
-  country  String
-  areaCode Int
-  number   Int
-  user     User?
+  id        String @id @default(uuid())
+  country   String
+  area_code Int
+  number    Int
+  user      User?
 
-  @@map("phones")
+  @@map("phone")
 }
 
 model Category {
-  id          String     @id @default(uuid())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  user        User       @relation(fields: [cognitoId], references: [cognitoId])
-  cognitoId   String
-  description String
-  color       String
-  active      Boolean
-  type        String
-  parentId    String?
-  parent      Category?  @relation("Parent", fields: [parentId], references: [id])
-  child       Category[] @relation("Parent")
+  id                   String               @id @default(uuid())
+  created_at           DateTime             @default(now())
+  updated_at           DateTime             @updatedAt
+  user                 User                 @relation(fields: [cognito_id], references: [cognito_id])
+  cognito_id           String
+  description          String
+  color                String
+  active               Boolean
+  type                 String
+  parent_id            String?
+  parent               Category?            @relation("Parent", fields: [parent_id], references: [id])
+  child                Category[]           @relation("Parent")
+  account_transactions AccountTransaction[]
+  card_transactions    CardTransaction[]
 
-  @@map("categories")
+  @@map("category")
 }
 
 model Account {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  type        String
-  user        User     @relation(fields: [cognitoId], references: [cognitoId])
-  cognitoId   String
-  description String
-  balance     Float
-  color       String
+  id           String               @id @default(uuid())
+  created_at   DateTime             @default(now())
+  updated_at   DateTime             @updatedAt
+  user         User                 @relation(fields: [cognito_id], references: [cognito_id])
+  cognito_id   String
+  type         String
+  description  String
+  balance      Float
+  color        String
+  transactions AccountTransaction[]
+  cards        Card[]
 
-  @@map("accounts")
+  @@map("account")
+}
+
+model AccountTransaction {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  account     Account  @relation(fields: [account_id], references: [id])
+  account_id  String
+  date        DateTime
+  description String
+  type        String
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+  value       Float
+
+  @@map("account_transaction")
+}
+
+model Card {
+  id           String            @id @default(uuid())
+  created_at   DateTime          @default(now())
+  updated_at   DateTime          @updatedAt
+  account      Account           @relation(fields: [account_id], references: [id])
+  account_id   String
+  user         User              @relation(fields: [cognito_id], references: [cognito_id])
+  cognito_id   String
+  brand        String
+  description  String
+  closing_day  Int
+  due_date     Int
+  limit        Float
+  transactions CardTransaction[]
+  Invoice      Invoice[]
+
+  @@map("card")
+}
+
+model CardTransaction {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  card        Card     @relation(fields: [card_id], references: [id])
+  card_id     String
+  date        DateTime
+  description String
+  type        String
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+  payments    Int
+  value       Float
+
+  @@map("card_transaction")
+}
+
+model Invoice {
+  id           String   @id @default(uuid())
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  user         User     @relation(fields: [cognito_id], references: [cognito_id])
+  cognito_id   String
+  card         Card     @relation(fields: [card_id], references: [id])
+  card_id      String
+  closing_date DateTime
+  due_date     DateTime
+  total        Float
+  status       String
+
+  @@map("invoices")
 }

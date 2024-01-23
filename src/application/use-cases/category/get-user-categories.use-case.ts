@@ -1,9 +1,9 @@
-import { InternalServerError } from '@/application/errors/app-error'
-import { ICategoryRepository } from '@/application/repositories/category.repository'
-import { CategoryDto } from '@/domain/dtos/category.dto'
-import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
-import { CategoryMapper } from '@/domain/mappers/category.mapper'
-import logger from '@/infra/logger/logger'
+import { InternalServerError } from 'application/errors/app-error'
+import { ICategoryRepository } from 'application/repositories/category.repository'
+import { CategoryDto } from 'domain/dtos/category.dto'
+import { CategoryTypeEnum } from 'domain/enums/category-type.enum'
+import { CategoryMapper } from 'domain/mappers/category.mapper'
+import logger from 'infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

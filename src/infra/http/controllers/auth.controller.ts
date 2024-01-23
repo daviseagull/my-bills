@@ -1,28 +1,28 @@
 import {
   ConfirmForgotPasswordRequest,
   ConfirmForgotPasswordUseCase
-} from '@/application/use-cases/auth/confirm-forgot-password.use-case'
+} from 'application/use-cases/auth/confirm-forgot-password.use-case'
 import {
   ConfirmUserRequest,
   ConfirmUserUseCase
-} from '@/application/use-cases/auth/confirm-user.use-case'
+} from 'application/use-cases/auth/confirm-user.use-case'
 import {
   ForgotPasswordRequest,
   ForgotPasswordUseCase
-} from '@/application/use-cases/auth/forgot-password.use-case'
+} from 'application/use-cases/auth/forgot-password.use-case'
 import {
   ResendCodeRequest,
   ResendCodeUseCase
-} from '@/application/use-cases/auth/resend-code.use-case'
+} from 'application/use-cases/auth/resend-code.use-case'
 import {
   SignInRequest,
   SignInUseCase
-} from '@/application/use-cases/auth/sign-in.use-case'
-import { SignOutUseCase } from '@/application/use-cases/auth/sign-out.use-case'
+} from 'application/use-cases/auth/sign-in.use-case'
+import { SignOutUseCase } from 'application/use-cases/auth/sign-out.use-case'
 import {
   SignUpRequest,
   SignUpUseCase
-} from '@/application/use-cases/auth/sign-up.use-case'
+} from 'application/use-cases/auth/sign-up.use-case'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
