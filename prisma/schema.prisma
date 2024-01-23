@@ -23,6 +23,7 @@ model User {
   accounts   Account[]
   categories Category[]
   cards      Card[]
+  Invoice    Invoice[]
 
   @@map("user")
 }
@@ -51,7 +52,7 @@ model Category {
   parent               Category?            @relation("Parent", fields: [parent_id], references: [id])
   child                Category[]           @relation("Parent")
   account_transactions AccountTransaction[]
-  card_transactions    cardTransaction[]
+  card_transactions    CardTransaction[]
 
   @@map("category")
 }
@@ -101,12 +102,13 @@ model Card {
   closing_day  Int
   due_date     Int
   limit        Float
-  transactions cardTransaction[]
+  transactions CardTransaction[]
+  Invoice      Invoice[]
 
   @@map("card")
 }
 
-model cardTransaction {
+model CardTransaction {
   id          String   @id @default(uuid())
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
@@ -121,4 +123,20 @@ model cardTransaction {
   value       Float
 
   @@map("card_transaction")
+}
+
+model Invoice {
+  id           String   @id @default(uuid())
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  user         User     @relation(fields: [cognito_id], references: [cognito_id])
+  cognito_id   String
+  card         Card     @relation(fields: [card_id], references: [id])
+  card_id      String
+  closing_date DateTime
+  due_date     DateTime
+  total        Float
+  status       String
+
+  @@map("invoices")
 }

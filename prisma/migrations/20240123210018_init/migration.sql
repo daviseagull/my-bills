@@ -1,36 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `accounts` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `categories` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `phones` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `users` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "accounts" DROP CONSTRAINT "accounts_cognitoId_fkey";
-
--- DropForeignKey
-ALTER TABLE "categories" DROP CONSTRAINT "categories_cognitoId_fkey";
-
--- DropForeignKey
-ALTER TABLE "categories" DROP CONSTRAINT "categories_parentId_fkey";
-
--- DropForeignKey
-ALTER TABLE "users" DROP CONSTRAINT "users_phoneId_fkey";
-
--- DropTable
-DROP TABLE "accounts";
-
--- DropTable
-DROP TABLE "categories";
-
--- DropTable
-DROP TABLE "phones";
-
--- DropTable
-DROP TABLE "users";
-
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
@@ -133,6 +100,21 @@ CREATE TABLE "card_transaction" (
     CONSTRAINT "card_transaction_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "invoices" (
+    "id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "cognito_id" TEXT NOT NULL,
+    "card_id" TEXT NOT NULL,
+    "closing_date" TIMESTAMP(3) NOT NULL,
+    "due_date" TIMESTAMP(3) NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
+    "status" TEXT NOT NULL,
+
+    CONSTRAINT "invoices_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
@@ -171,3 +153,9 @@ ALTER TABLE "card_transaction" ADD CONSTRAINT "card_transaction_card_id_fkey" FO
 
 -- AddForeignKey
 ALTER TABLE "card_transaction" ADD CONSTRAINT "card_transaction_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "invoices" ADD CONSTRAINT "invoices_cognito_id_fkey" FOREIGN KEY ("cognito_id") REFERENCES "user"("cognito_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "invoices" ADD CONSTRAINT "invoices_card_id_fkey" FOREIGN KEY ("card_id") REFERENCES "card"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
