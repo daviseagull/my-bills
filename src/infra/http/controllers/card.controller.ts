@@ -21,7 +21,7 @@ export class CardController {
 
   async disable(req: Request, res: Response) {}
 
-  async getAccount(req: Request, res: Response) {}
+  async getCard(req: Request, res: Response) {}
 
-  async getAccounts(req: Request, res: Response) {}
+  async getCards(req: Request, res: Response) {}
 }
