@@ -4,6 +4,6 @@ export interface ICardRepository {
   create(card: Card): Promise<string>
   delete(id: string): Promise<void>
   update(card: Card): Promise<string>
-  findById(id: string): Promise<Card>
-  findAllByUser(userId: string): Promise<Card[]>
+  findByUserAndId(cognitoId: string, id: string): Promise<Card | null>
+  findAllByUser(cognitoId: string): Promise<Card[]>
 }

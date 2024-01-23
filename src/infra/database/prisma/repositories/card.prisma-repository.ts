@@ -31,11 +31,24 @@ export class CardPrismaRepository implements ICardRepository {
     throw new Error('Method not implemented.')
   }
 
-  findById(id: string): Promise<Card> {
-    throw new Error('Method not implemented.')
+  async findByUserAndId(cognitoId: string, id: string): Promise<Card | null> {
+    const card = await this.prisma.card.findUnique({
+      where: {
+        cognito_id: cognitoId,
+        id
+      }
+    })
+
+    return card ? CardPrismaMapper.toDomain(card!) : null
   }
 
-  findAllByUser(cognitoId: string): Promise<Card[]> {
-    throw new Error('Method not implemented.')
+  async findAllByUser(cognitoId: string): Promise<Card[]> {
+    const cards = await this.prisma.card.findMany({
+      where: {
+        cognito_id: cognitoId
+      }
+    })
+
+    return cards ? cards.map((card) => CardPrismaMapper.toDomain(card!)) : []
   }
 }

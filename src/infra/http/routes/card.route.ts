@@ -7,5 +7,7 @@ const controller = container.resolve(CardController)
 const cardRoutes = Router()
 
 cardRoutes.post('', authenticateToken, controller.create)
+cardRoutes.get('/:id', authenticateToken, controller.getCard)
+cardRoutes.get('', authenticateToken, controller.getCards)
 
 export default cardRoutes
