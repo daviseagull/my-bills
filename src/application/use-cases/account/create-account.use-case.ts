@@ -33,8 +33,6 @@ export class CreateAccountUseCase {
       color: Color.create(request.color)
     })
 
-    const account = await this.accountRepository.create(newAccount)
-
-    return account
+    return await this.accountRepository.create(newAccount)
   }
 }
