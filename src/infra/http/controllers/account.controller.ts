@@ -1,9 +1,9 @@
 import {
   CreateAccountRequest,
   CreateAccountUseCase
-} from 'application/use-cases/account/create-account.use-case'
-import { GetAccountUseCase } from 'application/use-cases/account/get-account.use-case'
-import { GetAccountsUseCase } from 'application/use-cases/account/get-accounts.use-case'
+} from '@/application/use-cases/account/create-account.use-case'
+import { GetAccountUseCase } from '@/application/use-cases/account/get-account.use-case'
+import { GetAccountsUseCase } from '@/application/use-cases/account/get-accounts.use-case'
 import { Request, Response } from 'express'
 import { container, injectable } from 'tsyringe'
 

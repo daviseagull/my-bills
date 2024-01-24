@@ -1,9 +1,9 @@
-import { Id } from 'domain/value-objects/id'
 import { Entity } from '../abstracts/entity'
 import { CardBrandEnum } from '../enums/card-brand.enum'
 import { CardLimit } from '../value-objects/card-limit'
 import { DayOfMonth } from '../value-objects/day-of-month'
 import { Description } from '../value-objects/description'
+import { Id } from '../value-objects/id'
 
 type CardProps = {
   user: Id

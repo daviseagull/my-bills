@@ -1,8 +1,8 @@
-import { Id } from 'domain/value-objects/id'
 import { Entity } from '../abstracts/entity'
 import { AccountTypeEnum } from '../enums/account-type.enum'
 import { Color } from '../value-objects/color'
 import { Description } from '../value-objects/description'
+import { Id } from '../value-objects/id'
 
 type AccountProps = {
   type: AccountTypeEnum

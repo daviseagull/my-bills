@@ -1,5 +1,5 @@
-import { BadRequestError } from 'application/errors/app-error'
-import { StringProp, ValueObject } from 'domain/abstracts/value-object'
+import { BadRequestError } from '@/application/errors/app-error'
+import { StringProp, ValueObject } from '../abstracts/value-object'
 
 export class Id extends ValueObject<StringProp> {
   private constructor(props: StringProp) {

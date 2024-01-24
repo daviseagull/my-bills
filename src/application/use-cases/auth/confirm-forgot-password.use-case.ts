@@ -1,8 +1,8 @@
-import { NotFoundError } from 'application/errors/app-error'
-import { IUserRepository } from 'application/repositories/user.repository'
-import { IAuthenticationService } from 'application/services/authentication.service'
-import { PasswordUtils } from 'application/utils/password.utils'
-import logger from 'infra/logger/logger'
+import { NotFoundError } from '@/application/errors/app-error'
+import { IUserRepository } from '@/application/repositories/user.repository'
+import { IAuthenticationService } from '@/application/services/authentication.service'
+import { PasswordUtils } from '@/application/utils/password.utils'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 export type ConfirmForgotPasswordRequest = {

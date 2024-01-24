@@ -1,7 +1,7 @@
-import { NotFoundError } from 'application/errors/app-error'
-import { IUserRepository } from 'application/repositories/user.repository'
-import { UserDto } from 'domain/dtos/user.dto'
-import { UserMapper } from 'domain/mappers/user.mapper'
+import { NotFoundError } from '@/application/errors/app-error'
+import { IUserRepository } from '@/application/repositories/user.repository'
+import { UserDto } from '@/domain/dtos/user.dto'
+import { UserMapper } from '@/domain/mappers/user.mapper'
 import { autoInjectable, inject } from 'tsyringe'
 
 @autoInjectable()

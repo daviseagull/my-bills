@@ -1,4 +1,4 @@
-import { BadRequestError } from 'application/errors/app-error'
+import { BadRequestError } from '@/application/errors/app-error'
 import { StringProp, ValueObject } from '../abstracts/value-object'
 
 export class Email extends ValueObject<StringProp> {

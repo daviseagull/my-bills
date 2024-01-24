@@ -1,4 +1,13 @@
 import {
+  BadRequestError,
+  InternalServerError
+} from '@/application/errors/app-error'
+import {
+  AuthenticationResult,
+  IAuthenticationService
+} from '@/application/services/authentication.service'
+import { SignUpRequest } from '@/application/use-cases/auth/sign-up.use-case'
+import {
   AttributeType,
   CodeMismatchException,
   ExpiredCodeException,
@@ -8,15 +17,6 @@ import {
   UserNotConfirmedException,
   UsernameExistsException
 } from '@aws-sdk/client-cognito-identity-provider'
-import {
-  BadRequestError,
-  InternalServerError
-} from 'application/errors/app-error'
-import {
-  AuthenticationResult,
-  IAuthenticationService
-} from 'application/services/authentication.service'
-import { SignUpRequest } from 'application/use-cases/auth/sign-up.use-case'
 import { CognitoUtils } from '../utils/cognito.utils'
 
 class UserAttribute implements AttributeType {

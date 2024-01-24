@@ -1,6 +1,6 @@
-import { ICardRepository } from 'application/repositories/card.repository'
-import { CardMapper } from 'domain/mappers/card.mapper'
-import logger from 'infra/logger/logger'
+import { ICardRepository } from '@/application/repositories/card.repository'
+import { CardMapper } from '@/domain/mappers/card.mapper'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

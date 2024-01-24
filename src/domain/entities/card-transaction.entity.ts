@@ -1,7 +1,7 @@
-import { Id } from 'domain/value-objects/id'
 import { Entity } from '../abstracts/entity'
 import { TransacationTypeEnum } from '../enums/transaction-type.enum'
 import { Description } from '../value-objects/description'
+import { Id } from '../value-objects/id'
 
 type CardTransactionProps = {
   card: Id

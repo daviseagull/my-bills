@@ -1,6 +1,6 @@
-import { IAccountRepository } from 'application/repositories/account.repository'
-import { AccountMapper } from 'domain/mappers/account.mapper'
-import logger from 'infra/logger/logger'
+import { IAccountRepository } from '@/application/repositories/account.repository'
+import { AccountMapper } from '@/domain/mappers/account.mapper'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

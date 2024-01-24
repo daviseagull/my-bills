@@ -1,10 +1,10 @@
+import { CardUtils } from '@/application/utils/card.utils'
+import { Card } from '@/domain/entities/card.entity'
+import { CardLimit } from '@/domain/value-objects/card-limit'
+import { DayOfMonth } from '@/domain/value-objects/day-of-month'
+import { Description } from '@/domain/value-objects/description'
+import { Id } from '@/domain/value-objects/id'
 import { Card as RawCard } from '@prisma/client'
-import { CardUtils } from 'application/utils/card.utils'
-import { Card } from 'domain/entities/card.entity'
-import { CardLimit } from 'domain/value-objects/card-limit'
-import { DayOfMonth } from 'domain/value-objects/day-of-month'
-import { Description } from 'domain/value-objects/description'
-import { Id } from 'domain/value-objects/id'
 
 export class CardPrismaMapper {
   static toDomain(card: RawCard): Card {

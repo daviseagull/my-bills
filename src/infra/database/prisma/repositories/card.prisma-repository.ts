@@ -1,7 +1,7 @@
+import { InternalServerError } from '@/application/errors/app-error'
+import { ICardRepository } from '@/application/repositories/card.repository'
+import { Card } from '@/domain/entities/card.entity'
 import { PrismaClient } from '@prisma/client'
-import { InternalServerError } from 'application/errors/app-error'
-import { ICardRepository } from 'application/repositories/card.repository'
-import { Card } from 'domain/entities/card.entity'
 import { CardPrismaMapper } from '../mappers/card.prisma-mapper'
 
 export class CardPrismaRepository implements ICardRepository {

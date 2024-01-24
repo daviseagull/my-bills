@@ -1,7 +1,7 @@
+import { env } from '@/env'
 import { CognitoIdentityProvider as CognitoIdentityServiceProvider } from '@aws-sdk/client-cognito-identity-provider'
 import { CognitoJwtVerifier } from 'aws-jwt-verify/cognito-verifier'
 import crypto from 'crypto'
-import { env } from 'env'
 
 export class CognitoUtils {
   public static cognitoServiceProvider() {

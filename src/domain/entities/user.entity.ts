@@ -1,4 +1,4 @@
-import { Entity } from 'domain/abstracts/entity'
+import { Entity } from '../abstracts/entity'
 import { Email } from '../value-objects/email'
 import { Name } from '../value-objects/name'
 import { Phone } from '../value-objects/phone'

@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client'
 import {
   BadRequestError,
   InternalServerError
-} from 'application/errors/app-error'
-import { ICategoryRepository } from 'application/repositories/category.repository'
-import { Category } from 'domain/entities/category.entity'
-import { CategoryTypeEnum } from 'domain/enums/category-type.enum'
-import logger from 'infra/logger/logger'
+} from '@/application/errors/app-error'
+import { ICategoryRepository } from '@/application/repositories/category.repository'
+import { Category } from '@/domain/entities/category.entity'
+import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
+import logger from '@/infra/logger/logger'
+import { PrismaClient } from '@prisma/client'
 import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
 
 export class CategoryPrismaRepository implements ICategoryRepository {

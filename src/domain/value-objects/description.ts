@@ -1,5 +1,5 @@
-import { BadRequestError } from 'application/errors/app-error'
-import { StringUtils } from 'application/utils/string.utils'
+import { BadRequestError } from '@/application/errors/app-error'
+import { StringUtils } from '@/application/utils/string.utils'
 import { StringProp, ValueObject } from '../abstracts/value-object'
 
 export class Description extends ValueObject<StringProp> {

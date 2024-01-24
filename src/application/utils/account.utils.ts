@@ -1,4 +1,4 @@
-import { AccountTypeEnum } from 'domain/enums/account-type.enum'
+import { AccountTypeEnum } from '@/domain/enums/account-type.enum'
 import { BadRequestError } from '../errors/app-error'
 
 export class AccountUtils {

@@ -1,8 +1,8 @@
-import { Id } from 'domain/value-objects/id'
 import { Entity } from '../abstracts/entity'
 import { CategoryTypeEnum } from '../enums/category-type.enum'
 import { Color } from '../value-objects/color'
 import { Description } from '../value-objects/description'
+import { Id } from '../value-objects/id'
 
 type CategoryProps = {
   user: Id

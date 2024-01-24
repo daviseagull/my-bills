@@ -1,6 +1,6 @@
-import { UnauthorizedError } from 'application/errors/app-error'
+import { UnauthorizedError } from '@/application/errors/app-error'
+import { CognitoUtils } from '@/infra/authentication/utils/cognito.utils'
 import { NextFunction, Request, Response } from 'express'
-import { CognitoUtils } from 'infra/authentication/utils/cognito.utils'
 
 export async function authenticateToken(
   req: Request,

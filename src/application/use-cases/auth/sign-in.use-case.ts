@@ -1,10 +1,10 @@
-import { NotFoundError } from 'application/errors/app-error'
-import { IUserRepository } from 'application/repositories/user.repository'
+import { NotFoundError } from '@/application/errors/app-error'
+import { IUserRepository } from '@/application/repositories/user.repository'
 import {
   AuthenticationResult,
   IAuthenticationService
-} from 'application/services/authentication.service'
-import logger from 'infra/logger/logger'
+} from '@/application/services/authentication.service'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 export type SignInRequest = {
@@ -20,10 +20,6 @@ export class SignInUseCase {
   ) {}
 
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
-    logger.info(`Trying to log in user ${request.email}`)
-    logger.info(`Trying to log in user ${request.email}`)
-    logger.info(`Trying to log in user ${request.email}`)
-    logger.info(`Trying to log in user ${request.email}`)
     logger.info(`Trying to log in user ${request.email}`)
 
     const user = await this.userRepository.findByEmail(request.email)

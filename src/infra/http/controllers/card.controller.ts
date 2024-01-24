@@ -1,9 +1,9 @@
 import {
   CreateCardRequest,
   CreateCardUseCase
-} from 'application/use-cases/card/create-card.use-case'
-import { GetCardUseCase } from 'application/use-cases/card/get-card.use-case'
-import { GetCardsUseCase } from 'application/use-cases/card/get-cards.use-case'
+} from '@/application/use-cases/card/create-card.use-case'
+import { GetCardUseCase } from '@/application/use-cases/card/get-card.use-case'
+import { GetCardsUseCase } from '@/application/use-cases/card/get-cards.use-case'
 import { Request, Response } from 'express'
 import { container, injectable } from 'tsyringe'
 

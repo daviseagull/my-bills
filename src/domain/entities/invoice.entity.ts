@@ -1,6 +1,6 @@
-import { Entity } from 'domain/abstracts/entity'
-import { InvoiceStausEnum } from 'domain/enums/invoice-status.enum'
-import { Id } from 'domain/value-objects/id'
+import { Entity } from '../abstracts/entity'
+import { InvoiceStausEnum } from '../enums/invoice-status.enum'
+import { Id } from '../value-objects/id'
 
 type InvoiceProps = {
   user: Id

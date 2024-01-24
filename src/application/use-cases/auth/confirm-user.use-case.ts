@@ -1,7 +1,7 @@
-import { NotFoundError } from 'application/errors/app-error'
-import { IUserRepository } from 'application/repositories/user.repository'
-import { IAuthenticationService } from 'application/services/authentication.service'
-import logger from 'infra/logger/logger'
+import { NotFoundError } from '@/application/errors/app-error'
+import { IUserRepository } from '@/application/repositories/user.repository'
+import { IAuthenticationService } from '@/application/services/authentication.service'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
 export type ConfirmUserRequest = {

@@ -1,5 +1,5 @@
-import { IAuthenticationService } from 'application/services/authentication.service'
-import logger from 'infra/logger/logger'
+import { IAuthenticationService } from '@/application/services/authentication.service'
+import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 import { CreateUserUseCase } from '../user/create-user.use-case'
 

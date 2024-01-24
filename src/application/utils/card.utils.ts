@@ -1,4 +1,4 @@
-import { CardBrandEnum } from 'domain/enums/card-brand.enum'
+import { CardBrandEnum } from '@/domain/enums/card-brand.enum'
 import { BadRequestError } from '../errors/app-error'
 
 export class CardUtils {

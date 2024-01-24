@@ -1,7 +1,7 @@
+import { InternalServerError } from '@/application/errors/app-error'
+import { IAccountRepository } from '@/application/repositories/account.repository'
+import { Account } from '@/domain/entities/account.entity'
 import { PrismaClient } from '@prisma/client'
-import { InternalServerError } from 'application/errors/app-error'
-import { IAccountRepository } from 'application/repositories/account.repository'
-import { Account } from 'domain/entities/account.entity'
 import { AccountPrismaMapper } from '../mappers/account.prisma-mapper'
 
 export default class AccountPrismaRepository implements IAccountRepository {
