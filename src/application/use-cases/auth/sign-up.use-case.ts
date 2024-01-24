@@ -1,4 +1,5 @@
 import { IAuthenticationService } from '@/application/services/authentication.service'
+import { PasswordUtils } from '@/application/utils/password.utils'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 import { CreateUserUseCase } from '../user/create-user.use-case'
@@ -35,6 +36,8 @@ export class SignUpUseCase {
 
   public async execute(request: SignUpRequest): Promise<SignUpResponse> {
     logger.info(`Signing up user with email ${request.email}`)
+
+    PasswordUtils.validatePassword(request.password)
 
     const cognitoId = await this.authService.signUp(request)
     logger.info(`User ${request.email} created in IAM with id ${cognitoId}`)

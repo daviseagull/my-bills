@@ -1,5 +1,4 @@
 import { IUserRepository } from '@/application/repositories/user.repository'
-import { PasswordUtils } from '@/application/utils/password.utils'
 import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
 import { Name } from '@/domain/value-objects/name'
@@ -35,8 +34,6 @@ export class CreateUserUseCase {
       cognitoId: cognitoId,
       confirmed: false
     })
-
-    PasswordUtils.validatePassword(request.password)
 
     const user = await this.userRepository.create(newUser)
 
