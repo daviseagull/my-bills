@@ -2,7 +2,7 @@ import rTracer from 'cls-rtracer'
 import express from 'express'
 import 'express-async-errors'
 import 'reflect-metadata'
-import 'shared/dependency-injection/container'
+import '../../shared/dependency-injection/container'
 import { errorHandler } from './middlewares/error-handler.middleware'
 import routes from './routes'
 
