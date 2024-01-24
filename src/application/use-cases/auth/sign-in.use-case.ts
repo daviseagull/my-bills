@@ -21,6 +21,10 @@ export class SignInUseCase {
 
   public async execute(request: SignInRequest): Promise<AuthenticationResult> {
     logger.info(`Trying to log in user ${request.email}`)
+    logger.info(`Trying to log in user ${request.email}`)
+    logger.info(`Trying to log in user ${request.email}`)
+    logger.info(`Trying to log in user ${request.email}`)
+    logger.info(`Trying to log in user ${request.email}`)
 
     const user = await this.userRepository.findByEmail(request.email)
 
