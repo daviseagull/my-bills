@@ -1,6 +1,5 @@
-import winston from 'winston'
-
 import rTracer from 'cls-rtracer'
+import winston from 'winston'
 
 const { combine, timestamp, printf } = winston.format
 
