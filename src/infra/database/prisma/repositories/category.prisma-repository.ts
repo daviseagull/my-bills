@@ -5,7 +5,6 @@ import {
 import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { Category } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
-import logger from '@/infra/logger/logger'
 import { PrismaClient } from '@prisma/client'
 import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
 
@@ -13,7 +12,6 @@ export class CategoryPrismaRepository implements ICategoryRepository {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
 
   async create(category: Category): Promise<Category> {
-    logger.info(`category: ${JSON.stringify(category)}`)
     const createdCategory = await this.prisma.category.create({
       data: {
         description: category.props.description.props.value,
@@ -43,6 +41,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
       data: prismaCategories
     })
   }
+
   async findByUser(user: string): Promise<Category[]> {
     const categories = await this.prisma.category.findMany({
       where: {
