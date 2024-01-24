@@ -18,10 +18,10 @@ export class CategoryPrismaRepository implements ICategoryRepository {
       data: {
         description: category.props.description.props.value,
         color: category.props.color.props.value,
-        parent_id: category.props.parent,
+        parent_id: category.props.parent?.props.value,
         active: category.props.active,
         type: category.props.type,
-        cognito_id: category.props.user
+        cognito_id: category.props.user.props.value
       }
     })
 
@@ -126,7 +126,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
 
   async update(categoryToUpdate: Category): Promise<Category> {
     const category = await this.findByUserAndId(
-      categoryToUpdate.props.user,
+      categoryToUpdate.props.user.props.value,
       categoryToUpdate.id!
     )
 
@@ -143,7 +143,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
       data: {
         description: categoryToUpdate.props.description.props.value,
         color: categoryToUpdate.props.color.props.value,
-        cognito_id: categoryToUpdate.props.parent,
+        cognito_id: categoryToUpdate.props.parent?.props.value,
         active: categoryToUpdate.props.active
       }
     })

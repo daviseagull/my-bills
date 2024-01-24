@@ -8,7 +8,7 @@ export class AccountMapper {
       createdAt: account.createdAt!.toISOString(),
       updatedAt: account.updatedAt!.toISOString(),
       type: account.props.type.toString(),
-      user: account.props.user,
+      user: account.props.user.props.value,
       description: account.props.description.props.value,
       balance: account.props.balance,
       color: account.props.color.props.value

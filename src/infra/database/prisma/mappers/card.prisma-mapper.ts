@@ -4,13 +4,14 @@ import { Card } from 'domain/entities/card.entity'
 import { CardLimit } from 'domain/value-objects/card-limit'
 import { DayOfMonth } from 'domain/value-objects/day-of-month'
 import { Description } from 'domain/value-objects/description'
+import { Id } from 'domain/value-objects/id'
 
 export class CardPrismaMapper {
   static toDomain(card: RawCard): Card {
     return Card.create(
       {
-        user: card.cognito_id,
-        account: card.account_id,
+        user: Id.create(card.cognito_id, 'User'),
+        account: Id.create(card.account_id, 'Account'),
         brand: CardUtils.mapCardTypeEnum(card.brand),
         description: Description.create(card.description),
         closingDay: DayOfMonth.create(card.closing_day),
@@ -28,8 +29,8 @@ export class CardPrismaMapper {
       id: card.id!,
       created_at: card.createdAt!,
       updated_at: card.updatedAt!,
-      cognito_id: card.props.user,
-      account_id: card.props.account,
+      cognito_id: card.props.user.props.value,
+      account_id: card.props.account.props.value,
       brand: card.props.brand,
       description: card.props.description.props.value,
       closing_day: card.props.closingDay.props.value,

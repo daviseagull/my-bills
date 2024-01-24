@@ -6,4 +6,5 @@ export interface ICardRepository {
   update(card: Card): Promise<string>
   findByUserAndId(cognitoId: string, id: string): Promise<Card | null>
   findAllByUser(cognitoId: string): Promise<Card[]>
+  exists(cognitoId: string, description: string): Promise<boolean>
 }

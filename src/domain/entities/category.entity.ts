@@ -1,14 +1,15 @@
+import { Id } from 'domain/value-objects/id'
 import { Entity } from '../abstracts/entity'
 import { CategoryTypeEnum } from '../enums/category-type.enum'
 import { Color } from '../value-objects/color'
 import { Description } from '../value-objects/description'
 
 type CategoryProps = {
-  user: string
+  user: Id
   type: CategoryTypeEnum
   description: Description
   color: Color
-  parent?: string
+  parent?: Id
   active: boolean
 }
 

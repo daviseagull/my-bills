@@ -1,3 +1,4 @@
+import rTracer from 'cls-rtracer'
 import express from 'express'
 import 'express-async-errors'
 import { errorHandler } from 'infra/http/middlewares/error-handler.middleware'
@@ -6,6 +7,8 @@ import 'shared/dependency-injection/container'
 import routes from './routes'
 
 const app = express()
+
+app.use(rTracer.expressMiddleware())
 
 app.use(express.json())
 

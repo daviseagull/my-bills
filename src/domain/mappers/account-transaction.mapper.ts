@@ -8,11 +8,11 @@ export class AccountTransactionMapper {
         id: transaction.id!,
         createdAt: transaction.createdAt!.toISOString(),
         updatedAt: transaction.updatedAt!.toISOString(),
-        account: transaction.props.account,
+        account: transaction.props.account.props.value,
         date: transaction.props.date.toISOString(),
         description: transaction.props.description.props.value,
         type: transaction.props.type.toString(),
-        category: transaction.props.category,
+        category: transaction.props.category.props.value,
         value: transaction.props.value
       }
     })

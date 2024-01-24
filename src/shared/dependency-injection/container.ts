@@ -6,7 +6,7 @@ import { IAuthenticationService } from 'application/services/authentication.serv
 import { CreateDefaultCategoriesUseCase } from 'application/use-cases/category/create-default-categories.use-case'
 import { CreateUserUseCase } from 'application/use-cases/user/create-user.use-case'
 import { CognitoService } from 'infra/authentication/service/cognito.service'
-import { AccountPrismaRepository } from 'infra/database/prisma/repositories/account.prisma-repository'
+import AccountPrismaRepository from 'infra/database/prisma/repositories/account.prisma-repository'
 import { CardPrismaRepository } from 'infra/database/prisma/repositories/card.prisma-repository'
 import { CategoryPrismaRepository } from 'infra/database/prisma/repositories/category.prisma-repository'
 import { UserPrismaRepository } from 'infra/database/prisma/repositories/user.prisma-repository'

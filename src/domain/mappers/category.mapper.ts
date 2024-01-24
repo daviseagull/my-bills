@@ -9,11 +9,11 @@ export class CategoryMapper {
         createdAt: category.createdAt!.toISOString(),
         updatedAt: category.updatedAt!.toISOString(),
         active: category.props.active,
-        user: category.props.user,
+        user: category.props.user.props.value,
         type: category.props.type,
         description: category.props.description.props.value,
         color: category.props.color.props.value,
-        parent: category.props.parent!
+        parent: category.props.parent!.props.value
       }
     })
   }
