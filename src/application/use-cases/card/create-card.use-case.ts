@@ -5,6 +5,7 @@ import { CardBrandEnum } from 'domain/enums/card-brand.enum'
 import { CardLimit } from 'domain/value-objects/card-limit'
 import { DayOfMonth } from 'domain/value-objects/day-of-month'
 import { Description } from 'domain/value-objects/description'
+import { Id } from 'domain/value-objects/id'
 import logger from 'infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
 
@@ -30,8 +31,8 @@ export class CreateCardUseCase {
     logger.info(`Creating card with description ${request.description}`)
 
     const newCard = Card.create({
-      user: user,
-      account: request.account,
+      user: Id.create(user, 'User'),
+      account: Id.create(request.account, 'Account'),
       brand: CardUtils.mapCardTypeEnum(request.brand),
       description: Description.create(request.description),
       closingDay: DayOfMonth.create(request.closingDay),

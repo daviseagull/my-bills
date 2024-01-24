@@ -6,4 +6,5 @@ export interface IAccountRepository {
   update(account: Account): Promise<string>
   findByUserAndId(cognitoId: string, id: string): Promise<Account | null>
   findAllByUser(userId: string): Promise<Account[]>
+  exists(cognitoId: string, description: string): Promise<boolean>
 }
