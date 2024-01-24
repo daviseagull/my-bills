@@ -5,7 +5,7 @@
   "author": "Davi Seagull <davi.seagull@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/infra/http/server.js NODE_ENV=production",
     "start:dev": "tsx watch --env-file .env src/infra/http/server.ts",
     "prisma:push": "prisma db push",
