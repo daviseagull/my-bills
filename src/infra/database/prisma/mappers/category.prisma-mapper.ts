@@ -25,13 +25,17 @@ export class CategoryPrismaMapper {
   }
 
   static toPrismaCategory(category: Category): RawCategory {
+    const parentId = category.props.parent
+      ? category.props.parent.props.value
+      : null
+
     return {
       id: category.id!,
       created_at: category.createdAt!,
       updated_at: category.updatedAt!,
       description: category.props.description.props.value,
       color: category.props.color.props.value,
-      parent_id: category.props.parent!.props.value,
+      parent_id: parentId,
       active: category.props.active,
       type: category.props.type,
       cognito_id: category.props.user.props.value
