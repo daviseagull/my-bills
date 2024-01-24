@@ -6,12 +6,12 @@ export class Id extends ValueObject<StringProp> {
     super(props)
   }
 
-  public static create(value: string, of: string): Id {
+  public static create(value: string, entityName: string): Id {
     const expression: RegExp =
       /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
 
     if (!expression.test(value)) {
-      throw new BadRequestError(`${of} must be a valid ID`)
+      throw new BadRequestError(`${entityName} must be a valid ID`)
     }
 
     return new Id({ value })

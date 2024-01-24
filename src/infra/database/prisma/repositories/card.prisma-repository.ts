@@ -51,4 +51,15 @@ export class CardPrismaRepository implements ICardRepository {
 
     return cards ? cards.map((card) => CardPrismaMapper.toDomain(card!)) : []
   }
+
+  async exists(cognitoId: string, description: string): Promise<boolean> {
+    const card = await this.prisma.card.count({
+      where: {
+        cognito_id: cognitoId,
+        description
+      }
+    })
+
+    return card !== 0
+  }
 }

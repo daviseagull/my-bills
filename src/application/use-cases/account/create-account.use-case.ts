@@ -35,7 +35,7 @@ export class CreateAccountUseCase {
 
     if (exists) {
       throw new BadRequestError(
-        `Couldn't create account with description ${request.description} because it already exists.`
+        `Account with description ${request.description} already exists.`
       )
     }
 
