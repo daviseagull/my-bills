@@ -1,10 +1,11 @@
 import { Router } from 'express'
+import { container } from 'tsyringe'
 import { UserController } from '../controllers/user.controller'
 import { authenticateToken } from '../middlewares/authenticate.middleware'
 
-const userController = new UserController()
+const controller = container.resolve(UserController)
 const userRoutes = Router()
 
-userRoutes.get('', authenticateToken, userController.getUser)
+userRoutes.get('', authenticateToken, controller.getUser)
 
 export default userRoutes
