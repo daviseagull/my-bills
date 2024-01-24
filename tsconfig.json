@@ -7,6 +7,9 @@
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "outDir": "dist",
+    "paths": {
+      "@/*": ["*"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
