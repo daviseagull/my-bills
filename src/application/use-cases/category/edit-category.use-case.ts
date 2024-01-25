@@ -10,7 +10,6 @@ import { inject, injectable } from 'tsyringe'
 
 export type EditCategoryRequest = {
   id: string
-  user: string
   type: string
   description: string
   color: string
@@ -42,10 +41,10 @@ export class EditCategoryUseCase {
     const category = Category.create(
       {
         type: CategoryUtils.mapCategoryTypeEnum(request.type),
-        user: Id.create(request.user, 'User'),
+        user: Id.create(user, 'User'),
         description: Description.create(request.description),
         parent: request.parent
-          ? Id.create(request.parent!, 'Parent')
+          ? Id.create(request.parent!, 'Parent category')
           : undefined,
         active: request.active,
         color: Color.create(request.color)
