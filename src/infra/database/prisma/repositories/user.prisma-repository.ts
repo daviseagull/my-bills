@@ -23,7 +23,7 @@ export class UserPrismaRepository implements IUserRepository {
         first_name: user.props.name.props.first,
         last_name: user.props.name.props.last,
         confirmed: user.props.confirmed,
-        cognito_id: user.props.cognitoId!,
+        cognito_id: user.props.cognitoId.props.value,
         phone: {
           country: user.props.phone.props.country,
           area_code: user.props.phone.props.areaCode,

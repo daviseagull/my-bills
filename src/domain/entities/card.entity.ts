@@ -7,7 +7,6 @@ import { Id } from '../value-objects/id'
 
 type CardProps = {
   user: Id
-  account: Id
   brand: CardBrandEnum
   description: Description
   closingDay: DayOfMonth

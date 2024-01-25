@@ -13,7 +13,6 @@ import { inject, injectable } from 'tsyringe'
 import { GetAccountUseCase } from '../account/get-account.use-case'
 
 export type CreateCardRequest = {
-  account: string
   brand: CardBrandEnum
   description: string
   closingDay: number
@@ -34,11 +33,6 @@ export class CreateCardUseCase {
   ): Promise<string> {
     logger.info(`Creating card with description ${request.description}`)
 
-    const account = await this.getAccount.execute(user, request.account)
-    if (!account) {
-      throw new BadRequestError(`Card couldn't be created. Invalid account`)
-    }
-
     const exists = await this.repository.exists(
       user,
       StringUtils.capitalizeFirstLetter(request.description)
@@ -52,7 +46,6 @@ export class CreateCardUseCase {
 
     const newCard = Card.create({
       user: Id.create(user, 'User'),
-      account: Id.create(request.account, 'Account'),
       brand: CardUtils.mapCardTypeEnum(request.brand),
       description: Description.create(request.description),
       closingDay: DayOfMonth.create(request.closingDay),

@@ -1,5 +1,6 @@
 import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
+import { Id } from '@/domain/value-objects/id'
 import { Name } from '@/domain/value-objects/name'
 import { Phone } from '@/domain/value-objects/phone'
 import { User as RawUser } from '@prisma/client'
@@ -13,7 +14,7 @@ export class UserPrismaMapper {
         phone: Phone.create('+1', 444, 12345566),
         name: Name.create(raw.first_name, raw.last_name),
         confirmed: raw.confirmed,
-        cognitoId: raw.cognito_id
+        cognitoId: Id.create(raw.cognito_id, 'User')
       },
       raw.id,
       raw.created_at,
@@ -38,7 +39,7 @@ export class UserPrismaMapper {
       first_name: user.props.name.props.first,
       last_name: user.props.name.props.last,
       confirmed: user.props.confirmed,
-      cognito_id: user.props.cognitoId!
+      cognito_id: user.props.cognitoId.props.value
     }
   }
 }

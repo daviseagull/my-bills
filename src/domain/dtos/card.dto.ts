@@ -4,7 +4,6 @@ export type CardDto = {
   updatedAt: string
   brand: string
   user: string
-  account: string
   description: string
   closingDay: number
   dueDate: number

@@ -1,13 +1,11 @@
 generator client {
   provider      = "prisma-client-js"
-  // previewFeatures = ["driverAdapters"]
   binaryTargets = ["darwin-arm64", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
-  // directUrl = env("DATABASE_DIRECT_URL")
 }
 
 model User {
@@ -65,7 +63,6 @@ model Account {
   balance      Float
   color        String
   transactions AccountTransaction[]
-  cards        Card[]
 
   @@map("account")
 }
@@ -90,8 +87,6 @@ model Card {
   id           String            @id @default(auto()) @map("_id") @db.ObjectId
   created_at   DateTime          @default(now())
   updated_at   DateTime          @updatedAt
-  account      Account           @relation(fields: [account_id], references: [id])
-  account_id   String            @db.ObjectId
   user         User              @relation(fields: [cognito_id], references: [cognito_id])
   cognito_id   String
   brand        String

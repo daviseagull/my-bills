@@ -1,6 +1,7 @@
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { Email } from '@/domain/value-objects/email'
+import { Id } from '@/domain/value-objects/id'
 import { Name } from '@/domain/value-objects/name'
 import { Phone } from '@/domain/value-objects/phone'
 import logger from '@/infra/logger/logger'
@@ -31,13 +32,13 @@ export class CreateUserUseCase {
         request.phone.number
       ),
       name: Name.create(request.name.first, request.name.last),
-      cognitoId: cognitoId,
+      cognitoId: Id.create(cognitoId, 'User'),
       confirmed: false
     })
 
     const user = await this.userRepository.create(newUser)
 
-    await this.categoryUseCase.execute(user.props.cognitoId!)
+    await this.categoryUseCase.execute(cognitoId)
 
     return user
   }

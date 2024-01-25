@@ -11,7 +11,6 @@ export class CardPrismaMapper {
     return Card.create(
       {
         user: Id.create(card.cognito_id, 'User'),
-        account: Id.create(card.account_id, 'Account'),
         brand: CardUtils.mapCardTypeEnum(card.brand),
         description: Description.create(card.description),
         closingDay: DayOfMonth.create(card.closing_day),
@@ -30,7 +29,6 @@ export class CardPrismaMapper {
       created_at: card.createdAt!,
       updated_at: card.updatedAt!,
       cognito_id: card.props.user.props.value,
-      account_id: card.props.account.props.value,
       brand: card.props.brand,
       description: card.props.description.props.value,
       closing_day: card.props.closingDay.props.value,

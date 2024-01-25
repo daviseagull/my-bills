@@ -1,5 +1,6 @@
 import { Entity } from '../abstracts/entity'
 import { Email } from '../value-objects/email'
+import { Id } from '../value-objects/id'
 import { Name } from '../value-objects/name'
 import { Phone } from '../value-objects/phone'
 
@@ -8,7 +9,7 @@ type UserProps = {
   name: Name
   birthday: Date
   phone: Phone
-  cognitoId?: string
+  cognitoId: Id
   confirmed: boolean
 }
 

@@ -9,7 +9,6 @@ export class CardMapper {
       updatedAt: card.updatedAt!.toISOString(),
       brand: card.props.brand,
       user: card.props.user.props.value,
-      account: card.props.account.props.value,
       description: card.props.description.props.value,
       closingDay: card.props.closingDay.props.value,
       dueDate: card.props.dueDate.props.value,
