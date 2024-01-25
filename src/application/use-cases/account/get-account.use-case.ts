@@ -17,6 +17,10 @@ export class GetAccountUseCase {
       accountId
     )
 
+    if (!account) {
+      return null
+    }
+
     return AccountMapper.toAccountDto(account!)
   }
 }

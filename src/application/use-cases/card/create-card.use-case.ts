@@ -10,6 +10,7 @@ import { Description } from '@/domain/value-objects/description'
 import { Id } from '@/domain/value-objects/id'
 import logger from '@/infra/logger/logger'
 import { inject, injectable } from 'tsyringe'
+import { GetAccountUseCase } from '../account/get-account.use-case'
 
 export type CreateCardRequest = {
   account: string
@@ -22,13 +23,21 @@ export type CreateCardRequest = {
 
 @injectable()
 export class CreateCardUseCase {
-  constructor(@inject('CardRepository') private repository: ICardRepository) {}
+  constructor(
+    @inject('CardRepository') private repository: ICardRepository,
+    @inject('GetAccountUseCase') private getAccount: GetAccountUseCase
+  ) {}
 
   public async execute(
     request: CreateCardRequest,
     user: string
   ): Promise<string> {
     logger.info(`Creating card with description ${request.description}`)
+
+    const account = await this.getAccount.execute(user, request.account)
+    if (!account) {
+      throw new BadRequestError(`Card couldn't be created. Invalid account`)
+    }
 
     const exists = await this.repository.exists(
       user,
