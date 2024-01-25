@@ -5,6 +5,7 @@ const envSchema = z.object({
   COGNITO_CLIENT_SECRET: z.string(),
   COGNITO_USER_POOL_ID: z.string(),
   DATABASE_URL: z.string().url(),
+  DATABASE_DIRECT_URL: z.string().url(),
   REGION: z.string()
 })
 

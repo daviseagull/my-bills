@@ -1,4 +1,5 @@
 import { UnauthorizedError } from '@/application/errors/app-error'
+import { env } from '@/env'
 import { CognitoUtils } from '@/infra/authentication/utils/cognito.utils'
 import { NextFunction, Request, Response } from 'express'
 
@@ -17,7 +18,7 @@ export async function authenticateToken(
 
   try {
     const payload = await CognitoUtils.getVerifier().verify(token, {
-      clientId: process.env['COGNITO_CLIENT_ID']!
+      clientId: env.COGNITO_CLIENT_ID
     })
 
     req.user = payload.sub

@@ -25,9 +25,7 @@ export class ResendCodeUseCase {
       )
     }
 
-    logger.info(JSON.stringify(user))
     if (user.props.confirmed) {
-      logger.info('teste')
       throw new BadRequestError('User already confirmed')
     }
 
