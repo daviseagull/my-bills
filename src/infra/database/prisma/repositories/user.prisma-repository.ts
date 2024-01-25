@@ -1,7 +1,7 @@
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
 import { UserPrismaMapper } from '../mappers/user.prisma-mapper'
-import prisma from '../prisma-client'
+import { prisma } from '../prisma-client'
 
 export class UserPrismaRepository implements IUserRepository {
   constructor() {}
@@ -25,11 +25,9 @@ export class UserPrismaRepository implements IUserRepository {
         confirmed: user.props.confirmed,
         cognito_id: user.props.cognitoId!,
         phone: {
-          create: {
-            country: user.props.phone.props.country,
-            area_code: user.props.phone.props.areaCode,
-            number: user.props.phone.props.number
-          }
+          country: user.props.phone.props.country,
+          area_code: user.props.phone.props.areaCode,
+          number: user.props.phone.props.number
         }
       }
     })

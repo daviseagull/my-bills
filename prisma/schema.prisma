@@ -1,24 +1,23 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
-  binaryTargets   = ["darwin-arm64", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+  provider      = "prisma-client-js"
+  // previewFeatures = ["driverAdapters"]
+  binaryTargets = ["darwin-arm64", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_DIRECT_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DATABASE_DIRECT_URL")
 }
 
 model User {
-  id         String     @id @default(uuid())
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
   email      String     @unique
   cognito_id String     @unique
   birthday   DateTime
-  phone      Phone      @relation(fields: [phone_id], references: [id])
-  phone_id   String     @unique
+  phone      Phone
   first_name String
   last_name  String
   confirmed  Boolean
@@ -30,18 +29,14 @@ model User {
   @@map("user")
 }
 
-model Phone {
-  id        String @id @default(uuid())
+type Phone {
   country   String
   area_code Int
   number    Int
-  user      User?
-
-  @@map("phone")
 }
 
 model Category {
-  id                   String               @id @default(uuid())
+  id                   String               @id @default(auto()) @map("_id") @db.ObjectId
   created_at           DateTime             @default(now())
   updated_at           DateTime             @updatedAt
   user                 User                 @relation(fields: [cognito_id], references: [cognito_id])
@@ -50,8 +45,8 @@ model Category {
   color                String
   active               Boolean
   type                 String
-  parent_id            String?
-  parent               Category?            @relation("Parent", fields: [parent_id], references: [id])
+  parent_id            String?              @db.ObjectId
+  parent               Category?            @relation("Parent", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   child                Category[]           @relation("Parent")
   account_transactions AccountTransaction[]
   card_transactions    CardTransaction[]
@@ -60,7 +55,7 @@ model Category {
 }
 
 model Account {
-  id           String               @id @default(uuid())
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
   created_at   DateTime             @default(now())
   updated_at   DateTime             @updatedAt
   user         User                 @relation(fields: [cognito_id], references: [cognito_id])
@@ -76,27 +71,27 @@ model Account {
 }
 
 model AccountTransaction {
-  id          String   @id @default(uuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   account     Account  @relation(fields: [account_id], references: [id])
-  account_id  String
+  account_id  String   @db.ObjectId
   date        DateTime
   description String
   type        String
   category    Category @relation(fields: [category_id], references: [id])
-  category_id String
+  category_id String   @db.ObjectId
   value       Float
 
   @@map("account_transaction")
 }
 
 model Card {
-  id           String            @id @default(uuid())
+  id           String            @id @default(auto()) @map("_id") @db.ObjectId
   created_at   DateTime          @default(now())
   updated_at   DateTime          @updatedAt
   account      Account           @relation(fields: [account_id], references: [id])
-  account_id   String
+  account_id   String            @db.ObjectId
   user         User              @relation(fields: [cognito_id], references: [cognito_id])
   cognito_id   String
   brand        String
@@ -111,16 +106,16 @@ model Card {
 }
 
 model CardTransaction {
-  id          String   @id @default(uuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   card        Card     @relation(fields: [card_id], references: [id])
-  card_id     String
+  card_id     String   @db.ObjectId
   date        DateTime
   description String
   type        String
   category    Category @relation(fields: [category_id], references: [id])
-  category_id String
+  category_id String   @db.ObjectId
   payments    Int
   value       Float
 
@@ -128,17 +123,17 @@ model CardTransaction {
 }
 
 model Invoice {
-  id           String   @id @default(uuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   user         User     @relation(fields: [cognito_id], references: [cognito_id])
   cognito_id   String
   card         Card     @relation(fields: [card_id], references: [id])
-  card_id      String
+  card_id      String   @db.ObjectId
   closing_date DateTime
   due_date     DateTime
   total        Float
   status       String
 
-  @@map("invoices")
+  @@map("invoice")
 }

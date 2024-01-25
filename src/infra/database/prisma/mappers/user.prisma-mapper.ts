@@ -30,7 +30,11 @@ export class UserPrismaMapper {
       updated_at: user.updatedAt!,
       email: user.props.email.props.value,
       birthday: new Date(user.props.birthday),
-      phone_id: '',
+      phone: {
+        area_code: user.props.phone.props.areaCode,
+        country: user.props.phone.props.country,
+        number: user.props.phone.props.number
+      },
       first_name: user.props.name.props.first,
       last_name: user.props.name.props.last,
       confirmed: user.props.confirmed,

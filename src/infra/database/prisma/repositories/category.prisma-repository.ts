@@ -6,7 +6,7 @@ import { ICategoryRepository } from '@/application/repositories/category.reposit
 import { Category } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
 import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
-import prisma from '../prisma-client'
+import { prisma } from '../prisma-client'
 
 export class CategoryPrismaRepository implements ICategoryRepository {
   constructor() {}
