@@ -1,16 +1,16 @@
 import { InternalServerError } from '@/application/errors/app-error'
 import { IAccountRepository } from '@/application/repositories/account.repository'
 import { Account } from '@/domain/entities/account.entity'
-import { PrismaClient } from '@prisma/client'
 import { AccountPrismaMapper } from '../mappers/account.prisma-mapper'
+import prisma from '../prisma-client'
 
 export default class AccountPrismaRepository implements IAccountRepository {
-  constructor(private prisma: PrismaClient = new PrismaClient()) {}
+  constructor() {}
 
   async create(account: Account): Promise<string> {
     const prismaAccount = AccountPrismaMapper.toPrismaAccount(account)
 
-    const createdAccount = await this.prisma.account.create({
+    const createdAccount = await prisma.account.create({
       data: prismaAccount
     })
 
@@ -35,7 +35,7 @@ export default class AccountPrismaRepository implements IAccountRepository {
     cognitoId: string,
     id: string
   ): Promise<Account | null> {
-    const account = await this.prisma.account.findUnique({
+    const account = await prisma.account.findUnique({
       where: {
         cognito_id: cognitoId,
         id
@@ -46,7 +46,7 @@ export default class AccountPrismaRepository implements IAccountRepository {
   }
 
   async findAllByUser(cognitoId: string): Promise<Account[]> {
-    const accounts = await this.prisma.account.findMany({
+    const accounts = await prisma.account.findMany({
       where: {
         cognito_id: cognitoId
       }
@@ -58,7 +58,7 @@ export default class AccountPrismaRepository implements IAccountRepository {
   }
 
   async exists(cognitoId: string, description: string): Promise<boolean> {
-    const account = await this.prisma.account.count({
+    const account = await prisma.account.count({
       where: {
         cognito_id: cognitoId,
         description

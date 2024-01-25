@@ -1,16 +1,16 @@
 import { InternalServerError } from '@/application/errors/app-error'
 import { ICardRepository } from '@/application/repositories/card.repository'
 import { Card } from '@/domain/entities/card.entity'
-import { PrismaClient } from '@prisma/client'
 import { CardPrismaMapper } from '../mappers/card.prisma-mapper'
+import prisma from '../prisma-client'
 
 export class CardPrismaRepository implements ICardRepository {
-  constructor(private prisma: PrismaClient = new PrismaClient()) {}
+  constructor() {}
 
   async create(card: Card): Promise<string> {
     const prismaCard = CardPrismaMapper.toPrisma(card)
 
-    const createdCard = await this.prisma.card.create({
+    const createdCard = await prisma.card.create({
       data: prismaCard
     })
 
@@ -32,7 +32,7 @@ export class CardPrismaRepository implements ICardRepository {
   }
 
   async findByUserAndId(cognitoId: string, id: string): Promise<Card | null> {
-    const card = await this.prisma.card.findUnique({
+    const card = await prisma.card.findUnique({
       where: {
         cognito_id: cognitoId,
         id
@@ -43,7 +43,7 @@ export class CardPrismaRepository implements ICardRepository {
   }
 
   async findAllByUser(cognitoId: string): Promise<Card[]> {
-    const cards = await this.prisma.card.findMany({
+    const cards = await prisma.card.findMany({
       where: {
         cognito_id: cognitoId
       }
@@ -53,7 +53,7 @@ export class CardPrismaRepository implements ICardRepository {
   }
 
   async exists(cognitoId: string, description: string): Promise<boolean> {
-    const card = await this.prisma.card.count({
+    const card = await prisma.card.count({
       where: {
         cognito_id: cognitoId,
         description

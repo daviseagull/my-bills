@@ -1,13 +1,13 @@
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { User } from '@/domain/entities/user.entity'
-import { PrismaClient } from '@prisma/client'
 import { UserPrismaMapper } from '../mappers/user.prisma-mapper'
+import prisma from '../prisma-client'
 
 export class UserPrismaRepository implements IUserRepository {
-  constructor(private prisma: PrismaClient = new PrismaClient()) {}
+  constructor() {}
 
   async confirmUser(id: string): Promise<void> {
-    await this.prisma.user.update({
+    await prisma.user.update({
       where: { id },
       data: {
         confirmed: true
@@ -16,7 +16,7 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   async create(user: User): Promise<User> {
-    const createdUser = await this.prisma.user.create({
+    const createdUser = await prisma.user.create({
       data: {
         email: user.props.email.props.value,
         birthday: new Date(user.props.birthday),
@@ -38,7 +38,7 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id: id
       }
@@ -52,7 +52,7 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: email
       }
@@ -66,7 +66,7 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   async findByCognitoId(id: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         cognito_id: id
       }

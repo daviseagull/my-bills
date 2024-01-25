@@ -4,6 +4,10 @@ import { Category } from '../entities/category.entity'
 export class CategoryMapper {
   static toCategoriesDto(categories: Category[]): CategoryDto[] {
     return categories.map((category: Category) => {
+      const parentId = category.props.parent
+        ? category.props.parent.props.value
+        : undefined
+
       return {
         id: category.id!,
         createdAt: category.createdAt!.toISOString(),
@@ -13,7 +17,7 @@ export class CategoryMapper {
         type: category.props.type,
         description: category.props.description.props.value,
         color: category.props.color.props.value,
-        parent: category.props.parent!.props.value
+        parent: parentId
       }
     })
   }

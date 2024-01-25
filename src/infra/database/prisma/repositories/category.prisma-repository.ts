@@ -5,14 +5,14 @@ import {
 import { ICategoryRepository } from '@/application/repositories/category.repository'
 import { Category } from '@/domain/entities/category.entity'
 import { CategoryTypeEnum } from '@/domain/enums/category-type.enum'
-import { PrismaClient } from '@prisma/client'
 import { CategoryPrismaMapper } from '../mappers/category.prisma-mapper'
+import prisma from '../prisma-client'
 
 export class CategoryPrismaRepository implements ICategoryRepository {
-  constructor(private prisma: PrismaClient = new PrismaClient()) {}
+  constructor() {}
 
   async create(category: Category): Promise<Category> {
-    const createdCategory = await this.prisma.category.create({
+    const createdCategory = await prisma.category.create({
       data: {
         description: category.props.description.props.value,
         color: category.props.color.props.value,
@@ -37,13 +37,13 @@ export class CategoryPrismaRepository implements ICategoryRepository {
       CategoryPrismaMapper.toPrismaCategory(category)
     )
 
-    await this.prisma.category.createMany({
+    await prisma.category.createMany({
       data: prismaCategories
     })
   }
 
   async findByUser(user: string): Promise<Category[]> {
-    const categories = await this.prisma.category.findMany({
+    const categories = await prisma.category.findMany({
       where: {
         cognito_id: user
       }
@@ -57,7 +57,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
   }
 
   async findById(id: string): Promise<Category | null> {
-    const category = await this.prisma.category.findUnique({
+    const category = await prisma.category.findUnique({
       where: {
         id: id
       }
@@ -74,7 +74,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
     user: string,
     description: string
   ): Promise<Category | null> {
-    const category = await this.prisma.category.findFirst({
+    const category = await prisma.category.findFirst({
       where: {
         cognito_id: user,
         description: description
@@ -92,7 +92,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
     user: string,
     type: CategoryTypeEnum
   ): Promise<Category[]> {
-    const categories = await this.prisma.category.findMany({
+    const categories = await prisma.category.findMany({
       where: {
         cognito_id: user,
         type: type
@@ -109,7 +109,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
   }
 
   async findByUserAndId(user: string, id: string): Promise<Category | null> {
-    const category = await this.prisma.category.findFirst({
+    const category = await prisma.category.findFirst({
       where: {
         cognito_id: user,
         id: id
@@ -135,7 +135,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
       )
     }
 
-    const updatedCategory = await this.prisma.category.update({
+    const updatedCategory = await prisma.category.update({
       where: {
         id: categoryToUpdate.id
       },
