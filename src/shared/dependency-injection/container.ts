@@ -1,6 +1,7 @@
 import { IAccountRepository } from '@/application/repositories/account.repository'
 import { ICardRepository } from '@/application/repositories/card.repository'
 import { ICategoryRepository } from '@/application/repositories/category.repository'
+import { ITransactionRepository } from '@/application/repositories/transaction.repository'
 import { IUserRepository } from '@/application/repositories/user.repository'
 import { IAuthenticationService } from '@/application/services/authentication.service'
 import { GetAccountUseCase } from '@/application/use-cases/account/get-account.use-case'
@@ -10,6 +11,7 @@ import { CognitoService } from '@/infra/authentication/service/cognito.service'
 import AccountPrismaRepository from '@/infra/database/prisma/repositories/account.prisma-repository'
 import { CardPrismaRepository } from '@/infra/database/prisma/repositories/card.prisma-repository'
 import { CategoryPrismaRepository } from '@/infra/database/prisma/repositories/category.prisma-repository'
+import TransactionPrismaRepository from '@/infra/database/prisma/repositories/transaction.prisma-repository'
 import { UserPrismaRepository } from '@/infra/database/prisma/repositories/user.prisma-repository'
 import { container } from 'tsyringe'
 
@@ -33,6 +35,11 @@ container.registerSingleton<IAccountRepository>(
 container.registerSingleton<ICardRepository>(
   'CardRepository',
   CardPrismaRepository
+)
+
+container.registerSingleton<ITransactionRepository>(
+  'TransactionRepository',
+  TransactionPrismaRepository
 )
 
 // Services

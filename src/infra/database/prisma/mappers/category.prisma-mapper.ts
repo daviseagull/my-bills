@@ -7,14 +7,16 @@ import { Category as RawCategory } from '@prisma/client'
 
 export class CategoryPrismaMapper {
   static toDomain(category: RawCategory): Category {
+    const parent = category.parent_id
+      ? Id.create(category.parent_id!, 'Parent')
+      : undefined
+
     return Category.create(
       {
         color: Color.create(category.color),
-        parent: category.parent_id
-          ? Id.create(category.parent_id!, 'Parent')
-          : undefined,
+        parent: parent,
         active: category.active,
-        user: Id.create(category.cognito_id, 'User'),
+        user: Id.create('Cognito', category.cognito_id)!,
         type: CategoryUtils.mapCategoryTypeEnum(category.type),
         description: Description.create(category.description)
       },

@@ -45,7 +45,7 @@ export class CreateCardUseCase {
     }
 
     const newCard = Card.create({
-      user: Id.create(user, 'User'),
+      user: Id.create('Cognito', user)!,
       brand: CardUtils.mapCardTypeEnum(request.brand),
       description: Description.create(request.description),
       closingDay: DayOfMonth.create(request.closingDay),

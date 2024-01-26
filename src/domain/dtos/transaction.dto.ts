@@ -1,11 +1,15 @@
-export type AccountTransactionDto = {
+export type TransactionDto = {
   id: string
   createdAt: string
   updatedAt: string
-  account: string
+  user: string
+  card?: string
+  account?: string
   type: string
   date: string
   description: string
   category: string
+  recurrence?: boolean
+  payments?: number
   value: number
 }

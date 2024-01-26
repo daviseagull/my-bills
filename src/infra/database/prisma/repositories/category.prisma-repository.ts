@@ -137,7 +137,7 @@ export class CategoryPrismaRepository implements ICategoryRepository {
 
     const updatedCategory = await prisma.category.update({
       where: {
-        id: categoryToUpdate.id
+        id: categoryToUpdate.id!
       },
       data: {
         description: categoryToUpdate.props.description.props.value,

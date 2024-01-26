@@ -41,7 +41,7 @@ export class EditCategoryUseCase {
     const category = Category.create(
       {
         type: CategoryUtils.mapCategoryTypeEnum(request.type),
-        user: Id.create(user, 'User'),
+        user: Id.create('Cognito', user)!,
         description: Description.create(request.description),
         parent: request.parent
           ? Id.create(request.parent!, 'Parent category')

@@ -33,7 +33,7 @@ export class CategoryUtils {
       categories.push(
         Category.create({
           type: CategoryTypeEnum.expenses,
-          user: Id.create(user, 'User'),
+          user: Id.create('Cognito', user)!,
           color: Color.create(ExpenseCategoriesColor.get(key)!),
           description: Description.create(key.toString()),
           active: true
@@ -47,7 +47,7 @@ export class CategoryUtils {
       categories.push(
         Category.create({
           type: CategoryTypeEnum.incomes,
-          user: Id.create(user, 'User'),
+          user: Id.create(user, 'User')!,
           color: Color.create(IncomeCategoriesColor.get(key)!),
           description: Description.create(key.toString()),
           active: true

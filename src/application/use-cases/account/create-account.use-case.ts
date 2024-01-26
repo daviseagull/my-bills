@@ -41,7 +41,7 @@ export class CreateAccountUseCase {
 
     const newAccount = Account.create({
       type: AccountUtils.mapAccountTypeEnum(request.type),
-      user: Id.create(user, 'User'),
+      user: Id.create('Cognito', user)!,
       description: Description.create(request.description),
       balance: request.balance,
       color: Color.create(request.color)

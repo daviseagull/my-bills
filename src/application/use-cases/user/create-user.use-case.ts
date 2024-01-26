@@ -32,7 +32,7 @@ export class CreateUserUseCase {
         request.phone.number
       ),
       name: Name.create(request.name.first, request.name.last),
-      cognitoId: Id.create(cognitoId, 'User'),
+      cognitoId: Id.create('Cognito', cognitoId)!,
       confirmed: false
     })
 

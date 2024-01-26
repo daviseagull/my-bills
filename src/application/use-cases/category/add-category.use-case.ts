@@ -39,7 +39,7 @@ export class AddCategoryUseCase {
 
     const createdCategory = await this.categoryRepository.create(
       Category.create({
-        user: Id.create(user, 'User'),
+        user: Id.create('Cognito', user)!,
         description: Description.create(request.description),
         color: Color.create(request.color),
         parent: request.parent

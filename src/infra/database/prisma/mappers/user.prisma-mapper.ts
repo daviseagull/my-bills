@@ -14,7 +14,7 @@ export class UserPrismaMapper {
         phone: Phone.create('+1', 444, 12345566),
         name: Name.create(raw.first_name, raw.last_name),
         confirmed: raw.confirmed,
-        cognitoId: Id.create(raw.cognito_id, 'User')
+        cognitoId: Id.create('Cognito', raw.cognito_id)!
       },
       raw.id,
       raw.created_at,

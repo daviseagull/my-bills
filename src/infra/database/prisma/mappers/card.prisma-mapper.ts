@@ -10,7 +10,7 @@ export class CardPrismaMapper {
   static toDomain(card: RawCard): Card {
     return Card.create(
       {
-        user: Id.create(card.cognito_id, 'User'),
+        user: Id.create('Cognito', card.cognito_id)!,
         brand: CardUtils.mapCardTypeEnum(card.brand),
         description: Description.create(card.description),
         closingDay: DayOfMonth.create(card.closing_day),
