@@ -1,13 +1,12 @@
 import { Router } from 'express'
 import { container } from 'tsyringe'
 import { AccountController } from '../controllers/account.controller'
-import { authenticateToken } from '../middlewares/authenticate.middleware'
 
 const controller = container.resolve(AccountController)
 const accountRoutes = Router()
 
-accountRoutes.post('', authenticateToken, controller.create)
-accountRoutes.get('/:id', authenticateToken, controller.getAccount)
-accountRoutes.get('', authenticateToken, controller.getAccounts)
+accountRoutes.post('', controller.create)
+accountRoutes.get('/:id', controller.getAccount)
+accountRoutes.get('', controller.getAccounts)
 
 export default accountRoutes

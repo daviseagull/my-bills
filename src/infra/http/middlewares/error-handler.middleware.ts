@@ -13,6 +13,9 @@ export const errorHandler = (
   const status = err.statusCode ?? 500
   message = err.statusCode ? message : `Internal server error - ${err.message}`
 
-  logger.error(`${message} - (${err.name}) ${err.stack}`)
+  err.name || err.stack
+    ? logger.error(`${message} - (${err.name}) ${err.stack}`)
+    : logger.error(`${message}`)
+
   res.status(status).json({ statusCode: err.statusCode, message: message })
 }
