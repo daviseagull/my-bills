@@ -17,19 +17,14 @@ type CardProps = {
 export class Card extends Entity<CardProps> {
   private constructor(
     props: CardProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
     super(props, id, createdAt, updatedAt)
   }
 
-  static create(
-    props: CardProps,
-    id?: string,
-    createdAt?: Date,
-    updatedAt?: Date
-  ) {
+  static create(props: CardProps, id?: Id, createdAt?: Date, updatedAt?: Date) {
     return new Card(props, id, createdAt, updatedAt)
   }
 }

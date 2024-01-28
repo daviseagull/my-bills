@@ -19,7 +19,7 @@ type TransactionProps = {
 export class Transaction extends Entity<TransactionProps> {
   private constructor(
     props: TransactionProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
@@ -28,7 +28,7 @@ export class Transaction extends Entity<TransactionProps> {
 
   static create(
     props: TransactionProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {

@@ -50,7 +50,7 @@ export class AddCategoryUseCase {
       })
     )
 
-    return { id: createdCategory.id! }
+    return { id: createdCategory.id!.props.value }
   }
 
   private async validateCategory(user: string, request: AddCategoryRequest) {

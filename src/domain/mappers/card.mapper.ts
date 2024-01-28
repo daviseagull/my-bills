@@ -4,7 +4,7 @@ import { Card } from '../entities/card.entity'
 export class CardMapper {
   static toCardDto(card: Card): CardDto {
     return {
-      id: card.id!,
+      id: card.id!.props.value,
       createdAt: card.createdAt!.toISOString(),
       updatedAt: card.updatedAt!.toISOString(),
       brand: card.props.brand,

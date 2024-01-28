@@ -17,7 +17,7 @@ export class CardPrismaMapper {
         dueDate: DayOfMonth.create(card.due_date),
         limit: CardLimit.create(card.limit)
       },
-      card.id,
+      Id.create('Card', card.id),
       card.created_at,
       card.updated_at
     )
@@ -25,7 +25,7 @@ export class CardPrismaMapper {
 
   static toPrisma(card: Card): RawCard {
     return {
-      id: card.id!,
+      id: card.id!.props.value,
       created_at: card.createdAt!,
       updated_at: card.updatedAt!,
       cognito_id: card.props.user.props.value,

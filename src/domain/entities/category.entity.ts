@@ -16,7 +16,7 @@ type CategoryProps = {
 export class Category extends Entity<CategoryProps> {
   private constructor(
     props: CategoryProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
@@ -25,7 +25,7 @@ export class Category extends Entity<CategoryProps> {
 
   static create(
     props: CategoryProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {

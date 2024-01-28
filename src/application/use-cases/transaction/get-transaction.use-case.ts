@@ -20,8 +20,6 @@ export class GetTransactionUseCase {
       transactionId
     )
 
-    logger.info(JSON.stringify(transaction))
-
     if (!transaction) {
       return null
     }

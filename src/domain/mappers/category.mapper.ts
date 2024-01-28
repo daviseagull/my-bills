@@ -9,7 +9,7 @@ export class CategoryMapper {
         : undefined
 
       return {
-        id: category.id!,
+        id: category.id!.props.value,
         createdAt: category.createdAt!.toISOString(),
         updatedAt: category.updatedAt!.toISOString(),
         active: category.props.active,

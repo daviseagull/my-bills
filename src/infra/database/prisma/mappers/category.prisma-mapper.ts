@@ -20,7 +20,7 @@ export class CategoryPrismaMapper {
         type: CategoryUtils.mapCategoryTypeEnum(category.type),
         description: Description.create(category.description)
       },
-      category.id,
+      Id.create('Category', category.id),
       category.created_at,
       category.updated_at
     )
@@ -32,7 +32,7 @@ export class CategoryPrismaMapper {
       : null
 
     return {
-      id: category.id!,
+      id: category.id!.props.value,
       created_at: category.createdAt!,
       updated_at: category.updatedAt!,
       description: category.props.description.props.value,

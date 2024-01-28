@@ -27,7 +27,7 @@ export class TransactionPrismaMapper {
         recurrence: transaction.recurrence!,
         value: transaction.value
       },
-      transaction.id,
+      Id.create('Transaction', transaction.id),
       transaction.created_at,
       transaction.updated_at
     )
@@ -44,7 +44,7 @@ export class TransactionPrismaMapper {
         : null
 
     return {
-      id: transaction.id!,
+      id: transaction.id!.props.value,
       created_at: transaction.createdAt!,
       updated_at: transaction.updatedAt!,
       cognito_id: transaction.props.user.props.value,

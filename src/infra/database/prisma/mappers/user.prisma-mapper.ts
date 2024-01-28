@@ -7,7 +7,7 @@ import { User as RawUser } from '@prisma/client'
 
 export class UserPrismaMapper {
   static toDomain(raw: RawUser): User {
-    const user = User.create(
+    return User.create(
       {
         email: Email.create(raw.email),
         birthday: new Date(raw.birthday),
@@ -16,17 +16,15 @@ export class UserPrismaMapper {
         confirmed: raw.confirmed,
         cognitoId: Id.create('Cognito', raw.cognito_id)!
       },
-      raw.id,
+      Id.create('User', raw.id),
       raw.created_at,
       raw.updated_at
     )
-
-    return user
   }
 
   static toPersistence(user: User): RawUser {
     return {
-      id: user.id!,
+      id: user.id!.props.value,
       created_at: user.createdAt!,
       updated_at: user.updatedAt!,
       email: user.props.email.props.value,

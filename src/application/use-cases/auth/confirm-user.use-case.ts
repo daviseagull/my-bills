@@ -28,6 +28,6 @@ export class ConfirmUserUseCase {
 
     await this.authService.confirmUser(request.email, request.code)
 
-    this.userRepository.confirmUser(user.id!)
+    this.userRepository.confirmUser(user.id!.props.value)
   }
 }

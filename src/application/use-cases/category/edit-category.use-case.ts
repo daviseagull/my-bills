@@ -49,11 +49,11 @@ export class EditCategoryUseCase {
         active: request.active,
         color: Color.create(request.color)
       },
-      request.id
+      Id.create('Category', request.id)
     )
 
     await this.categoryRepository.update(category)
 
-    return { id: category.id! }
+    return { id: category.id!.props.value }
   }
 }

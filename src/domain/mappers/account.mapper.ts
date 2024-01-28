@@ -4,7 +4,7 @@ import { Account } from '../entities/account.entity'
 export class AccountMapper {
   static toAccountDto(account: Account): AccountDto {
     return {
-      id: account.id!,
+      id: account.id!.props.value,
       createdAt: account.createdAt!.toISOString(),
       updatedAt: account.updatedAt!.toISOString(),
       type: account.props.type.toString(),

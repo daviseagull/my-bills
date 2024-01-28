@@ -1,5 +1,7 @@
+import { Id } from '../value-objects/id'
+
 export abstract class Entity<T> {
-  protected _id?: string
+  protected _id?: Id | null
   protected _createdAt?: Date
   protected _updatedAt?: Date
   public props: T
@@ -16,7 +18,7 @@ export abstract class Entity<T> {
     return this._updatedAt
   }
 
-  constructor(props: T, id?: string, createdAt?: Date, updatedAt?: Date) {
+  constructor(props: T, id?: Id, createdAt?: Date, updatedAt?: Date) {
     this.props = props
     this._id = id
     this._createdAt = createdAt

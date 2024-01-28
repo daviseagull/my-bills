@@ -3,8 +3,8 @@ import { User } from '../entities/user.entity'
 
 export class UserMapper {
   static toDto(entity: User): UserDto {
-    const user = {
-      id: entity.id!,
+    return {
+      id: entity.id!.props.value,
       createdAt: entity.createdAt!.toISOString(),
       updatedAt: entity.updatedAt!.toISOString(),
       email: entity.props.email.props.value,
@@ -16,6 +16,5 @@ export class UserMapper {
         full: `${entity.props.name.props.first} ${entity.props.name.props.last}`
       }
     }
-    return user
   }
 }

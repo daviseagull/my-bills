@@ -14,7 +14,7 @@ type InvoiceProps = {
 export class Invoice extends Entity<InvoiceProps> {
   private constructor(
     props: InvoiceProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
@@ -23,7 +23,7 @@ export class Invoice extends Entity<InvoiceProps> {
 
   static create(
     props: InvoiceProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {

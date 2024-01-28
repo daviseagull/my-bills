@@ -11,7 +11,7 @@ export class TransactionMapper {
       ? transaction.props.card.props.value
       : undefined
     return {
-      id: transaction.id!,
+      id: transaction.id!.props.value,
       createdAt: transaction.createdAt!.toISOString(),
       updatedAt: transaction.updatedAt!.toISOString(),
       user: transaction.props.user.props.value,

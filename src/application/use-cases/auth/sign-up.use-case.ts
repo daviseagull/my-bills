@@ -46,7 +46,7 @@ export class SignUpUseCase {
 
     logger.info(`User ${request.email} created in database with id ${user.id}`)
     return {
-      id: user.id!
+      id: user.id!.props.value
     }
   }
 }

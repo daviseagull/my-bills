@@ -15,7 +15,7 @@ export class AccountPrismaMapper {
         balance: account.balance,
         color: Color.create(account.color)
       },
-      account.id,
+      Id.create('Account', account.id),
       account.created_at,
       account.updated_at
     )
@@ -23,7 +23,7 @@ export class AccountPrismaMapper {
 
   static toPrismaAccount(account: Account): RawAccount {
     return {
-      id: account.id!,
+      id: account.id!.props.value,
       created_at: account.createdAt!,
       updated_at: account.updatedAt!,
       description: account.props.description.props.value,

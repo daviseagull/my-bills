@@ -16,19 +16,14 @@ type UserProps = {
 export class User extends Entity<UserProps> {
   private constructor(
     props: UserProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
     super(props, id, createdAt, updatedAt)
   }
 
-  static create(
-    props: UserProps,
-    id?: string,
-    createdAt?: Date,
-    updatedAt?: Date
-  ) {
+  static create(props: UserProps, id?: Id, createdAt?: Date, updatedAt?: Date) {
     return new User(props, id, createdAt, updatedAt)
   }
 }

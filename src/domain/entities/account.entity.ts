@@ -15,7 +15,7 @@ type AccountProps = {
 export class Account extends Entity<AccountProps> {
   private constructor(
     props: AccountProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
@@ -24,7 +24,7 @@ export class Account extends Entity<AccountProps> {
 
   static create(
     props: AccountProps,
-    id?: string,
+    id?: Id,
     createdAt?: Date,
     updatedAt?: Date
   ) {
